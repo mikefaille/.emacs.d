@@ -43,6 +43,5 @@ semanticdb
 srecode-map.el
 elpa
 auto-save-list/
-.python-environment
-
+.python-environments/
 
