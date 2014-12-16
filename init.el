@@ -18,7 +18,7 @@
 
 
 
-(defvar my-packages '(better-defaults smartparens idle-highlight-mode ido-ubiquitous find-file-in-project magit smex scpaste color-theme-solarized helm flycheck undo-tree linum-relative dired-hacks-utils  yasnippet flycheck malabar-mode company company-go multiple-cursors  linum-relative go-mode go-autocomplete auto-complete emacs-eclim eshell-prompt-extras projectile fuzzy cl-lib deferred jedi ) "A list of packages to ensure are installed at launch.")
+(defvar my-packages '(better-defaults smartparens idle-highlight-mode ido-ubiquitous find-file-in-project magit smex scpaste color-theme-solarized helm flycheck undo-tree dired-hacks-utils  yasnippet flycheck malabar-mode company company-go multiple-cursors go-mode go-autocomplete auto-complete emacs-eclim eshell-prompt-extras projectile fuzzy cl-lib deferred jedi ein ) "A list of packages to ensure are installed at launch.")
 
 
 
@@ -55,6 +55,10 @@
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:setup-keys t)
 (setq jedi:complete-on-dot t)
+(require 'ein)
+(setq ein:use-auto-complete-superpack t)
+(setq ein:use-smartrep t)
+(add-hook 'ein:connect-mode-hook 'ein:jedi-setup)
 
 ;;;; go config
 ;; install godef 
@@ -99,9 +103,7 @@
 (add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/nsf/gocode"))
 
 
-
-
-
+;; load git package
 (let ((base "~/.emacs.d/git-packages"))
  ; (add-to-list 'load-path base)
   (dolist (f (directory-files base))
@@ -129,6 +131,8 @@
 ;; performance requirement for helm
 (when (require 'dired-aux)
   (require 'dired-async))
+
+
 
 
 ;; init helm - a completion tool
@@ -167,12 +171,61 @@
              (yas-minor-mode)))
 
 
+
+
 ;; java
 (setq semantic-default-submodes '(global-semantic-idle-scheduler-mode
                                   global-semanticdb-minor-mode
                                   global-semantic-idle-summary-mode
                                   global-semantic-mru-bookmark-mode))
 (semantic-mode 1)
+
+
+(require 'minimap)
+
+;; active Babel languages
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((sh . t)
+   (python . nil)
+   (plantuml . nil)
+   ))
+
+(global-git-gutter-mode +1)
+(require 'git-gutter)
+
+;; If you enable global minor mode
+(global-git-gutter-mode t)
+
+;; If you would like to use git-gutter.el and linum-mode
+(git-gutter:linum-setup)
+
+;; If you enable git-gutter-mode for some modes
+(add-hook 'ruby-mode-hook 'git-gutter-mode)
+
+(global-set-key (kbd "C-x C-g") 'git-gutter:toggle)
+(global-set-key (kbd "C-x v =") 'git-gutter:popup-hunk)
+
+;; Jump to next/previous hunk
+(global-set-key (kbd "C-x p") 'git-gutter:previous-hunk)
+(global-set-key (kbd "C-x n") 'git-gutter:next-hunk)
+
+;; Stage current hunk
+(global-set-key (kbd "C-x v s") 'git-gutter:stage-hunk)
+
+;; Revert current hunk
+(global-set-key (kbd "C-x v r") 'git-gutter:revert-hunk)
+
+
+
+;(require 'sublimity)
+; (require 'sublimity-scroll)
+; (require 'sublimity-map)
+; (require 'sublimity-attractive)
+; (require 'minimap-autoloads)
+;(setq sublimity-attractive-centering-width nil)
+;(sublimity-mode 1)
+
 
 ;(require 'malabar-mode)
 ;(setq malabar-groovy-lib-dir "/path/to/malabar/lib")
@@ -241,6 +294,40 @@
 (setq ring-bell-function 'ignore)
 
 
+
+;; emacs gnomeshell integration
+(when (daemonp)
+  (defadvice desktop-restore-file-buffer
+    (around my-desktop-restore-file-buffer-advice)
+    "Be non-interactive while starting a daemon."
+    (let ((noninteractive t))
+      ad-do-it))
+  (ad-activate 'desktop-restore-file-buffer)
+  (setq desktop-dirname             "~/.emacs.d/desktop/"
+        desktop-base-file-name      (concat (daemonp) ".desktop")
+        desktop-base-lock-name      (concat (daemonp) ".lock")
+        desktop-path                (list desktop-dirname)
+        desktop-save                t
+        desktop-files-not-to-save   "^$" ;reload tramp paths
+        desktop-load-locked-desktop t)
+  (desktop-save-mode 1))
+
+
+;; Tweaks for tmux's support for Ctrl+arrows
+;; http://marc-abramowitz.com/archives/2006/10/05/ctrl-left-and-ctrl-right-in-bash-and-emacs/
+(global-set-key "\M-[1;5C"    'forward-word)      ; Ctrl+right   => forward word
+(global-set-key "\M-[1;5D"    'backward-word)     ; Ctrl+left    => backward word
+
+;
+; Cycle through windows backwards with C-x p
+(defun prev-window ()
+  (interactive)
+  (other-window -1))
+
+(define-key global-map (kbd "C-x p") 'prev-window)
+
+
+
 ;(require 'linum-relative)
 
 ;(require 'eclim)
@@ -281,7 +368,8 @@
  '(ac-auto-show-menu 0.6)
  '(ac-trigger-key "TAB")
  '(ac-use-comphist t)
- '(ac-use-fuzzy t))
+ '(ac-use-fuzzy t)
+ '(custom-safe-themes (quote ("64581032564feda2b5f2cf389018b4b9906d98293d84d84142d90d7986032d33" "756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" default))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
