@@ -2,8 +2,37 @@
 (setq inhibit-startup-message t)
 (setq inhibit-splash-screen t)
 
+(require 'cl)
+
 ;; replace current selection by yank or type
 (delete-selection-mode 1)
+
+;; Always load newest byte code
+(setq load-prefer-newer t)
+
+
+
+(defvar main-dir (file-name-directory load-file-name)
+"The root dir of the Emacs Prelude distribution.")
+(defvar core-dir (expand-file-name "core" main-dir)
+"The home of Prelude's core functionality.")
+
+
+
+;; add Prelude's directories to Emacs's `load-path'
+(add-to-list 'load-path core-dir)
+
+;(defvar main-dir (file-name-directory load-file-name)
+;"The root dir of the Emacs Prelude distribution.")
+;(defvar core-dir (expand-file-name "core" main-dir)
+;"The home of Prelude's core functionality.")
+;(add-to-list 'load-path main-dir)
+
+    
+(require 'core-ui)
+(require 'core-packages)
+;; the core stuff
+;;(require 'core-ui)
 
 
 (require 'package)
@@ -168,9 +197,10 @@
 ;; yasnippet - template
 (add-hook 'prog-mode-hook
           '(lambda ()
-             (yas-minor-mode)))
+             (yas-global-mode 1)))
 
-
+;; diminish keeps the modeline tidy
+(require 'diminish)
 
 
 ;; java
