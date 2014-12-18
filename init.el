@@ -29,13 +29,13 @@
 ;(add-to-list 'load-path main-dir)
 
     
-(require 'core-ui)
-(require 'core-packages)
+(autoloadp 'core-ui)
+(autoloadp 'core-packages)
 ;; the core stuff
 ;;(require 'core-ui)
 
 
-(require 'package)
+(require  'package)
 (add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
 
@@ -56,7 +56,26 @@
   (when (not (package-installed-p p))
     (package-install p)))
 
+
+(require 'auto-async-byte-compile)
+(setq auto-async-byte-compile-exclude-files-regexp "/junk/")
+(add-hook 'emacs-lisp-mode-hook 'enable-auto-async-byte-compile-mode)
+
+;(require 'color-theme-solarized)
+;; Color theme
+(add-to-list 'load-path "~/.emacs.d/themes/solarized/")
+(require 'color-theme)
+;(require 'color-theme-solarized-dark)
+(eval-after-load "color-theme"
+  '(progn
+(color-theme-initialize)
+(color-theme-solarized-dark)))
+(setq color-theme-is-global t)
+
+
 (require 'undo-tree)
+
+
 
 
 ;; auto-complete
@@ -64,7 +83,7 @@
 (auto-complete-mode t)
 (ac-set-trigger-key "TAB")
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/dict")
-(require 'auto-complete-config)
+(autoloadp 'auto-complete-config)
 (ac-config-default)
 (setq-default
  ac-sources
@@ -84,7 +103,7 @@
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:setup-keys t)
 (setq jedi:complete-on-dot t)
-(require 'ein)
+(autoloadp 'ein)
 (setq ein:use-auto-complete-superpack t)
 (setq ein:use-smartrep t)
 (add-hook 'ein:connect-mode-hook 'ein:jedi-setup)
@@ -93,12 +112,12 @@
 ;; install godef 
 ; go get code.google.com/p/rog-go/exp/cmd/godef
 ; go get github.com/golang/lint/golint
-; require package : auto-complete
-(require 'go-mode)
+; autoloadp package : auto-complete
+(autoloadp 'go-mode)
 (add-hook 'before-save-hook 'gofmt-before-save)
-(require 'go-autocomplete)
+(autoloadp 'go-autocomplete)
   (add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/golang/lint/misc/emacs"))
-  (require 'golint)
+  (autoloadp 'golint)
 (defun my-go-mode-hook ()
   ; Call Gofmt before saving
   (add-hook 'before-save-hook 'gofmt-before-save)
@@ -148,38 +167,27 @@
 ;(let ((default-directory load-path))
 ;  (normal-top-level-add-subdirs-to-load-path))
 
-(require 'smartparens-config)
+(autoloadp 'smartparens-config)
 (smartparens-global-mode)
 
-(require 'multiple-cursors)
+(autoloadp 'multiple-cursors)
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
-;; performance requirement for helm
-(when (require 'dired-aux)
-  (require 'dired-async))
+;; performance autoloadpment for helm
+(when (autoloadp 'dired-aux)
+  (autoloadp 'dired-async))
 
 
 
 
 ;; init helm - a completion tool
-;;(require 'helm)
-;(require 'helm-config)
+;;(autoloadp 'helm)
+;(autoloadp 'helm-config)
 ;(helm-mode)
 
-
-;(require 'color-theme-solarized)
-;; Color theme
-(add-to-list 'load-path "~/.emacs.d/themes/solarized/")
-(require 'color-theme)
-;(require 'color-theme-solarized-dark)
-(eval-after-load "color-theme"
-  '(progn
-(color-theme-initialize)
-(color-theme-solarized-dark)))
-(setq color-theme-is-global t)
 
 ;;  Interactively do things is a very convenient way to find files and switch buffers.
 ;ido-mode)
@@ -200,7 +208,7 @@
              (yas-global-mode 1)))
 
 ;; diminish keeps the modeline tidy
-(require 'diminish)
+(autoloadp 'diminish)
 
 
 ;; java
@@ -211,7 +219,7 @@
 (semantic-mode 1)
 
 
-(require 'minimap)
+(autoloadp 'minimap)
 
 ;; active Babel languages
 (org-babel-do-load-languages
@@ -222,7 +230,7 @@
    ))
 
 (global-git-gutter-mode +1)
-(require 'git-gutter)
+(autoloadp 'git-gutter)
 
 ;; If you enable global minor mode
 (global-git-gutter-mode t)
@@ -248,16 +256,16 @@
 
 
 
-;(require 'sublimity)
-; (require 'sublimity-scroll)
-; (require 'sublimity-map)
-; (require 'sublimity-attractive)
-; (require 'minimap-autoloads)
+;(autoloadp 'sublimity)
+; (autoloadp 'sublimity-scroll)
+; (autoloadp 'sublimity-map)
+; (autoloadp 'sublimity-attractive)
+; (autoloadp 'minimap-autoloads)
 ;(setq sublimity-attractive-centering-width nil)
 ;(sublimity-mode 1)
 
 
-;(require 'malabar-mode)
+;(autoloadp 'malabar-mode)
 ;(setq malabar-groovy-lib-dir "/path/to/malabar/lib")
 ;(add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
 ;;compile on save
@@ -279,20 +287,20 @@
 
 ;; completion framework
 ;(add-hook 'after-init-hook 'global-company-mode)
-;(require 'company)                                   ; load company mode
-;(require 'company-go)                                ; load company mode go backend
+;(autoloadp 'company)                                   ; load company mode
+;(autoloadp 'company-go)                                ; load company mode go backend
 ;(setq company-tooltip-limit 20)                      ; bigger popup window
 ;;(setq company-idle-delay .3)                         ; decrease delay before autocomp;letion popup shows
 ;(setq company-echo-delay 0)                          ; remove annoying blinking
 ;(setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
 
 ;; flycheck. for fuzzy check, install fuzzy...
-;(require 'flycheck)
+;(autoloadp 'flycheck)
 ;(flycheck-mode t)
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
 ;; mouse integration
-(require 'mouse) ;; needed for iterm2 compatibility
+(autoloadp 'mouse) ;; needed for iterm2 compatibility
 (xterm-mouse-mode t)
 (global-set-key [mouse-4] '(lambda ()
                            (interactive)
@@ -358,22 +366,22 @@
 
 
 
-;(require 'linum-relative)
+;(autoloadp 'linum-relative)
 
-;(require 'eclim)
+;(autoloadp 'eclim)
 ;(global-eclim-mode)
-;(require 'eclimd)
+;(autoloadp 'eclimd)
 ;(custom-set-variables
 ;  '(eclim-eclipse-dirs '("~/app/eclipse"))
-;(require 'company)
-;(require 'company-emacs-eclim)
+;(autoloadp 'company)
+;(autoloadp 'company-emacs-eclim)
 ;(company-emacs-eclim-setup)
 ;(global-company-mode t)
 
 
 ;(eval-after-load 'esh-opt
 ;  (progn
-;    (require 'eshell-prompt-extras)))
+;    (autoloadp 'eshell-prompt-extras)))
 ;    (setq eshell-highlight-prompt nil
 ;          eshell-prompt-function 'epe-theme-lambda)))
 
@@ -382,7 +390,7 @@
 
 
 
-(require 'smex) ; Not needed if you use package.el
+(autoloadp 'smex) ; Not needed if you use package.el
 (smex-initialize) ; Can be omitted. This might cause a (minimal) delay
                   ; when Smex is auto-initialized on its first run.
 
