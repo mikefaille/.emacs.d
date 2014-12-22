@@ -39,8 +39,7 @@
 (require 'package)
 (package-initialize)
 
-(require 'use-package)
-(defvar core-modules '(better-defaults smartparens idle-highlight-mode ido-ubiquitous find-file-in-project magit smex scpaste color-theme-solarized helm flycheck undo-tree dired-hacks-utils  yasnippet flycheck malabar-mode company company-go multiple-cursors go-mode go-autocomplete  emacs-eclim eshell-prompt-extras projectile fuzzy cl-lib deferred jedi ein ) "A list of modules to ensure are installed at launch.")
+(defvar core-modules '(better-defaults smartparens idle-highlight-mode ido-ubiquitous find-file-in-project magit smex scpaste color-theme-solarized helm flycheck undo-tree dired-hacks-utils  yasnippet flycheck malabar-mode company company-go multiple-cursors go-mode go-autocomplete  emacs-eclim eshell-prompt-extras projectile fuzzy cl-lib deferred jedi ein git-gutter auto-async-byte-compile ) "A list of modules to ensure are installed at launch.")
 
 (defvar-local enabled-modules '(nil) "A list of modules to ensure are installed at launch.")
 
@@ -54,6 +53,18 @@
 
 
 
+(defun require-package (package &optional min-version no-refresh)
+  "Install given PACKAGE, optionally requiring MIN-VERSION.
+If NO-REFRESH is non-nil, the available package lists will not be
+re-downloaded in order to locate PACKAGE."
+  (if (package-installed-p package min-version)
+      t
+    (if (or (assoc package package-archive-contents) no-refresh)
+        (package-install package)
+      (progn
+        (package-refresh-contents)
+        (require-package package min-version t)))))
+
 
 (unless package-archive-contents
   (message "%s" "Emacs is now refreshing its package database...")
@@ -63,37 +74,41 @@
   )
 
 
-(defun require-package (package)
-  "Install PACKAGE unless already installed."
-  (unless (memq package core-modules)
-    (add-to-list 'core-modules package))
-  (unless (package-installed-p package)
-    (package-install package)))
 
 (defun module-list-install (modules-list)
   ; install the missing packages
   (dolist (module modules-list )
-                                        ;
-    (unless (package-installed-p module)
-      (package-refresh-contents)      
-      (package-install module))))
-  ;; (if (not (package-installed-p 'use-package))
-  ;;     (progn
-  ;;       (package-refresh-contents)
-  ;;       (package-install 'use-package))))
-;
+      (require-package module)      
+      (package-install module))) 
+(module-list-install core-modules)
 
 
+(defun add-subfolders-to-load-path (parent-dir)
+  "Add subfolders to load path"
+  (dolist (f (directory-files parent-dir))
+    (let ((name (concat parent-dir f)))
+      (when (and (file-directory-p name)
+                 (not (equal f ".."))
+                 (not (equal f ".")))
+        (add-to-list 'load-path name)))))
 
-;; load git package
-(let ((base "~/.emacs.d/git-packages"))
- ; (add-to-list 'load-path base)
+(defun add-subfolders-to-load-path2 (parent-dir)
+(let ((base parent-dir))
+  (add-to-list 'load-path base)
   (dolist (f (directory-files base))
-    (let ((name f))
+    (let ((name (concat base "/" f)))
       (when (and (file-directory-p name) 
                  (not (equal f ".."))
                  (not (equal f ".")))
-        (normal-top-level-add-subdirs-to-load-path)))))
+        (add-to-list 'load-path name))))))
+
+
+(defvar git-packages-dir
+(concat user-emacs-directory
+        (convert-standard-filename "git-packages") ) )
+
+
+(add-subfolders-to-load-path2 (expand-file-name git-packages-dir))
 
 
 

@@ -15,7 +15,7 @@
 (global-set-key (kbd "C-c C-1") 'prelude-recompile-init)
 
 
-(require 'cl)
+
 (defvar current-user
       (getenv
        (if (equal system-type 'windows-nt) "USERNAME" "USER")))
@@ -32,14 +32,10 @@
 (concat user-emacs-directory
         (convert-standard-filename "core")) )
 
-(defvar packages-dir
-(concat user-emacs-directory
-        (convert-standard-filename "packages")) )
-
 
 ;; add core's directories to Emacs's `load-path'
 (add-to-list 'load-path (expand-file-name core-dir))
-(add-to-list 'load-path (expand-file-name packages-dir))
+
 
 ;; reduce the frequency of garbage collection by making it happen on
 ;; each 50MB of allocated data (the default is on every 0.76MB)
@@ -56,11 +52,22 @@
 (setq load-prefer-newer )
 
     
-;(require 'core-look)
+(require 'core-look)
 (require 'core-feel)
 (require 'core-packages)
 
 
+
+(defvar packages-dir
+(concat user-emacs-directory
+        (convert-standard-filename "packages")) )
+
+(add-to-list 'load-path (expand-file-name packages-dir))
+
+
+(require 'pkg-theme)
+(require 'pkg-ac-complete)
+(require 'pkg-go)
 
 (when (not package-archive-contents)
   (package-refresh-contents))
@@ -69,9 +76,14 @@
 
 
 
+(require 'git-gutter)
+
+
+
+;; auto byte compile
 (require 'auto-async-byte-compile)
-(setq auto-async-byte-compile-exclude-files-regexp "/junk/")
 (add-hook 'emacs-lisp-mode-hook 'enable-auto-async-byte-compile-mode)
+
 
 ;; ;(require 'color-theme-solarized)
 ;; ;; Color theme
@@ -125,50 +137,9 @@
 ;; (setq ein:use-smartrep t)
 ;; (add-hook 'ein:connect-mode-hook 'ein:jedi-setup)
 
-;;;; go config
-;; install godef 
-; go get code.google.com/p/rog-go/exp/cmd/godef
-; go get github.com/golang/lint/golint
-; autoloadp package : auto-complete
-(autoloadp 'go-mode)
-(add-hook 'before-save-hook 'gofmt-before-save)
-(autoloadp 'go-autocomplete)
-  (add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/golang/lint/misc/emacs"))
-  (autoloadp 'golint)
-(defun my-go-mode-hook ()
-  ; Call Gofmt before saving
-  (add-hook 'before-save-hook 'gofmt-before-save)
-  ; Customize compile command to run go build
-  (if (not (string-match "go" compile-command))
-      (set (make-local-variable 'compile-command)
-           "go build -v && go test -v && go vet"))
-  ; Godef jump key binding
-  (local-set-key (kbd "M-.") 'godef-jump))
-(add-hook 'go-mode-hook 'my-go-mode-hook)
 
 
 
-(setenv "PATH"
-  ( concat 
-    "/usr/local/go/bin" ":"
-    (getenv "HOME") "/go/bin" ":"
-
-    (getenv "PATH")
-  )
-)
-
-(setenv "GOPATH"
-  ( concat 
-    (getenv "HOME") "/go" ":"
-
-    (getenv "GOPATH")
-  )
-)
-
-(add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/nsf/gocode"))
-
-
-(require 'pkg-theme)
 
 ;; (dolist (p my-packages)
 ;;   (when (not (package-installed-p p))
