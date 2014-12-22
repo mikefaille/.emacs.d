@@ -1,3 +1,4 @@
+
 ;; License:
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License
@@ -46,5 +47,5 @@ scroll-preserve-screen-position 1)
 "%b"))))
 ;; use zenburn as the default theme
 ;;(load-theme prelude-theme t)
-(provide 'core-ui)
+(provide 'core-look)
 ;;; prelude-ui.el ends here
