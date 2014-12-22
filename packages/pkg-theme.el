@@ -1,3 +1,5 @@
+(require-package 'solarized-theme)
+(require-package 'color-theme-solarized)
 (if (daemonp)
 (add-hook 'after-make-frame-functions
           '(lambda (f)
