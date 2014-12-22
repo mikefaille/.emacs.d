@@ -1,45 +1,66 @@
+;;; package --- 
+;;; Commentary:
 ;; no welcome screen
+;;; code:
 (setq inhibit-startup-message t)
 (setq inhibit-splash-screen t)
 
+(message "Loading core...")
+(defun prelude-recompile-init ()
+"Byte-compile all your dotfiles again."
+(interactive)
+
+(byte-recompile-directory user-emacs-directory 0))
+
+(global-set-key (kbd "C-c C-1") 'prelude-recompile-init)
+
+
 (require 'cl)
+(defvar current-user
+      (getenv
+       (if (equal system-type 'windows-nt) "USERNAME" "USER")))
+
+(message "Mike's .emac.d is powering up... Be patient, Master %s!" current-user)
+
+(when (version< emacs-version "24.1")
+  (error "Prelude requires at least GNU Emacs 24.1, but you're running %s" emacs-version))
+
+;; Always load newest byte code
+(setq load-prefer-newer t)
+
+(defvar core-dir
+(concat user-emacs-directory
+        (convert-standard-filename "core")) )
+
+(defvar packages-dir
+(concat user-emacs-directory
+        (convert-standard-filename "packages")) )
+
+
+;; add core's directories to Emacs's `load-path'
+(add-to-list 'load-path (expand-file-name core-dir))
+(add-to-list 'load-path (expand-file-name packages-dir))
+
+;; reduce the frequency of garbage collection by making it happen on
+;; each 50MB of allocated data (the default is on every 0.76MB)
+(setq gc-cons-threshold 50000000)
+
+;; warn when opening files bigger than 100MB
+(setq large-file-warning-threshold 100000000)
+
 
 ;; replace current selection by yank or type
 (delete-selection-mode 1)
 
 ;; Always load newest byte code
-(setq load-prefer-newer t)
-
-
-
-(defvar main-dir (file-name-directory load-file-name)
-"The root dir of the Emacs Prelude distribution.")
-(defvar core-dir (expand-file-name "core" main-dir)
-"The home of Prelude's core functionality.")
-
-
-
-;; add Prelude's directories to Emacs's `load-path'
-(add-to-list 'load-path core-dir)
-
-;(defvar main-dir (file-name-directory load-file-name)
-;"The root dir of the Emacs Prelude distribution.")
-;(defvar core-dir (expand-file-name "core" main-dir)
-;"The home of Prelude's core functionality.")
-;(add-to-list 'load-path main-dir)
+(setq load-prefer-newer )
 
     
-(autoloadp 'core-ui)
-(autoloadp 'core-packages)
-;; the core stuff
-;;(require 'core-ui)
+;(require 'core-look)
+(require 'core-feel)
+(require 'core-packages)
 
 
-(require  'package)
-(add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/"))
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
-
-(package-initialize)
 
 (when (not package-archive-contents)
   (package-refresh-contents))
@@ -47,66 +68,62 @@
 
 
 
-(defvar my-packages '(better-defaults smartparens idle-highlight-mode ido-ubiquitous find-file-in-project magit smex scpaste color-theme-solarized helm flycheck undo-tree dired-hacks-utils  yasnippet flycheck malabar-mode company company-go multiple-cursors go-mode go-autocomplete auto-complete emacs-eclim eshell-prompt-extras projectile fuzzy cl-lib deferred jedi ein ) "A list of packages to ensure are installed at launch.")
-
-
-
-
-(dolist (p my-packages)
-  (when (not (package-installed-p p))
-    (package-install p)))
-
 
 (require 'auto-async-byte-compile)
 (setq auto-async-byte-compile-exclude-files-regexp "/junk/")
 (add-hook 'emacs-lisp-mode-hook 'enable-auto-async-byte-compile-mode)
 
-;(require 'color-theme-solarized)
-;; Color theme
-(add-to-list 'load-path "~/.emacs.d/themes/solarized/")
-(require 'color-theme)
-;(require 'color-theme-solarized-dark)
-(eval-after-load "color-theme"
-  '(progn
-(color-theme-initialize)
-(color-theme-solarized-dark)))
-(setq color-theme-is-global t)
+;; ;(require 'color-theme-solarized)
+;; ;; Color theme
+;; (add-to-list 'load-path "~/.emacs.d/themes/solarized/")
+;; (require 'color-theme)
+;; ;(require 'color-theme-solarized-dark)
+;; (eval-after-load "color-theme"
+;;   '(progn
+;; (color-theme-initialize)
+;; (color-theme-solarized-dark)))
+;; (setq color-theme-is-global t)
+
+(add-to-list 'custom-theme-load-path "~/.emacs.d/elpa")
 
 
+
+
+;(require 'yasnippet)
 (require 'undo-tree)
 
 
 
 
-;; auto-complete
-(require 'auto-complete)
-(auto-complete-mode t)
-(ac-set-trigger-key "TAB")
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/dict")
-(autoloadp 'auto-complete-config)
-(ac-config-default)
-(setq-default
- ac-sources
- '(
-   ac-source-yasnippet
-   ac-source-imenu
-   ac-source-abbrev
-   ac-source-words-in-same-mode-buffers
-   ac-source-files-in-current-dir
-   ac-source-filename
-   )
-)
+;; ;; auto-complete
+;; (require 'auto-complete)
+;; (auto-complete-mode t)
+;; (ac-set-trigger-key "TAB")
+;; (add-to-list 'ac-dictionary-directories "~/.emacs.d/dict")
+;; (autoloadp 'auto-complete-config)
+;; (ac-config-default)
+;; (setq-default
+;;  ac-sources
+;;  '(
+;;    ac-source-yasnippet
+;;    ac-source-imenu
+;;    ac-source-abbrev
+;;    ac-source-words-in-same-mode-buffers
+;;    ac-source-files-in-current-dir
+;;    ac-source-filename
+;;    )
+;; )
 
 
-;; python jedi for completion
-(autoload 'jedi:setup "jedi" nil t)
-(add-hook 'python-mode-hook 'jedi:setup)
-(setq jedi:setup-keys t)
-(setq jedi:complete-on-dot t)
-(autoloadp 'ein)
-(setq ein:use-auto-complete-superpack t)
-(setq ein:use-smartrep t)
-(add-hook 'ein:connect-mode-hook 'ein:jedi-setup)
+;; ;; python jedi for completion
+;; (autoload 'jedi:setup "jedi" nil t)
+;; (add-hook 'python-mode-hook 'jedi:setup)
+;; (setq jedi:setup-keys t)
+;; (setq jedi:complete-on-dot t)
+;; (autoloadp 'ein)
+;; (setq ein:use-auto-complete-superpack t)
+;; (setq ein:use-smartrep t)
+;; (add-hook 'ein:connect-mode-hook 'ein:jedi-setup)
 
 ;;;; go config
 ;; install godef 
@@ -151,17 +168,11 @@
 (add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/nsf/gocode"))
 
 
-;; load git package
-(let ((base "~/.emacs.d/git-packages"))
- ; (add-to-list 'load-path base)
-  (dolist (f (directory-files base))
-    (let ((name f))
-      (when (and (file-directory-p name) 
-                 (not (equal f ".."))
-                 (not (equal f ".")))
-        (normal-top-level-add-subdirs-to-load-path)))))
+(require 'pkg-theme)
 
-
+;; (dolist (p my-packages)
+;;   (when (not (package-installed-p p))
+;;     (package-install)))
 
 ;; load plugins
 ;(let ((default-directory load-path))
@@ -281,10 +292,6 @@
 
 
 
-(when (fboundp 'windmove-default-keybindings)
-  (windmove-default-keybindings))
-;windmove-default-keybindings 'meta)
-
 ;; completion framework
 ;(add-hook 'after-init-hook 'global-company-mode)
 ;(autoloadp 'company)                                   ; load company mode
@@ -298,63 +305,28 @@
 ;(autoloadp 'flycheck)
 ;(flycheck-mode t)
 (add-hook 'after-init-hook #'global-flycheck-mode)
-
-;; mouse integration
-(autoloadp 'mouse) ;; needed for iterm2 compatibility
-(xterm-mouse-mode t)
-(global-set-key [mouse-4] '(lambda ()
-                           (interactive)
-                           (scroll-down 1)))
-(global-set-key [mouse-5] '(lambda ()
-                           (interactive)
-                           (scroll-up 1)))
-(global-set-key [mouse-6] '(lambda ()
-                           (interactive)
-                           (scroll-right 1)))
-(global-set-key [double-mouse-6] '(lambda ()
-                           (interactive)
-                           (scroll-right 1)))
-(global-set-key [triple-mouse-6] '(lambda ()
-                           (interactive)
-                           (scroll-right 1)))
-(global-set-key [mouse-7] '(lambda ()
-                           (interactive)
-                           (scroll-left 1)))
-(global-set-key [double-mouse-7] '(lambda ()
-                           (interactive)
-                           (scroll-left 1)))
-(global-set-key [triple-mouse-7] '(lambda ()
-                           (interactive)
-                           (scroll-left 1)))
-(setq mouse-sel-mode t)
-(defun track-mouse (e))
-;; disable bell function
-(setq ring-bell-function 'ignore)
+(setq-default flycheck-emacs-lisp-load-path 'inherit)
 
 
 
-;; emacs gnomeshell integration
-(when (daemonp)
-  (defadvice desktop-restore-file-buffer
-    (around my-desktop-restore-file-buffer-advice)
-    "Be non-interactive while starting a daemon."
-    (let ((noninteractive t))
-      ad-do-it))
-  (ad-activate 'desktop-restore-file-buffer)
-  (setq desktop-dirname             "~/.emacs.d/desktop/"
-        desktop-base-file-name      (concat (daemonp) ".desktop")
-        desktop-base-lock-name      (concat (daemonp) ".lock")
-        desktop-path                (list desktop-dirname)
-        desktop-save                t
-        desktop-files-not-to-save   "^$" ;reload tramp paths
-        desktop-load-locked-desktop t)
-  (desktop-save-mode 1))
 
+;; ;; emacs gnomeshell integration
+;; (when (daemonp)
+;;   (defadvice desktop-restore-file-buffer
+;;     (around my-desktop-restore-file-buffer-advice)
+;;     "Be non-interactive while starting a daemon."
+;;     (let ((noninteractive t))
+;;       ad-do-it))
+;;   (ad-activate 'desktop-restore-file-buffer)
+;;   (setq desktop-dirname             "~/.emacs.d/desktop/"
+;;         desktop-base-file-name      (concat (daemonp) ".desktop")
+;;         desktop-base-lock-name      (concat (daemonp) ".lock")
+;;         desktop-path                (list desktop-dirname)
+;;         desktop-save                t
+;;         desktop-files-not-to-save   "^$" ;reload tramp paths
+;;         desktop-load-locked-desktop t)
+;;   (desktop-save-mode 1))
 
-;; Tweaks for tmux's support for Ctrl+arrows
-;; http://marc-abramowitz.com/archives/2006/10/05/ctrl-left-and-ctrl-right-in-bash-and-emacs/
-(global-set-key "\M-[1;5C"    'forward-word)      ; Ctrl+right   => forward word
-(global-set-key "\M-[1;5D"    'backward-word)     ; Ctrl+left    => backward word
 
 ;
 ; Cycle through windows backwards with C-x p
@@ -390,9 +362,9 @@
 
 
 
-(autoloadp 'smex) ; Not needed if you use package.el
-(smex-initialize) ; Can be omitted. This might cause a (minimal) delay
-                  ; when Smex is auto-initialized on its first run.
+;; (autoloadp 'smex) ; Not needed if you use package.el
+;; (smex-initialize) ; Can be omitted. This might cause a (minimal) delay
+;;                   ; when Smex is auto-initialized on its first run.
 
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
@@ -404,13 +376,23 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ac-auto-show-menu 0.6)
- '(ac-trigger-key "TAB")
+
  '(ac-use-comphist t)
  '(ac-use-fuzzy t)
- '(custom-safe-themes (quote ("64581032564feda2b5f2cf389018b4b9906d98293d84d84142d90d7986032d33" "756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" default))))
+ '(ansi-color-names-vector
+   ["#262626" "#d70000" "#5f8700" "#af8700" "#0087ff" "#af005f" "#00afaf" "#626262"])
+ '(background-color nil)
+ '(background-mode dark)
+ '(cursor-color nil)
+ '(custom-safe-themes
+   (quote
+    ("fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" "64581032564feda2b5f2cf389018b4b9906d98293d84d84142d90d7986032d33" "756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" default)))
+ '(foreground-color nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+
