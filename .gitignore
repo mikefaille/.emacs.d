@@ -45,3 +45,6 @@ elpa
 auto-save-list/
 .python-environments/
 
+smex-items
+fix.sh
+ido.last
