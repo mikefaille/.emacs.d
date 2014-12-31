@@ -13,8 +13,9 @@
 (add-hook 'after-make-frame-functions
           '(lambda (f)
              (with-selected-frame f
-               (when (window-system f) (load-theme 'solarized-dark t))))
-         (color-theme-tty-dark) )
+               (when (window-system f) (color-theme-solarized-dark)))
+             ))
+          (color-theme-solarized-dark) 
 ;; can add else...
 )
 
