@@ -69,7 +69,7 @@
 (require 'pkg-go)
 (require 'pkg-ssh)
 (require 'pkg-gutter)
-
+(require 'pkg-feel)
 
 (when (not package-archive-contents)
   (package-refresh-contents))
@@ -98,7 +98,7 @@
 ;; (color-theme-solarized-dark)))
 ;; (setq color-theme-is-global t)
 
-(add-to-list 'custom-theme-load-path "~/.emacs.d/elpa")
+;;(add-to-list 'custom-theme-load-path "~/.emacs.d/elpa")
 
 
 
@@ -151,8 +151,7 @@
 ;(let ((default-directory load-path))
 ;  (normal-top-level-add-subdirs-to-load-path))
 
-(autoloadp 'smartparens-config)
-(smartparens-global-mode)
+
 
 ;; performance autoloadpment for helm
 (when (autoloadp 'dired-aux)
@@ -302,7 +301,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ac-auto-show-menu 0.6)
-
  '(ac-use-comphist t)
  '(ac-use-fuzzy t)
  '(ansi-color-names-vector
@@ -312,7 +310,7 @@
  '(cursor-color nil)
  '(custom-safe-themes
    (quote
-    ("fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" "64581032564feda2b5f2cf389018b4b9906d98293d84d84142d90d7986032d33" "756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" default)))
+    ("41b6698b5f9ab241ad6c30aea8c9f53d539e23ad4e3963abff4b57c0f8bf6730" "1affe85e8ae2667fb571fc8331e1e12840746dae5c46112d5abb0c3a973f5f5a" "e53cc4144192bb4e4ed10a3fa3e7442cae4c3d231df8822f6c02f1220a0d259a" "de2c46ed1752b0d0423cde9b6401062b67a6a1300c068d5d7f67725adc6c3afb" "1e7e097ec8cb1f8c3a912d7e1e0331caeed49fef6cff220be63bd2a6ba4cc365" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" "64581032564feda2b5f2cf389018b4b9906d98293d84d84142d90d7986032d33" "756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" default)))
  '(foreground-color nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
