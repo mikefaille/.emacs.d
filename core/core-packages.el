@@ -39,7 +39,7 @@
 (require 'package)
 (package-initialize)
 
-(defvar core-modules '(better-defaults smartparens idle-highlight-mode ido-ubiquitous find-file-in-project magit smex scpaste color-theme-solarized helm flycheck undo-tree dired-hacks-utils  yasnippet flycheck malabar-mode company company-go multiple-cursors go-mode go-autocomplete  emacs-eclim eshell-prompt-extras projectile fuzzy cl-lib deferred jedi ein git-gutter auto-async-byte-compile markdown-mode ) "A list of modules to ensure are installed at launch.")
+(defvar core-modules '(better-defaults smartparens idle-highlight-mode ido-ubiquitous find-file-in-project magit smex scpaste color-theme-solarized helm flycheck undo-tree dired-hacks-utils   flycheck malabar-mode company company-go multiple-cursors go-mode go-autocomplete  emacs-eclim eshell-prompt-extras projectile fuzzy cl-lib deferred jedi ein git-gutter auto-async-byte-compile markdown-mode ) "A list of modules to ensure are installed at launch.")
 
 (defvar-local enabled-modules '(nil) "A list of modules to ensure are installed at launch.")
 
@@ -110,6 +110,12 @@ re-downloaded in order to locate PACKAGE."
 
 (add-subfolders-to-load-path2 (expand-file-name git-packages-dir))
 
+
+(require-package 'multiple-cursors)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
 
 

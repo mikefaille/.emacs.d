@@ -51,10 +51,9 @@
 ;; Always load newest byte code
 (setq load-prefer-newer )
 
-    
+(require 'core-packages)
 (require 'core-look)
 (require 'core-feel)
-(require 'core-packages)
 
 
 
@@ -68,6 +67,9 @@
 (require 'pkg-theme)
 (require 'pkg-ac-complete)
 (require 'pkg-go)
+(require 'pkg-ssh)
+(require 'pkg-gutter)
+
 
 (when (not package-archive-contents)
   (package-refresh-contents))
@@ -76,7 +78,7 @@
 
 
 
-(require 'git-gutter)
+
 
 
 
@@ -152,12 +154,6 @@
 (autoloadp 'smartparens-config)
 (smartparens-global-mode)
 
-(autoloadp 'multiple-cursors)
-(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-
 ;; performance autoloadpment for helm
 (when (autoloadp 'dired-aux)
   (autoloadp 'dired-async))
@@ -184,14 +180,6 @@
   (winner-mode 1))
 
 
-;; yasnippet - template
-(add-hook 'prog-mode-hook
-          '(lambda ()
-             (yas-global-mode 1)))
-
-;; diminish keeps the modeline tidy
-(autoloadp 'diminish)
-
 
 ;; java
 (setq semantic-default-submodes '(global-semantic-idle-scheduler-mode
@@ -201,8 +189,6 @@
 (semantic-mode 1)
 
 
-(autoloadp 'minimap)
-
 ;; active Babel languages
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -211,30 +197,6 @@
    (plantuml . nil)
    ))
 
-(global-git-gutter-mode +1)
-(autoloadp 'git-gutter)
-
-;; If you enable global minor mode
-(global-git-gutter-mode t)
-
-;; If you would like to use git-gutter.el and linum-mode
-(git-gutter:linum-setup)
-
-;; If you enable git-gutter-mode for some modes
-(add-hook 'ruby-mode-hook 'git-gutter-mode)
-
-(global-set-key (kbd "C-x C-g") 'git-gutter:toggle)
-(global-set-key (kbd "C-x v =") 'git-gutter:popup-hunk)
-
-;; Jump to next/previous hunk
-(global-set-key (kbd "C-x p") 'git-gutter:previous-hunk)
-(global-set-key (kbd "C-x n") 'git-gutter:next-hunk)
-
-;; Stage current hunk
-(global-set-key (kbd "C-x v s") 'git-gutter:stage-hunk)
-
-;; Revert current hunk
-(global-set-key (kbd "C-x v r") 'git-gutter:revert-hunk)
 
 
 
@@ -299,13 +261,6 @@
 ;;   (desktop-save-mode 1))
 
 
-;
-; Cycle through windows backwards with C-x p
-(defun prev-window ()
-  (interactive)
-  (other-window -1))
-
-(define-key global-map (kbd "C-x p") 'prev-window)
 
 
 

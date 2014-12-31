@@ -1,7 +1,7 @@
 ;;; package --- Suma auto-complete
 
 ;;; Commentary:
-(require 'auto-complete)
+(require-package 'auto-complete)
 ;;; Code:
 
 

@@ -8,11 +8,11 @@
 (require-package 'golint)
 
 
-(autoloadp 'go-mode)
+(require-package 'go-mode)
 (add-hook 'before-save-hook 'gofmt-before-save)
-(autoloadp 'go-autocomplete)
-  (add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/golang/lint/misc/emacs"))
-  (autoloadp 'golint)
+(require-package 'go-autocomplete)
+(add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/golang/lint/misc/emacs"))
+
 (defun my-go-mode-hook ()
   ; Call Gofmt before saving
   (add-hook 'before-save-hook 'gofmt-before-save)

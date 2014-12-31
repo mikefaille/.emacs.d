@@ -1,5 +1,5 @@
 ;; mouse integration
-(autoloadp 'mouse) ;; needed for iterm2 compatibility
+(require 'mouse) ;; needed for iterm2 compatibility
 (xterm-mouse-mode t)
 (global-set-key [mouse-4] '(lambda ()
                            (interactive)
@@ -68,7 +68,6 @@
   (other-window -1))
 
 (define-key global-map (kbd "C-x p") 'prev-window)
-
 
 
 
