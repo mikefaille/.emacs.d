@@ -32,13 +32,21 @@
 (setq load-prefer-newer t)
 
 (defvar core-dir
-(concat user-emacs-directory
-        (convert-standard-filename "core")) )
+  (concat user-emacs-directory
+          (convert-standard-filename "core")) )
+
+
+(defvar main-savefile-dir
+  (concat user-emacs-directory
+          (convert-standard-filename "savefile")) )
 
 
 ;; add core's directories to Emacs's `load-path'
 (add-to-list 'load-path (expand-file-name core-dir))
 
+
+(unless (file-exists-p main-savefile-dir)
+(make-directory main-savefile-dir))
 
 ;; reduce the frequency of garbage collection by making it happen on
 ;; each 50MB of allocated data (the default is on every 0.76MB)
@@ -50,6 +58,11 @@
 
 ;; replace current selection by yank or type
 (delete-selection-mode 1)
+
+;(defvar main-savefile-dir
+;(concat user-emacs-directory
+;        (convert-standard-filename "savefile")) )
+
 
 ;; Always load newest byte code
 (setq load-prefer-newer )
@@ -75,7 +88,9 @@
 (require 'pkg-feel)
 (require 'pkg-python)
 (require 'pkg-latex)
+;(require 'main-editor)
 ;; (require 'pkg-gnome)
+(require 'main-custom)
 
 (when (not package-archive-contents)
   (package-refresh-contents))
@@ -201,13 +216,14 @@
 
 ;; (autoloadp 'smex) ; Not needed if you use package.el
 ;; (smex-initialize) ; Can be omitted. This might cause a (minimal) delay
-;;                   ; when Smex is auto-initialized on its first run.
-
+;;                   ; when Smex is auto-initialized on its first 
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
+
 ;; This is your old M-x.
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 (custom-set-variables
+
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
