@@ -4,10 +4,8 @@
 (require-package 'auto-complete)
 ;;; Code:
 
-
-(defvar-local local-packages '(better-defaults smartparens idle-highlight-mode ido-ubiquitous find-file-in-project magit smex scpaste color-theme-solarized helm flycheck undo-tree dired-hacks-utils  yasnippet flycheck malabar-mode company company-go multiple-cursors go-mode go-autocomplete auto-complete emacs-eclim eshell-prompt-extras projectile fuzzy cl-lib deferred jedi ein ) "A list of packages to ensure are installed at launch.")
-
-
+;; auto-complete latex
+(require-package 'auto-complete-auctex)
 
 (auto-complete-mode t)
 (ac-set-trigger-key "TAB")

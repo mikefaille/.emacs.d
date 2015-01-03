@@ -6,6 +6,9 @@
 (setq inhibit-splash-screen t)
 
 (message "Loading core...")
+
+
+;; recompile all from prelude
 (defun prelude-recompile-init ()
 "Byte-compile all your dotfiles again."
 (interactive)
@@ -54,7 +57,7 @@
 (require 'core-packages)
 (require 'core-look)
 (require 'core-feel)
-
+(require 'core-org)
 
 
 (defvar packages-dir
@@ -70,6 +73,9 @@
 (require 'pkg-ssh)
 (require 'pkg-gutter)
 (require 'pkg-feel)
+(require 'pkg-python)
+(require 'pkg-latex)
+;; (require 'pkg-gnome)
 
 (when (not package-archive-contents)
   (package-refresh-contents))
@@ -79,7 +85,7 @@
 
 
 
-
+(add-to-list 'auto-mode-alist '("\\.log\\'" . auto-revert-mode))
 
 
 ;; auto byte compile
@@ -87,7 +93,7 @@
 (add-hook 'emacs-lisp-mode-hook 'enable-auto-async-byte-compile-mode)
 
 
-;; ;(require 'color-theme-solarized)
+;; ;(require 'color-theme-solarized)l
 ;; ;; Color theme
 ;; (add-to-list 'load-path "~/.emacs.d/themes/solarized/")
 ;; (require 'color-theme)
@@ -106,75 +112,6 @@
 ;(require 'yasnippet)
 (require 'undo-tree)
 
-
-
-
-;; ;; auto-complete
-;; (require 'auto-complete)
-;; (auto-complete-mode t)
-;; (ac-set-trigger-key "TAB")
-;; (add-to-list 'ac-dictionary-directories "~/.emacs.d/dict")
-;; (autoloadp 'auto-complete-config)
-;; (ac-config-default)
-;; (setq-default
-;;  ac-sources
-;;  '(
-;;    ac-source-yasnippet
-;;    ac-source-imenu
-;;    ac-source-abbrev
-;;    ac-source-words-in-same-mode-buffers
-;;    ac-source-files-in-current-dir
-;;    ac-source-filename
-;;    )
-;; )
-
-
-;; ;; python jedi for completion
-;; (autoload 'jedi:setup "jedi" nil t)
-;; (add-hook 'python-mode-hook 'jedi:setup)
-;; (setq jedi:setup-keys t)
-;; (setq jedi:complete-on-dot t)
-;; (autoloadp 'ein)
-;; (setq ein:use-auto-complete-superpack t)
-;; (setq ein:use-smartrep t)
-;; (add-hook 'ein:connect-mode-hook 'ein:jedi-setup)
-
-
-
-
-
-;; (dolist (p my-packages)
-;;   (when (not (package-installed-p p))
-;;     (package-install)))
-
-;; load plugins
-;(let ((default-directory load-path))
-;  (normal-top-level-add-subdirs-to-load-path))
-
-
-
-;; performance autoloadpment for helm
-(when (autoloadp 'dired-aux)
-  (autoloadp 'dired-async))
-
-
-
-
-;; init helm - a completion tool
-;;(autoloadp 'helm)
-;(autoloadp 'helm-config)
-;(helm-mode)
-
-
-;;  Interactively do things is a very convenient way to find files and switch buffers.
-;ido-mode)
-;ido-everywhere 1)
-
-
-;; relative numbering
-;;(linum-on)
-
-;; Windows configs undo/redo
 (when (fboundp 'winner-mode)
   (winner-mode 1))
 
@@ -187,14 +124,6 @@
                                   global-semantic-mru-bookmark-mode))
 (semantic-mode 1)
 
-
-;; active Babel languages
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((sh . t)
-   (python . nil)
-   (plantuml . nil)
-   ))
 
 
 
@@ -241,23 +170,6 @@
 
 
 
-
-;; ;; emacs gnomeshell integration
-;; (when (daemonp)
-;;   (defadvice desktop-restore-file-buffer
-;;     (around my-desktop-restore-file-buffer-advice)
-;;     "Be non-interactive while starting a daemon."
-;;     (let ((noninteractive t))
-;;       ad-do-it))
-;;   (ad-activate 'desktop-restore-file-buffer)
-;;   (setq desktop-dirname             "~/.emacs.d/desktop/"
-;;         desktop-base-file-name      (concat (daemonp) ".desktop")
-;;         desktop-base-lock-name      (concat (daemonp) ".lock")
-;;         desktop-path                (list desktop-dirname)
-;;         desktop-save                t
-;;         desktop-files-not-to-save   "^$" ;reload tramp paths
-;;         desktop-load-locked-desktop t)
-;;   (desktop-save-mode 1))
 
 
 
@@ -316,7 +228,8 @@
  '(custom-safe-themes
    (quote
     ("ae8d0f1f36460f3705b583970188e4fbb145805b7accce0adb41031d99bd2580" "f41fd682a3cd1e16796068a2ca96e82cfd274e58b978156da0acce4d56f2b0d5" "978ff9496928cc94639cb1084004bf64235c5c7fb0cfbcc38a3871eb95fa88f6" "51bea7765ddaee2aac2983fac8099ec7d62dff47b708aa3595ad29899e9e9e44" "405fda54905200f202dd2e6ccbf94c1b7cc1312671894bc8eca7e6ec9e8a41a2" "9bac44c2b4dfbb723906b8c491ec06801feb57aa60448d047dbfdbd1a8650897" "41b6698b5f9ab241ad6c30aea8c9f53d539e23ad4e3963abff4b57c0f8bf6730" "1affe85e8ae2667fb571fc8331e1e12840746dae5c46112d5abb0c3a973f5f5a" "e53cc4144192bb4e4ed10a3fa3e7442cae4c3d231df8822f6c02f1220a0d259a" "de2c46ed1752b0d0423cde9b6401062b67a6a1300c068d5d7f67725adc6c3afb" "1e7e097ec8cb1f8c3a912d7e1e0331caeed49fef6cff220be63bd2a6ba4cc365" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" "64581032564feda2b5f2cf389018b4b9906d98293d84d84142d90d7986032d33" "756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" default)))
- '(foreground-color nil))
+ '(foreground-color nil)
+ '(pdf-latex-command "xelatex"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

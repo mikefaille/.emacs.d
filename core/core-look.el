@@ -49,10 +49,6 @@ scroll-preserve-screen-position 1)
 ;;(load-theme prelude-theme t)
 
 
-;; diminish keeps the modeline tidy
-(require-package 'diminish)
-(require-package 'minimap)
-
 (provide 'core-look)
 ;;; prelude-ui.el ends here
 
