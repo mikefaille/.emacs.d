@@ -1,17 +1,88 @@
+;;; main-editor.el --- Emacs Main: enhanced core editing experience.
+;;
+;; Copyright © 2011-2014 Bozhidar Batsov
+;;
+;; Author: Bozhidar Batsov <bozhidar@batsov.com>
+;; URL: https://github.com/bbatsov/prelude
+;; Version: 1.0.0
+;; Keywords: convenience
+;; This file is not part of GNU Emacs.
+;;; Commentary:
+;; Refinements of the core editing experience in Emacs.
+;;; License:
+;; This program is free software; you can redistribute it and/or
+;; modify it under the terms of the GNU General Public License
+;; as published by the Free Software Foundation; either version 3
+;; of the License, or (at your option) any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with GNU Emacs; see the file COPYING. If not, write to the
+;; Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+;; Boston, MA 02110-1301, USA.
+;;; Code:
+
+;;  Death to the tabs! However, tabs historically indent to the next
+;; 8-character offset; specifying anything else will cause *mass*
+;; confusion, as it will change the appearance of every existing file.
+;; In some cases (python), even worse -- it will change the semantics
+;; (meaning) of the program.
+;;
+;; Emacs modes typically provide a standard means to change the
+;; indentation width -- eg. c-basic-offset: use that to adjust your
+;; personal indentation width, while maintaining the style (and
+;; meaning) of any files you load.
+(setq-default indent-tabs-mode nil) ;; don't use tabs to indent
+(setq-default tab-width 8) ;; but maintain correct appearance
+
+;; Newline at end of file
+(setq require-final-newline t)
+
+;; delete the selection with a keypress
+(delete-selection-mode t)
+
+;; store all backup and autosave files in the tmp dir
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+
+;; autosave the undo-tree history
+(setq undo-tree-history-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq undo-tree-auto-save-history t)
+
+;; revert buffers automatically when underlying files are changed externally
+(global-auto-revert-mode t)
+
+;; hippie expand is dabbrev expand on steroids
+(setq hippie-expand-try-functions-list '(try-expand-dabbrev
+                                         try-expand-dabbrev-all-buffers
+                                         try-expand-dabbrev-from-kill
+                                         try-complete-file-name-partially
+                                         try-complete-file-name
+                                         try-expand-all-abbrevs
+                                         try-expand-list
+                                         try-expand-line
+                                         try-complete-lisp-symbol-partially
+                                         try-complete-lisp-symbol))
+
+
+;; smart tab behavior - indent or complete
+(setq tab-always-indent 'complete)
+
+
+
+
+;; disable annoying blink-matching-paren
+(setq blink-matching-paren nil)
+
 ;; diminish keeps the modeline tidy
-(require-package 'diminish)
-(require-package 'minimap)
-
-
-
-(require-package 'smartparens)
-(autoloadp 'smartparens-config)
-(smartparens-global-mode)
-(setq sp-base-key-bindings 'paredit)
-(setq sp-autoskip-closing-pair 'always)
-(setq sp-hybrid-kill-entire-symbol nil)
-(show-smartparens-global-mode +1)
-
+(require 'diminish)
 
 ;; meaningful names for buffers with the same name
 (require 'uniquify)
@@ -20,15 +91,12 @@
 (setq uniquify-after-kill-buffer-p t) ; rename after killing uniquified
 (setq uniquify-ignore-buffers-re "^\\*") ; don't muck with special buffers
 
-
 ;; saveplace remembers your location in a file when saving files
 (require 'saveplace)
 (setq save-place-file (expand-file-name "saveplace" main-savefile-dir))
 
-
 ;; activate it for all buffers
 (setq-default save-place t)
-
 
 ;; savehist keeps track of some history
 (require 'savehist)
@@ -43,18 +111,6 @@
       ;; keep the home clean
       savehist-file (expand-file-name "savehist" main-savefile-dir))
 (savehist-mode +1)
-
-;; hippie expand is dabbrev expand on steroids
-(setq hippie-expand-try-functions-list '(try-expand-dabbrev
-                                         try-expand-dabbrev-all-buffers
-                                         try-expand-dabbrev-from-kill
-                                         try-complete-file-name-partially
-                                         try-complete-file-name
-                                         try-expand-all-abbrevs
-                                         try-expand-list
-                                         try-expand-line
-                                         try-complete-lisp-symbol-partially
-                                         try-complete-lisp-symbol))
 
 ;; save recent files
 (require 'recentf)
@@ -73,7 +129,6 @@
               (string-prefix-p dir file-dir))
             (mapcar 'file-truename (list main-savefile-dir package-user-dir)))))
 (add-to-list 'recentf-exclude 'main-recentf-exclude-p)
-
 
 ;; ignore magit's commit message files
 (add-to-list 'recentf-exclude "COMMIT_EDITMSG\\'")
@@ -101,7 +156,6 @@ The body of the advice is in BODY."
                     ,@body))
                commands)))
 
-
 ;; advise all window switching functions
 (advise-commands "auto-save"
                  (switch-to-buffer other-window windmove-up windmove-down windmove-left windmove-right)
@@ -119,8 +173,7 @@ The body of the advice is in BODY."
 ;; highlight the current line
 (global-hl-line-mode +1)
 (require-package 'volatile-highlights)
-(require 'volatile-highlights)
-(volatile-highlights-mode t)
+(volatile-highlights t)
 (diminish 'volatile-highlights-mode)
 
 ;; note - this should be after volatile-highlights is required
@@ -172,7 +225,7 @@ The body of the advice is in BODY."
 
 ;; enable erase-buffer command
 (put 'erase-buffer 'disabled nil)
-(require-package 'expand-region)
+(require 'expand-region)
 
 ;; bookmarks
 (require 'bookmark)
@@ -180,17 +233,14 @@ The body of the advice is in BODY."
       bookmark-save-flag 1)
 
 ;; projectile is a project management mode
-(require-package 'projectile)
+(require 'projectile)
 (setq projectile-cache-file (expand-file-name "projectile.cache" main-savefile-dir))
 (projectile-global-mode t)
 
 ;; anzu-mode enhances isearch & query-replace by showing total matches and current match position
 (require-package 'anzu)
-
-(anzu-mode +1)
-
 (diminish 'anzu-mode)
-(global-anzu-mode +1)
+(global-anzu-mode)
 (global-set-key (kbd "M-%") 'anzu-query-replace)
 (global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp)
 
@@ -206,7 +256,7 @@ The body of the advice is in BODY."
 (setq dired-dwim-target t)
 
 ;; enable some really cool extensions like C-x C-j(dired-jump)
-(require 'dired-x)
+(require-package 'dired-x)
 
 ;; ediff - don't start another frame
 (require 'ediff)
@@ -216,7 +266,7 @@ The body of the advice is in BODY."
 (require 'midnight)
 
 ;; smarter kill-ring navigation
-(require-package 'browse-kill-ring)
+(require 'browse-kill-ring)
 (browse-kill-ring-default-keybindings)
 (global-set-key (kbd "s-y") 'browse-kill-ring)
 (defadvice exchange-point-and-mark (before deactivate-mark activate compile)
@@ -294,8 +344,8 @@ indent yanked text (with prefix arg don't indent)."
 (require 'ansi-color)
 (add-hook 'compilation-filter-hook #'main-colorize-compilation-buffer)
 
-;; ;; enable Main's keybindings
-;; (main-global-mode t)
+;; enable Main's keybindings
+(main-global-mode t)
 
 ;; sensible undo
 (global-undo-tree-mode)
@@ -304,21 +354,16 @@ indent yanked text (with prefix arg don't indent)."
 ;; enable winner-mode to manage window configurations
 (winner-mode +1)
 
-;; ;; diff-hl
-;; (global-diff-hl-mode +1)
-;; (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
-
+;; diff-hl
+(global-diff-hl-mode +1)
+(add-hook 'dired-mode-hook 'diff-hl-dired-mode)
 
 ;; easy-kill
-(require-package 'easy-kill)
 (global-set-key [remap kill-ring-save] 'easy-kill)
 (global-set-key [remap mark-sexp] 'easy-mark)
 
 ;; operate-on-number
-(require-package 'operate-on-number)
-
-(require-package 'smartrep)
-(require 'smartrep)
+(require 'operate-on-number)
 (smartrep-define-key global-map "C-c ."
 '(("+" . apply-operation-to-number-at-point)
 ("-" . apply-operation-to-number-at-point)
@@ -347,6 +392,6 @@ and file 'filename' will be opened and cursor set on line 'linenumber'"
 (cons (string-to-number (match-string 2 name))
 (string-to-number (or (match-string 3 name) ""))))
 fn))) files)))
+(provide 'main-editor)
 
-
-(provide 'pkg-feel)
+;;; main-editor.el ends here
