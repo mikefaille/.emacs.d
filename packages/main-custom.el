@@ -85,10 +85,10 @@ Only modes that don't derive from `prog-mode' should be listed here."
 :type 'number
 :group 'main)
 
-(defcustom main-theme 'zenburn
-"The default color theme, change this in your /personal/preload config."
-:type 'symbol
-:group 'main)
+;; (defcustom main-theme 'zenburn
+;; "The default color theme, change this in your /personal/preload config."
+;; :type 'symbol
+;; :group 'main)
 
 (provide 'main-custom)
 ;;; main-custom.el ends here
