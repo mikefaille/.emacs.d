@@ -2,6 +2,9 @@
 (require-package 'diminish)
 (require-package 'minimap)
 
+(defvar main-savefile-dir
+  (concat user-emacs-directory
+          (convert-standard-filename "savefile")) )
 
 
 (require-package 'smartparens)
