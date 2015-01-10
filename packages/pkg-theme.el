@@ -10,7 +10,7 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/elpa")
 ;(set-background-color "black")
 
-;(lambda (frame) (set-frame-parameter frame 'background-mode dark) t)
+;; (lambda (frame) (set-frame-parameter frame 'background-mode dark) t)
 ;; (add-hook 'after-make-frame-functions
 ;;           (lambda (frame)
 ;;             (set-frame-parameter frame
@@ -49,13 +49,13 @@
 ;; ;; can add else...
 ;; ))
 
-;; (add-hook 'after-make-frame-functions
-;;           (lambda (frame)
-;;             (set-frame-parameter frame
-;;                                  'background-mode
-;;                                  (if (display-graphic-p frame) 'light 'dark))
-;;             (enable-theme 'solarized-dark))
-;; )
+(add-hook 'after-make-frame-functions
+          (lambda (frame)
+            (set-frame-parameter frame
+                                 'background-mode
+                                  'dark)
+            (enable-theme 'solarized))
+ )
 (set-background-color "black")
 (load-theme 'solarized)
 (provide 'pkg-theme)
