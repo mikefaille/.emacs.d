@@ -39,7 +39,7 @@
 (require 'package)
 (package-initialize)
 
-(defvar core-modules '(better-defaults smartparens idle-highlight-mode ido-ubiquitous find-file-in-project magit smex scpaste  helm flycheck undo-tree dired-hacks-utils   flycheck malabar-mode company company-go multiple-cursors go-mode go-autocomplete  emacs-eclim eshell-prompt-extras projectile fuzzy cl-lib deferred jedi ein git-gutter auto-async-byte-compile markdown-mode ) "A list of modules to ensure are installed at launch.")
+(defvar core-modules '(better-defaults smartparens idle-highlight-mode ido-ubiquitous find-file-in-project magit smex scpaste  helm flycheck undo-tree dired-hacks-utils   flycheck malabar-mode company company-go multiple-cursors go-mode go-autocomplete  emacs-eclim eshell-prompt-extras projectile fuzzy cl-lib deferred jedi ein git-gutter auto-async-byte-compile markdown-mode async ) "A list of modules to ensure are installed at launch.")
 
 (defvar-local enabled-modules '(nil) "A list of modules to ensure are installed at launch.")
 
