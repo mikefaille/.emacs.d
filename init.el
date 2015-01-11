@@ -91,6 +91,10 @@
 ;(require 'main-editor)
 ;; (require 'pkg-gnome)
 (require 'main-custom)
+(require 'pkg-docker)
+(require 'yaml-mode)
+(require 'pkg-php)
+
 
 (when (not package-archive-contents)
   (package-refresh-contents))
