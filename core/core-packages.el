@@ -1,8 +1,8 @@
 ;;; core-packages.el --- 
 
-;; Copyright © 2011-2014 Bozhidar Batsov <bozhidar@batsov.com>
-;; Author: Bozhidar Batsov <bozhidar@batsov.com>
-;; URL: https://github.com/bbatsov/projectile
+;; Copyright © 2015 Michael Faille <michael@faille.io>
+;; Author: 
+;; URL: https://github.com/mikefaille/.emacs.d
 ;; Keywords: project, convenience
 ;; Version: 0.11.0
 ;; Package-Requires: ((s "1.6.0") (f "0.17.1") (dash "1.5.0") (pkg-info "0.4"))
