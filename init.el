@@ -81,6 +81,7 @@
 
 
 
+
 (require 'pkg-ac-complete)
 (require 'pkg-go)
 (require 'pkg-ssh)
@@ -94,7 +95,9 @@
 (require 'pkg-docker)
 (require 'yaml-mode)
 (require 'pkg-php)
+(require 'go-autocomplete)
 
+(define-key ac-mode-map (kbd "TAB") 'auto-complete)
 
 (when (not package-archive-contents)
   (package-refresh-contents))
