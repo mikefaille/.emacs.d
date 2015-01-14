@@ -43,8 +43,17 @@
   )
 )
 
-(add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/nsf/gocode"))
+(add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/nsf/gocode/emacs"))
+(require 'go-autocomplete)
 
+;; wget https://github.com/golang/tools/blob/master/cmd/oracle/oracle.el
+;; install golang-googlecode-tools-oracle.x86_64
+(require 'oracle)
+
+(require-package 'exec-path-from-shell)
+(exec-path-from-shell-initialize)
+(add-to-list 'exec-path (exec-path-from-shell-copy-env "GOPATH"))
+;;(exec-path-from-shell-copy-env "GOPAT")
 ;(executable-interpret "go get github.com/golang/lint/golint")
 
 ;;(executable-interpret "go get github.com/kisielk/errcheck")
