@@ -44,7 +44,7 @@
 )
 
 (add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/nsf/gocode/emacs"))
-(require 'go-autocomplete)
+
 
 ;; wget https://github.com/golang/tools/blob/master/cmd/oracle/oracle.el
 ;; install golang-googlecode-tools-oracle.x86_64
