@@ -76,31 +76,31 @@
 
 (eval-after-load 'go-mode
   '(progn
-     (defun prelude-go-mode-defaults ()
-       ;; Add to default go-mode key bindings
-       (let ((map go-mode-map))
-         (define-key map (kbd "C-c a") 'go-test-current-project) ;; current package, really
-         (define-key map (kbd "C-c m") 'go-test-current-file)
-         (define-key map (kbd "C-c .") 'go-test-current-test)
-         (define-key map (kbd "C-c b") 'go-run)
-         (define-key map (kbd "C-h f") 'godoc-at-point))
-       ;; Prefer goimports to gofmt if installed
-       (let ((goimports (executable-find "goimports")))
-         (when goimports
-           (setq gofmt-command goimports)))
-     
-     
-       ;; stop whitespace being highlighted
-       (whitespace-toggle-options '(tabs))
 
-       ;; El-doc for Go
+     ;; Add to default go-mode key bindings
+     (let ((map go-mode-map))
+       (define-key map (kbd "C-c a") 'go-test-current-project) ;; current package, really
+       (define-key map (kbd "C-c m") 'go-test-current-file)
+       (define-key map (kbd "C-c .") 'go-test-current-test)
+       (define-key map (kbd "C-c b") 'go-run)
+       (define-key map (kbd "C-h f") 'godoc-at-point))
+     ;; Prefer goimports to gofmt if installed
+     (let ((goimports (executable-find "goimports")))
+       (when goimports
+         (setq gofmt-command goimports)))
+     
+     
+     ;; stop whitespace being highlighted
+     (whitespace-toggle-options '(tabs))
+     
+     ;; El-doc for Go
        (go-eldoc-setup)
-
-
+       
+       
 
        (add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/golang/lint/misc/emacs"))
-
-
+       
+       
        ;; Customize compile command to run go build
        (defun my-go-mode-hook ()
 
@@ -114,16 +114,16 @@
                                         ; Godef jump key binding
          (local-set-key (kbd "M-.") 'godef-jump))
        (add-hook 'go-mode-hook 'my-go-mode-hook)
-
        
-
-     ;; Enable go-oracle-mode if available
-     (let ((oracle (executable-find "oracle")))
-       (when oracle
+       
+       
+       ;; Enable go-oracle-mode if available
+       (let ((oracle (executable-find "oracle")))
+         (when oracle
          (setq go-oracle-command oracle)
          (autoload 'go-oracle-mode "oracle")
          (add-hook 'go-mode-hook 'go-oracle-mode))))
-     )
   )
+
 
 (provide 'pkg-go)
