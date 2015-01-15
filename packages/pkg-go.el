@@ -14,11 +14,8 @@
 (require-package 'golint)
 (require-package 'go-eldoc)
 (require-package 'go-projectile)
-
-(require-package 'go-mode)
-(add-hook 'before-save-hook 'gofmt-before-save)
 (require-package 'go-autocomplete)
-(add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/golang/lint/misc/emacs"))
+(require-package 'go-mode)
 
 ;; eldoc for go
 (require 'go-eldoc) ;; Don't need to require, if you install by package.el
@@ -59,19 +56,6 @@
 
 (add-hook 'before-save-hook 'gofmt-before-save)
 
-;; Customize compile command to run go build
-(defun my-go-mode-hook ()
-
-                                        ; Use goimports instead of go-fmt
-  (setq gofmt-command "goimports")                                      ; Call Gofmt before saving
-  (add-hook 'before-save-hook 'gofmt-before-save)
-                                        ; Customize compile command to run go build
-  (if (not (string-match "go" compile-command))
-      (set (make-local-variable 'compile-command)
-           "go build -v && go test -v && go vet"))
-                                        ; Godef jump key binding
-  (local-set-key (kbd "M-.") 'godef-jump))
-(add-hook 'go-mode-hook 'my-go-mode-hook)
 
 ;(require-package go-errcheck)
 ;;(executable-interpret "go get github.com/kisielk/errcheck")
@@ -89,5 +73,57 @@
                           (local-set-key (kbd "C-c i") 'go-goto-imports)))
 
 
+
+(eval-after-load 'go-mode
+  '(progn
+     (defun prelude-go-mode-defaults ()
+       ;; Add to default go-mode key bindings
+       (let ((map go-mode-map))
+         (define-key map (kbd "C-c a") 'go-test-current-project) ;; current package, really
+         (define-key map (kbd "C-c m") 'go-test-current-file)
+         (define-key map (kbd "C-c .") 'go-test-current-test)
+         (define-key map (kbd "C-c b") 'go-run)
+         (define-key map (kbd "C-h f") 'godoc-at-point))
+       ;; Prefer goimports to gofmt if installed
+       (let ((goimports (executable-find "goimports")))
+         (when goimports
+           (setq gofmt-command goimports)))
+     
+     
+       ;; stop whitespace being highlighted
+       (whitespace-toggle-options '(tabs))
+
+       ;; El-doc for Go
+       (go-eldoc-setup)
+
+
+
+       (add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/golang/lint/misc/emacs"))
+
+
+       ;; Customize compile command to run go build
+       (defun my-go-mode-hook ()
+
+                                        ; Use goimports instead of go-fmt
+         (setq gofmt-command "goimports")                                      ; Call Gofmt before saving
+         (add-hook 'before-save-hook 'gofmt-before-save)
+                                        ; Customize compile command to run go build
+         (if (not (string-match "go" compile-command))
+             (set (make-local-variable 'compile-command)
+                  "go build -v && go test -v && go vet"))
+                                        ; Godef jump key binding
+         (local-set-key (kbd "M-.") 'godef-jump))
+       (add-hook 'go-mode-hook 'my-go-mode-hook)
+
+       
+
+     ;; Enable go-oracle-mode if available
+     (let ((oracle (executable-find "oracle")))
+       (when oracle
+         (setq go-oracle-command oracle)
+         (autoload 'go-oracle-mode "oracle")
+         (add-hook 'go-mode-hook 'go-oracle-mode))))
+     )
+  )
 
 (provide 'pkg-go)
