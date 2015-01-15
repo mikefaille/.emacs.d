@@ -15,6 +15,15 @@
 (setq sp-hybrid-kill-entire-symbol nil)
 (show-smartparens-global-mode +1)
 
+;; super ido
+(require-package 'flx-ido)
+(flx-ido-mode 1)
+
+(require-package 'flx-isearch)
+(flx-isearch-mode)
+(global-set-key (kbd "C-M-s") #'flx-isearch-forward)
+(global-set-key (kbd "C-M-r") #'flx-isearch-backward)
+
 
 ;; meaningful names for buffers with the same name
 (require 'uniquify)
