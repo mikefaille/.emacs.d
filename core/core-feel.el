@@ -1,5 +1,28 @@
 ;; mouse integration
 (require 'mouse) ;; needed for iterm2 compatibility
+
+
+(ido-mode 1)
+(ido-everywhere 1)
+
+;; disable ido faces to see flx highlights.
+(setq ido-enable-flex-matching t)
+(setq ido-use-faces t)
+;; https://github.com/lewang/flx
+(setq gc-cons-threshold 20000000)
+
+
+
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+;(ido-mode 1)
+(setq ido-use-filename-at-point 'guess)
+(setq ido-create-new-buffer 'always)
+(require 'ido)
+;(ido-mode 'buffers) ;; only use this line to turn off ido for file names!
+(setq ido-ignore-buffers '("^ " "*Completions*" "*Shell Command Output*"
+                           "*Messages*" "Async Shell Command"))
+
 (xterm-mouse-mode t)
 (global-set-key [mouse-4] '(lambda ()
                            (interactive)
