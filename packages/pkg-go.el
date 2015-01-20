@@ -17,10 +17,6 @@
 (require-package 'go-autocomplete)
 (require-package 'go-mode)
 
-;; eldoc for go
-(require 'go-eldoc) ;; Don't need to require, if you install by package.el
-(add-hook 'go-mode-hook 'go-eldoc-setup)
-
 
 (setenv "PATH"
   ( concat 
@@ -59,7 +55,8 @@
 (require-package 'exec-path-from-shell)
 ;;(exe)
 ;;(exec-path-from-shell-initialize)
-(add-to-list 'exec-path (exec-path-from-shell-copy-env "GOPATH"))
+(add-to-list 'exec-path (concat
+                         (exec-path-from-shell-copy-env "GOPATH") "/bin"))
 ;;(exec-path-from-shell-copy-env "GOPAT")
 ;(executable-interpret "go get github.com/golang/lint/golint")
 
@@ -82,6 +79,10 @@
 (add-hook 'go-mode-hook (lambda ()
                           (local-set-key (kbd "C-c i") 'go-goto-imports)))
 
+;; eldoc for go
+(package-install 'go-eldoc) ;; Don't need to require, if you install by package.el
+(add-hook 'go-mode-hook 'go-eldoc-setup)
+
 
 
 (eval-after-load 'go-mode
@@ -102,9 +103,9 @@
      
      ;; stop whitespace being highlighted
      (whitespace-toggle-options '(tabs))
+
      
-     ;; El-doc for Go
-       (go-eldoc-setup)
+
 
        (add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/golang/lint/misc/emacs"))
        ;; Customize compile command to run go build
