@@ -96,6 +96,7 @@
 (require 'yaml-mode)
 (require 'pkg-php)
 (require 'go-autocomplete)
+(require 'pkg-org)
 
 (define-key ac-mode-map (kbd "TAB") 'auto-complete)
 
