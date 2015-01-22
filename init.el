@@ -97,8 +97,10 @@
 (require 'pkg-php)
 (require 'go-autocomplete)
 (require 'pkg-org)
+(require 'pkg-yas)
 
-(define-key ac-mode-map (kbd "TAB") 'auto-complete)
+
+
 
 (when (not package-archive-contents)
   (package-refresh-contents))

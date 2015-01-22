@@ -197,5 +197,7 @@
 (add-hook 'go-mode-hook #'(lambda ()
                            (add-to-list 'ac-sources 'ac-source-go)))
 
+(define-key ac-mode-map (kbd "TAB") 'auto-complete)
+
 (provide 'go-autocomplete)
 ;;; go-autocomplete.el ends here
