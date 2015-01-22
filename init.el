@@ -93,7 +93,7 @@
 ;; (require 'pkg-gnome)
 (require 'main-custom)
 (require 'pkg-docker)
-(require 'yaml-mode)
+(require 'pkg-yaml)
 (require 'pkg-php)
 (require 'go-autocomplete)
 (require 'pkg-org)
