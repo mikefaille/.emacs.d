@@ -1,4 +1,4 @@
-(require-package 'yasnippet-bundle)
+(require-package 'yasnippet)
 
 
 ;; yasnippet - template

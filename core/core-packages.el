@@ -79,7 +79,10 @@ re-downloaded in order to locate PACKAGE."
   ; install the missing packages
   (dolist (module modules-list )
       (require-package module)      
-      (package-install module))) 
+;      (package-install module)
+
+
+)) 
 (module-list-install core-modules)
 
 
