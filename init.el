@@ -67,6 +67,7 @@
 ;; Always load newest byte code
 (setq load-prefer-newer )
 
+(require 'eieio)
 (require 'core-packages)
 (require 'core-look)
 (require 'core-feel)
@@ -87,6 +88,7 @@
 (require 'pkg-ssh)
 (require 'pkg-gutter)
 (require 'pkg-feel)
+(require 'pkg-yas)
 (require 'pkg-python)
 (require 'pkg-latex)
 ;(require 'main-editor)
@@ -97,7 +99,7 @@
 (require 'pkg-php)
 (require 'go-autocomplete)
 (require 'pkg-org)
-(require 'pkg-yas)
+
 
 
 
@@ -141,6 +143,8 @@
   (winner-mode 1))
 
 
+
+ 
 
 ;; java
 (setq semantic-default-submodes '(global-semantic-idle-scheduler-mode

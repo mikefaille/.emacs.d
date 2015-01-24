@@ -12,7 +12,7 @@
 
 ;; go lint
 (require-package 'golint)
-(require-package 'go-eldoc)
+
 (require-package 'go-projectile)
 (require-package 'go-autocomplete)
 (require-package 'go-mode)
@@ -80,7 +80,7 @@
                           (local-set-key (kbd "C-c i") 'go-goto-imports)))
 
 ;; eldoc for go
-(package-install 'go-eldoc) ;; Don't need to require, if you install by package.el
+(require-package 'go-eldoc)
 (add-hook 'go-mode-hook 'go-eldoc-setup)
 
 
