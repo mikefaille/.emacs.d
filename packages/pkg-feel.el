@@ -95,6 +95,11 @@
 (require 'windmove)
 (windmove-default-keybindings)
 
+(defcustom prelude-auto-save t
+"Non-nil values enable Prelude's auto save."
+:type 'boolean
+:group 'prelude)
+
 ;; automatically save buffers associated with files on buffer switch
 ;; and on windows switch
 (defun main-auto-save-command ()
