@@ -3,6 +3,10 @@
 (require-package 'projectile)
 (require-package 'go-projectile)
 
+;(require 'go-projectile)
+(require 'go-projectile-autoloads)
+
+
 (projectile-global-mode)
 
 

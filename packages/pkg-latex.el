@@ -41,6 +41,7 @@
       :help "Run Latexmk on file")
     TeX-command-list)))
 
+(setq pdf-latex-command "xelatex")
 
 ;; AUCTeX configuration
 (setq TeX-auto-save t)

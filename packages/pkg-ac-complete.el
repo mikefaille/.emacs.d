@@ -31,6 +31,10 @@
 ;; )
 
 
+(setq ac-auto-show-menu 0.6)
+(setq ac-use-comphist t)
+(setq ac-use-fuzzy t)
+
 
 ;(setq ac-source-yasnippet nil)
 
