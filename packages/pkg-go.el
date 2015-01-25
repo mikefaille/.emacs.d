@@ -13,9 +13,9 @@
 ;; go lint
 (require-package 'golint)
 
-(require-package 'go-projectile)
 (require-package 'go-autocomplete)
 (require-package 'go-mode)
+
 
 
 (setenv "PATH"
