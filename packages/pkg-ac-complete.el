@@ -2,7 +2,11 @@
 
 ;;; Commentary:
 (require-package 'auto-complete)
+
 ;;; Code:
+
+
+(require-package 'jedi)
 
 ;; auto-complete latex
 (require-package 'auto-complete-auctex)
@@ -12,16 +16,24 @@
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/dict")
 (autoloadp 'auto-complete-config)
 (ac-config-default)
-(setq-default
- ac-sources
- '(
-   ac-source-yasnippet
-   ac-source-imenu
-   ac-source-abbrev
-   ac-source-words-in-same-mode-buffers
-   ac-source-files-in-current-dir
-   ac-source-filename
-   )
-)
+;; (setq-default
+;;  ac-sources
+;;  '(
+;;    ac-source-yasnippet
+;;    ac-source-imenu
+;;    ac-source-abbrev
+;;    ac-source-words-in-same-mode-buffers
+;;    ac-source-files-in-current-dir
+;;    ac-source-filename
+;;    ac-source-semantic
+
+;;    )
+;; )
+
+
+
+;(setq ac-source-yasnippet nil)
+
+
 (provide 'pkg-ac-complete)
 ;;; ac-complete ends here

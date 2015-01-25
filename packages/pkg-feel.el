@@ -196,11 +196,6 @@ The body of the advice is in BODY."
 (setq bookmark-default-file (expand-file-name "bookmarks" main-savefile-dir)
       bookmark-save-flag 1)
 
-;; projectile is a project management mode
-(require-package 'projectile)
-(setq projectile-cache-file (expand-file-name "projectile.cache" main-savefile-dir))
-(projectile-global-mode t)
-
 ;; anzu-mode enhances isearch & query-replace by showing total matches and current match position
 (require-package 'anzu)
 
