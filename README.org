@@ -1,0 +1,19 @@
+* Mike's .emacs.d
+
+To install :
+
+#+begin_src sh
+cd ~
+git clone git@github.com:mikefaille/.emacs.d.git --recursive
+#+end_src
+
+
+To setup go bin for emacs.
+
+- First, install go.
+
+- Second, in emacs :
+
+#+begin_src lisp
+ M-x go-projectile-install-tools
+#+end_src
