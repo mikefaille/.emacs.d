@@ -14,9 +14,12 @@
 (require-package 'golint)
 
 (require-package 'go-autocomplete)
+
 (require-package 'go-mode)
-
-
+;(require 'auto-complete-mode )
+;(require 'ac-complete-go)
+(require-package 'go-projectile)
+(require 'go-projectile)
 
 (setenv "PATH"
   ( concat 
@@ -35,6 +38,8 @@
   )
 )
 
+(setq go-projectile-tools-path (concat (getenv "HOME")  "/go" ) )
+
 ;; helper function
 (defun go-run ()
   "run current buffer"
@@ -45,6 +50,8 @@
 
 
 (add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/nsf/gocode/emacs"))
+
+
 
 
 ;; wget https://github.com/golang/tools/blob/master/cmd/oracle/oracle.el
