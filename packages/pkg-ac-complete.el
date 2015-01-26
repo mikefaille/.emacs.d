@@ -14,7 +14,9 @@
 (require-package 'auto-complete-auctex)
 
 
+
 (ac-set-trigger-key "TAB")
+(ac-set-trigger-key "<tab>")
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/dict")
 (autoloadp 'auto-complete-config)
 (ac-config-default)
@@ -42,13 +44,13 @@
 ;;   (let ((yas-fallback-behavior nil))
 ;;     ad-do-it))
 
-(add-to-list 'ac-sources 'ac-source-yasnippet)
-;(setq ac-sources (append '(ac-source-yasnippet) ac-sources))
 
-;(setq ac-source-yasnippet nil)
 
 (defun add-yasnippet-ac-sources ()
   (add-to-list 'ac-sources 'ac-source-yasnippet))
+(add-yasnippet-ac-sources)
+
+;(setq ac-source-yasnippet nil)
 
 
 (define-key yas-minor-mode-map (kbd "<tab>") nil)

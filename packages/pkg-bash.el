@@ -1,3 +1,5 @@
+(require-package 'ac-complete)
+
 (require-package 'bash-completion)
 
 (defun ac-bash-candidates ()
@@ -26,7 +28,7 @@ bash-completion-dynamic-complete from bash-completion.el"
  
 (add-hook 'shell-mode-hook
           (lambda()
-            (setq ac-sources '(ac-source-bash))
+            (add-to-list ac-sources '(ac-source-bash))
             (auto-complete-mode)))
 
 (provide 'pkg-bash)
