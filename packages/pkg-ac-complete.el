@@ -38,6 +38,11 @@
 
 ;(setq ac-source-yasnippet nil)
 
+(defun add-yasnippet-ac-sources ()
+  (add-to-list 'ac-sources 'ac-source-yasnippet))
 
+
+(define-key yas-minor-mode-map (kbd "<tab>") nil)
+(define-key yas-minor-mode-map (kbd "TAB") nil)
 (provide 'pkg-ac-complete)
 ;;; ac-complete ends here

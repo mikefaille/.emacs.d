@@ -81,14 +81,15 @@
 (add-to-list 'load-path (expand-file-name packages-dir))
 
 
-
-
+;; I recommend to load yas before ac-complete
+(require 'pkg-yas)
 (require 'pkg-ac-complete)
+
 (require 'pkg-go)
 (require 'pkg-ssh)
 (require 'pkg-gutter)
 (require 'pkg-feel)
-(require 'pkg-yas)
+
 (require 'pkg-python)
 (require 'pkg-latex)
 ;(require 'main-editor)
