@@ -5,13 +5,15 @@
 
 ;;; Code:
 
+(require-package 'ac-capf)
+(ac-capf-setup)
 
 (require-package 'jedi)
 
 ;; auto-complete latex
 (require-package 'auto-complete-auctex)
 
-(auto-complete-mode t)
+
 (ac-set-trigger-key "TAB")
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/dict")
 (autoloadp 'auto-complete-config)
@@ -30,11 +32,18 @@
 ;;    )
 ;; )
 
-
+(setq ac-auto-start 1)
 (setq ac-auto-show-menu 0.6)
 (setq ac-use-comphist t)
 (setq ac-use-fuzzy t)
 
+
+;; (defadvice ac-fallback-command (around no-yasnippet-fallback activate)
+;;   (let ((yas-fallback-behavior nil))
+;;     ad-do-it))
+
+(add-to-list 'ac-sources 'ac-source-yasnippet)
+;(setq ac-sources (append '(ac-source-yasnippet) ac-sources))
 
 ;(setq ac-source-yasnippet nil)
 
