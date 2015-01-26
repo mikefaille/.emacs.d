@@ -11,6 +11,7 @@ git clone git@github.com:mikefaille/.emacs.d.git --recursive
 To setup go bin for emacs.
 
 - First, install go.
+Note : Have ~/go as GOPATH.
 
 - Second, in emacs :
 
