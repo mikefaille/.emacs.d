@@ -1,4 +1,4 @@
-(require-package 'ac-complete)
+(require-package 'auto-complete)
 
 (require-package 'bash-completion)
 
