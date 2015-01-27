@@ -18,3 +18,12 @@ Note : Have ~/go as GOPATH.
 #+begin_src lisp
  M-x go-projectile-install-tools
 #+end_src
+
+
+To use platium searcher :
+
+- get it
+
+#+begin_src sh
+go get -u github.com/monochromegane/the_platinum_searcher/...
+#+end_src

@@ -103,7 +103,7 @@
 (require 'pkg-org)
 (require 'pkg-projectile)
 (require 'pkg-bash)
-
+(require 'pkg-search)
 
 
 (when (not package-archive-contents)
@@ -168,6 +168,8 @@
 ;(sublimity-mode 1)
 
 
+
+
 ;(autoloadp 'malabar-mode)
 ;(setq malabar-groovy-lib-dir "/path/to/malabar/lib")
 ;(add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
@@ -183,6 +185,13 @@
 ;               (malabar-codegen-insert-class-template)))) 
 
 
+
+(add-hook 'after-init-hook (lambda ()
+                             (message "activate-malabar-mode")
+                             (activate-malabar-mode)))
+
+(add-hook 'malabar-java-mode-hook 'flycheck-mode)
+(add-hook 'malabar-groovy-mode-hook 'flycheck-mode)
 
 ;; completion framework
 ;(add-hook 'after-init-hook 'global-company-mode)
