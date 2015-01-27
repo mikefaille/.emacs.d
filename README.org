@@ -27,3 +27,10 @@ To use platium searcher :
 #+begin_src sh
 go get -u github.com/monochromegane/the_platinum_searcher/...
 #+end_src
+
+
+
+Python :
+
+Install jedi before, you must :
+M-x jedi:install-server
