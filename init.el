@@ -4,6 +4,8 @@
 ;;; code:
 (setq inhibit-startup-message t)
 (setq inhibit-splash-screen t)
+;; (if (not server-mode)
+;;     (server-start nil t))
 
 (message "Loading core...")
 
@@ -186,12 +188,12 @@
 
 
 
-(add-hook 'after-init-hook (lambda ()
-                             (message "activate-malabar-mode")
-                             (activate-malabar-mode)))
+;; (add-hook 'after-init-hook (lambda ()
+;;                              (message "activate-malabar-mode")
+;;                              (activate-malabar-mode)))
 
-(add-hook 'malabar-java-mode-hook 'flycheck-mode)
-(add-hook 'malabar-groovy-mode-hook 'flycheck-mode)
+;; (add-hook 'malabar-java-mode-hook 'flycheck-mode)
+;; (add-hook 'malabar-groovy-mode-hook 'flycheck-mode)
 
 ;; completion framework
 ;(add-hook 'after-init-hook 'global-company-mode)
@@ -232,8 +234,6 @@
 ;    (setq eshell-highlight-prompt nil
 ;          eshell-prompt-function 'epe-theme-lambda)))
 
-;(if (not server-mode)
-;    (server-start nil t))
 
 
 
