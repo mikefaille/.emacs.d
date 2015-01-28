@@ -1,5 +1,6 @@
 ;(require-package 'solarized-theme)
 (require-package 'color-theme)
+(require 'color-theme)
 (require 'color-theme-solarized)
 ;(require 'color-theme-solarized)
 
@@ -52,11 +53,17 @@
 
 (add-hook 'after-make-frame-functions
           (lambda (frame)
+            (if 'display-graphic-p      
             (set-frame-parameter frame
                                  'background-mode
                                   'dark)
-            (enable-theme 'solarized))
- )
-(set-background-color "black")
+
+            (enable-theme 'solarized)))
+          )
+(setq frame-background-mode 'dark)
+(setq solarized-termcolors '256)
+(setq solarized-degrade  nil)
+;;(set-background-color "black")
+
 (load-theme 'solarized)
 (provide 'pkg-theme)
