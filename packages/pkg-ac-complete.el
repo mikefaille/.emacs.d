@@ -1,12 +1,17 @@
 ;;; package --- Suma auto-complete
 
 ;;; Commentary:
+
 (require-package 'auto-complete)
+(require-package 'ac-capf)
+(ac-capf-setup)
+(require 'go-autocomplete)
+(ac-config-default)
 
 ;;; Code:
 
-(require-package 'ac-capf)
-(ac-capf-setup)
+
+
 
 (require-package 'jedi)
 
@@ -18,8 +23,7 @@
 (ac-set-trigger-key "TAB")
 (ac-set-trigger-key "<tab>")
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/dict")
-(autoloadp 'auto-complete-config)
-(ac-config-default)
+
 ;; (setq-default
 ;;  ac-sources
 ;;  '(
@@ -35,7 +39,7 @@
 ;; )
 
 (setq ac-auto-start 1)
-(setq ac-auto-show-menu 0.6)
+(setq ac-auto-show-menu 7)
 (setq ac-use-comphist t)
 (setq ac-use-fuzzy t)
 
@@ -48,7 +52,7 @@
 
 (defun add-yasnippet-ac-sources ()
   (add-to-list 'ac-sources 'ac-source-yasnippet))
-(add-yasnippet-ac-sources)
+(setq-default ac-sources (push 'ac-source-yasnippet ac-sources))
 
 ;(setq ac-source-yasnippet nil)
 
