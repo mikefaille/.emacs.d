@@ -1,5 +1,6 @@
 ;(require-package 'solarized-theme)
 (require-package 'color-theme)
+(require 'color-theme)
 (require 'color-theme-solarized)
 ;(require 'color-theme-solarized)
 
