@@ -1,7 +1,7 @@
 ;(require-package 'solarized-theme)
 (require-package 'color-theme)
 (require 'color-theme)
-(require 'color-theme-solarized)
+(require-package 'color-theme-solarized)
 ;(require 'color-theme-solarized)
 
 ;'(custom-enabled-themes (quote (solarized-dark)))
