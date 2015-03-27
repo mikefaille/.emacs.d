@@ -1,8 +1,10 @@
-;(require-package 'solarized-theme)
-(require-package 'color-theme)
-(require 'color-theme)
-(require-package 'color-theme-solarized)
-;(require 'color-theme-solarized)
+(require-package 'solarized-theme)
+;(require-package 'color-theme)
+;(require 'color-theme)
+;(require-package 'color-theme-solarized)
+;(require-package 'color-theme-sanityinc-solarized)
+
+                                        ;(require 'color-theme-solarized)
 
 ;'(custom-enabled-themes (quote (solarized-dark)))
 
@@ -79,17 +81,17 @@
 
 ;(set-background-color "black")
 
-(set-background-color "black")
-(add-hook 'after-make-frame-functions
-          (setq solarized-termcolors (if window-system '256 '16))
-          (lambda (frame)
-            (set-frame-parameter frame
-                                 'background-mode
-                                 'dark)
-            (enable-theme 'solarized))
-            
-          )
-(load-theme 'solarized)
+;; (set-background-color "black")
+;; (add-hook 'after-make-frame-functions
+;;           (setq solarized-termcolors (if window-system '256 '16))
+;;           (lambda (frame)
+;;             (set-frame-parameter frame
+;;                                  'background-mode
+;;                                  'dark)
+;;             (enable-theme 'solarized))
+
+;;           )
+;; (load-theme 'solarized)
 
 ;; (unless window-system
 ;;   (setq solarized-degrade (if window-system nil '16)
@@ -104,9 +106,17 @@
 ;;           )
 
 
-;(setq frame-background-mode "black")
+;   (setq frame-background-mode "black")
 
 ;(setq solarized-termcolors '256)
 ;(setq solarized-degrade t)
+
+;;(setq solarized-termcolors 16)
+(set-background-color "black")
+;(load-theme 'color-theme-sanityinc-solarized-dark)
+;;(setq solarized-degrade nil)
+;(setq frame-background-mode "black")
+(load-theme 'solarized-dark)
+(enable-theme 'solarized-dark)
 
 (provide 'pkg-theme)
