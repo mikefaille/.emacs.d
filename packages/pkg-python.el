@@ -1,6 +1,12 @@
-(require-package 'jedi)
+;(require-package 'jedi)
 
-;; python jedi for completion
+
+
+;; (require-package 'elpy)
+;; (package-initialize)
+;; (elpy-enable)
+
+;;python jedi for completion
 (autoload 'jedi:setup "jedi" nil t)
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:setup-keys t)
@@ -9,5 +15,13 @@
 (setq ein:use-auto-complete-superpack t)
 (setq ein:use-smartrep t)
 (add-hook 'ein:connect-mode-hook 'ein:jedi-setup)
+
+
+;; pip install jedi
+;; # flake8 for code checks
+;; pip install flake8
+;; # and importmagic for automatic imports
+;; pip install importmagic
+;; https://github.com/jorgenschaefer/elpy
 
 (provide 'pkg-python)

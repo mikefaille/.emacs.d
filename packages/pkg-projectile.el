@@ -3,7 +3,11 @@
 (require-package 'projectile)
 (require-package 'go-projectile)
 
+
 (require 'go-projectile)
+(require-package 'exec-path-from-shell)
+
+(setq go-projectile-tools-path (concat (exec-path-from-shell-copy-env "HOME") "/go"))
 ;(require 'go-projectile-autoloads)
 
 
