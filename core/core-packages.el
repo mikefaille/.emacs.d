@@ -1,7 +1,7 @@
-;;; core-packages.el --- 
+;;; core-packages.el ---
 
 ;; Copyright © 2015 Michael Faille <michael@faille.io>
-;; Author: 
+;; Author:
 ;; URL: https://github.com/mikefaille/.emacs.d
 ;; Keywords: project, convenience
 ;; Version: 0.11.0
@@ -45,7 +45,8 @@
 
 (add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
-
+(add-to-list 'package-archives
+             '("elpy" . "http://jorgenschaefer.github.io/packages/"))
 
 
 ; activate all the packages (in particular autoloads)
@@ -70,7 +71,7 @@ re-downloaded in order to locate PACKAGE."
   (message "%s" "Emacs is now refreshing its package database...")
   (package-refresh-contents)
   (message "%s" " done.")
-  
+
   )
 
 
@@ -78,11 +79,11 @@ re-downloaded in order to locate PACKAGE."
 (defun module-list-install (modules-list)
   ; install the missing packages
   (dolist (module modules-list )
-      (require-package module)      
+      (require-package module)
 ;      (package-install module)
 
 
-)) 
+))
 (module-list-install core-modules)
 
 
@@ -100,7 +101,7 @@ re-downloaded in order to locate PACKAGE."
   (add-to-list 'load-path base)
   (dolist (f (directory-files base))
     (let ((name (concat base "/" f)))
-      (when (and (file-directory-p name) 
+      (when (and (file-directory-p name)
                  (not (equal f ".."))
                  (not (equal f ".")))
         (add-to-list 'load-path name))))))

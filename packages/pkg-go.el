@@ -1,5 +1,5 @@
 ;;;; go config
-;; install godef 
+;; install godef
 
 ;;go get -u github.com/nsf/gocode
 
@@ -15,11 +15,11 @@
 
 (require-package 'go-autocomplete)
 (require-package 'go-mode)
-
+(require-package 'exec-path-from-shell)
 
 
 (setenv "PATH"
-  ( concat 
+  ( concat
     "/usr/local/go/bin" ":"
     (getenv "HOME") "/go/bin" ":"
 
@@ -28,7 +28,7 @@
 )
 
 (setenv "GOPATH"
-  ( concat 
+  ( concat
     (getenv "HOME") "/go" ":"
 
     (getenv "GOPATH")
@@ -44,15 +44,22 @@
                           (local-set-key (kbd "C-c C-c") 'go-run)))
 
 
-(add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/nsf/gocode/emacs"))
+(load   (concat (exec-path-from-shell-copy-env "GOPATH")  "/src/github.com/nsf/gocode/emacs/go-autocomplete.el"))
 
 
 ;; wget https://github.com/golang/tools/blob/master/cmd/oracle/oracle.el
 ;; using fedora ? install golang-googlecode-tools-oracle package
 ;; tutorial http://tleyden.github.io/blog/2014/05/27/configure-emacs-as-a-go-editor-from-scratch-part-2/
+
+
+(load (concat
+       (exec-path-from-shell-copy-env "GOPATH") "/src/golang.org/x/tools/cmd/oracle/oracle.el"))
+
 (require 'go-oracle)
 
-(require-package 'exec-path-from-shell)
+(add-hook 'go-mode-hook 'go-oracle-mode)
+
+
 ;;(exe)
 ;;(exec-path-from-shell-initialize)
 (add-to-list 'exec-path (concat
@@ -99,12 +106,12 @@
      (let ((goimports (executable-find "goimports")))
        (when goimports
          (setq gofmt-command goimports)))
-     
-     
+
+
      ;; stop whitespace being highlighted
      (whitespace-toggle-options '(tabs))
 
-     
+
 
 
        (add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/golang/lint/misc/emacs"))
