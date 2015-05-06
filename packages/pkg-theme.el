@@ -1,4 +1,5 @@
 (require-package 'solarized-theme)
+(require-package 'frame-fns)
 ;(require-package 'color-theme)
 ;(require 'color-theme)
 ;(require-package 'color-theme-solarized)
@@ -118,5 +119,19 @@
 ;(setq frame-background-mode "black")
 (load-theme 'solarized-dark)
 (enable-theme 'solarized-dark)
+
+
+
+;;; dark border
+(require 'frame-fns)
+(defun set-selected-frame-dark ()
+  (interactive)
+  (let ((frame-name (get-frame-name (selected-frame))))
+    (call-process-shell-command (concat "xprop -f _GTK_THEME_VARIANT 8u -set _GTK_THEME_VARIANT \"dark\" -name \""
+                                        frame-name
+                                        "\""))))
+
+(if (window-system)
+    (set-selected-frame-dark))
 
 (provide 'pkg-theme)
