@@ -1,4 +1,3 @@
-
 ;; License:
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License
@@ -48,7 +47,8 @@ scroll-preserve-screen-position 1)
 ;; use zenburn as the default theme
 ;;(load-theme prelude-theme t)
 
+;; http://stackoverflow.com/questions/812135/emacs-modes-command-attempted-to-use-minibuffer-while-in-minibuffer
+(setq enable-recursive-minibuffers t)
 
 (provide 'core-look)
 ;;; prelude-ui.el ends here
-

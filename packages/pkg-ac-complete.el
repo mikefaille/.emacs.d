@@ -54,16 +54,14 @@
 
 
 
+
 (defun add-yasnippet-ac-sources ()
   (add-to-list 'ac-sources 'ac-source-yasnippet))
-(setq-default ac-sources (push 'ac-source-yasnippet ac-sources))
+
+(if (featurep 'yasnippet)
+    (setq-default ac-sources (push 'ac-source-yasnippet ac-sources)))
 
 ;(setq ac-source-yasnippet nil)
-
-
-(define-key yas-minor-mode-map (kbd "<tab>") nil)
-(define-key yas-minor-mode-map (kbd "TAB") nil)
-
 
 
 (setq-default ac-expand-on-auto-complete nil)

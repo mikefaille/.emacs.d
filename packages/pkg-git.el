@@ -26,4 +26,8 @@
 
 ;; Revert current hunk
 (global-set-key (kbd "C-x v r") 'git-gutter:revert-hunk)
+
+;; magit 1.4
+(setq magit-last-seen-setup-instructions "1.4.0")
+
 (provide 'pkg-git)
