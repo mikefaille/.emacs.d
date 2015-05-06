@@ -118,7 +118,7 @@
 (require 'pkg-rust)
 (require 'pkg-emms)
 (require 'pkg-js)
-
+(require 'pkg-web)
 
 (when (not package-archive-contents)
   (package-refresh-contents))
@@ -277,9 +277,10 @@
  '(custom-safe-themes
    (quote
     ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
+ '(magit-use-overlays nil)
  '(package-selected-packages
    (quote
-    (tern-auto-complete json-mode markdown-mode+ tern js3-mode swiper weechat nginx-mode bug-hunter solarized-theme circe emms-info-mediainfo emmet-mode bongo emms flycheck-rust rust-mode pt bash-completion go-projectile projectile php-mode yaml-mode dockerfile-mode auctex-latexmk cdlatex auctex smartrep operate-on-number easy-kill browse-kill-ring anzu expand-region volatile-highlights flx-isearch flx-ido minimap diminish ssh-config-mode go-eldoc exec-path-from-shell go-mode go-autocomplete golint auto-complete-auctex jedi ac-capf auto-complete yasnippet git-gutter magit gitconfig-mode markdown-mode auto-async-byte-compile ein deferred fuzzy eshell-prompt-extras emacs-eclim multiple-cursors malabar-mode dired-hacks-utils undo-tree flycheck helm scpaste smex find-file-in-project ido-ubiquitous idle-highlight-mode smartparens better-defaults))))
+    (css-eldoc web-mode tern-auto-complete json-mode markdown-mode+ tern js3-mode swiper weechat nginx-mode bug-hunter solarized-theme circe emms-info-mediainfo emmet-mode bongo emms flycheck-rust rust-mode pt bash-completion go-projectile projectile php-mode yaml-mode dockerfile-mode auctex-latexmk cdlatex auctex smartrep operate-on-number easy-kill browse-kill-ring anzu expand-region volatile-highlights flx-isearch flx-ido minimap diminish ssh-config-mode go-eldoc exec-path-from-shell go-mode go-autocomplete golint auto-complete-auctex jedi ac-capf auto-complete yasnippet git-gutter magit gitconfig-mode markdown-mode auto-async-byte-compile ein deferred fuzzy eshell-prompt-extras emacs-eclim multiple-cursors malabar-mode dired-hacks-utils undo-tree flycheck helm scpaste smex find-file-in-project ido-ubiquitous idle-highlight-mode smartparens better-defaults))))
 
 
 (custom-set-faces
