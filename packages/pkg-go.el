@@ -17,7 +17,6 @@
 (require-package 'go-mode)
 (require-package 'exec-path-from-shell)
 
-
 (setenv "PATH"
   ( concat
     "/usr/local/go/bin" ":"
@@ -34,6 +33,10 @@
     (getenv "GOPATH")
   )
 )
+
+
+
+
 
 ;; helper function
 (defun go-run ()
@@ -53,11 +56,10 @@
 
 
 (load (concat
-       (exec-path-from-shell-copy-env "GOPATH") "/src/golang.org/x/tools/cmd/oracle/oracle.el"))
+       (exec-path-from-shell-copy-env "GOROOT") "src/golang.org/x/tools/cmd/oracle/oracle.el"))
+;; (require 'oracle)
 
-(require 'go-oracle)
 
-(add-hook 'go-mode-hook 'go-oracle-mode)
 
 
 ;;(exe)
@@ -133,8 +135,7 @@
        (let ((oracle (executable-find "oracle")))
          (when oracle
          (setq go-oracle-command oracle)
-         (autoload 'go-oracle-mode "oracle")
-         (add-hook 'go-mode-hook 'go-oracle-mode))))
+         )))
   )
 
 
