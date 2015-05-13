@@ -17,7 +17,7 @@
       (compile "cargo run")
 
     (compile
-     (format "rustc %s & %s"
+     (format "rustc %s & ./%s"
              (buffer-file-name)
              (file-name-sans-extension (buffer-file-name))))))
 
@@ -40,5 +40,7 @@
 ;;   :modes rust-mode)
 
 ;(add-hook 'rust-mode-hook (lambda () (flycheck-select-checker 'servo-rust)))
+
+(global-set-key (kbd "C-c C-c") 'rust-save-compile-and-run)
 
 (provide 'pkg-rust)

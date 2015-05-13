@@ -279,7 +279,7 @@
     ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
  '(package-selected-packages
    (quote
-    (emmet-mode css-eldoc web-mode json-mode tern-auto-complete tern js3-mode flycheck-rust rust-mode pt bash-completion go-projectile projectile php-mode yaml-mode dockerfile-mode auctex-latexmk cdlatex auctex smartrep operate-on-number easy-kill browse-kill-ring anzu expand-region volatile-highlights flx-isearch flx-ido minimap diminish ssh-config-mode go-eldoc exec-path-from-shell go-mode go-autocomplete golint auto-complete-auctex jedi ac-capf auto-complete git-gutter magit gitconfig-mode markdown-mode auto-async-byte-compile ein deferred fuzzy eshell-prompt-extras emacs-eclim multiple-cursors malabar-mode dired-hacks-utils undo-tree flycheck helm scpaste smex find-file-in-project ido-ubiquitous idle-highlight-mode smartparens better-defaults))))
+    (frame-fns solarized-theme emmet-mode css-eldoc web-mode json-mode tern-auto-complete tern js3-mode flycheck-rust rust-mode pt bash-completion go-projectile projectile php-mode yaml-mode dockerfile-mode auctex-latexmk cdlatex auctex smartrep operate-on-number easy-kill browse-kill-ring anzu expand-region volatile-highlights flx-isearch flx-ido minimap diminish ssh-config-mode go-eldoc exec-path-from-shell go-mode go-autocomplete golint auto-complete-auctex jedi ac-capf auto-complete git-gutter magit gitconfig-mode markdown-mode auto-async-byte-compile ein deferred fuzzy eshell-prompt-extras emacs-eclim multiple-cursors malabar-mode dired-hacks-utils undo-tree flycheck helm scpaste smex find-file-in-project ido-ubiquitous idle-highlight-mode smartparens better-defaults))))
 
 
 (custom-set-faces
