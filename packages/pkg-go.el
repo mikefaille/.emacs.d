@@ -56,7 +56,7 @@
 
 
 (load (concat
-       (exec-path-from-shell-copy-env "GOROOT") "src/golang.org/x/tools/cmd/oracle/oracle.el"))
+       (exec-path-from-shell-copy-env "GOPATH") "/src/golang.org/x/tools/cmd/oracle/oracle.el"))
 ;; (require 'oracle)
 
 

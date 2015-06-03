@@ -279,7 +279,7 @@
     ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
  '(package-selected-packages
    (quote
-    (emmet-mode css-eldoc web-mode json-mode tern-auto-complete tern js3-mode flycheck-rust rust-mode pt bash-completion go-projectile projectile php-mode yaml-mode dockerfile-mode auctex-latexmk cdlatex auctex smartrep operate-on-number easy-kill browse-kill-ring anzu expand-region volatile-highlights flx-isearch flx-ido minimap diminish ssh-config-mode go-eldoc exec-path-from-shell go-mode go-autocomplete golint auto-complete-auctex jedi ac-capf auto-complete git-gutter magit gitconfig-mode markdown-mode auto-async-byte-compile ein deferred fuzzy eshell-prompt-extras emacs-eclim multiple-cursors malabar-mode dired-hacks-utils undo-tree flycheck helm scpaste smex find-file-in-project ido-ubiquitous idle-highlight-mode smartparens better-defaults))))
+    (tramp-docker yaml-mode web-mode web-beautify volatile-highlights undo-tree tern-auto-complete ssh-config-mode solarized-theme smex smartrep smartparens scpaste rust-mode pt plantuml-mode php-mode operate-on-number multiple-cursors minimap markdown-mode malabar-mode magit json-mode js3-mode jedi ido-ubiquitous idle-highlight-mode helm grunt golint go-projectile go-autocomplete gitconfig-mode git-gutter fuzzy frame-fns flycheck-rust flx-isearch flx-ido find-file-in-project expand-region exec-path-from-shell eshell-prompt-extras emmet-mode emacs-eclim ein easy-kill dockerfile-mode docker-tramp dired-hacks-utils diminish css-eldoc cdlatex browse-kill-ring better-defaults bash-completion auto-complete-auctex auto-async-byte-compile auctex-latexmk anzu ac-capf))))
 
 
 (custom-set-faces
