@@ -41,6 +41,6 @@
 
 ;(add-hook 'rust-mode-hook (lambda () (flycheck-select-checker 'servo-rust)))
 
-(global-set-key (kbd "C-c C-c") 'rust-save-compile-and-run)
+(local-set-key (kbd "C-c C-c") 'rust-save-compile-and-run)
 
 (provide 'pkg-rust)
