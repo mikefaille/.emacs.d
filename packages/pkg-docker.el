@@ -1,5 +1,5 @@
 (require-package 'dockerfile-mode)
-<<<<<<< HEAD
+
 (require-package 'docker)
 
 (require-package 'docker-tramp)
