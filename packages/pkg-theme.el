@@ -122,18 +122,18 @@
 
 
 
-;;; dark border
-(require 'frame-fns)
-(defun set-selected-frame-dark ()
-  (interactive)
-  (let ((frame-name (get-frame-name (selected-frame))))
-    (call-process-shell-command (concat "xprop -f _GTK_THEME_VARIANT 8u -set _GTK_THEME_VARIANT \"dark\" -name \""
-                                        frame-name
-                                        "\""))))
+;; ;;; dark border
+;; (require 'frame-fns)
+;; (defun set-selected-frame-dark ()
+;;   (interactive)
+;;   (let ((frame-name (get-frame-name (selected-frame))))
+;;     (call-process-shell-command (concat "xprop -f _GTK_THEME_VARIANT 8u -set _GTK_THEME_VARIANT \"dark\" -name \""
+;;                                         frame-name
+;;                                         "\""))))
 
-;; (add-hook 'window-setup-hook 'set-selected-frame-dark)
-(if (window-system)
-    (set-selected-frame-dark))
+;; ;; (add-hook 'window-setup-hook 'set-selected-frame-dark)
+;; (if (window-system)
+;;     (set-selected-frame-dark))
 
 (if (daemonp)
     (add-hook 'after-make-frame-functions
