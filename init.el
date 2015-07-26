@@ -3,28 +3,25 @@
 ;; no welcome screen
 ;;; code:
 
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
+
 (package-initialize)
 
 (setq inhibit-startup-message t)
 (setq inhibit-splash-screen t)
 ;; (if (not server-mode)
 ;;     (server-start nil t))
-
+(ansi-color-for-comint-mode-on)
 (message "Loading core...")
 (add-to-list 'default-frame-alist '(background-mode . dark))
 
 ;; recompile all from prelude
-(defun prelude-recompile-init ()
+(defun recompile-init ()
 "Byte-compile all your dotfiles again."
 (interactive)
 
 (byte-recompile-directory user-emacs-directory 0))
 
-(global-set-key (kbd "C-c C-1") 'prelude-recompile-init)
+(global-set-key (kbd "C-c C-1") 'recompile-init)
 
 
 (setq debug-on-error t)
@@ -85,8 +82,8 @@
 
 
 (defvar packages-dir
-(concat user-emacs-directory
-        (convert-standard-filename "packages")) )
+  (concat user-emacs-directory
+          (convert-standard-filename "packages")) )
 
 (add-to-list 'load-path (expand-file-name packages-dir))
 
@@ -103,15 +100,15 @@
 
 (require 'pkg-python)
 (require 'pkg-latex)
-;(require 'main-editor)
-;; (require 'pkg-gnome)
+;;;;(require 'main-editor)
+;;;; (require 'pkg-gnome)
 (require 'main-custom)
 (require 'pkg-docker)
 (require 'pkg-yaml)
 (require 'pkg-php)
 (require 'go-autocomplete)
 (require 'pkg-org)
-(require 'pkg-projectile)
+;;(require 'pkg-projectile)
 (require 'pkg-bash)
 (require 'pkg-search)
 (require 'pkg-eshell)
@@ -121,7 +118,7 @@
 (require 'pkg-web)
 (require 'pkg-systemd)
 (require 'pkg-mu4e)
-;; (require 'pkg-wanderlust)
+;;(require 'pkg-wanderlust)
 
 (when (not package-archive-contents)
   (package-refresh-contents))
@@ -173,7 +170,7 @@
 
 
 
-;(require 'yasnippet)
+                                        ;(require 'yasnippet)
 (require 'undo-tree)
 
 (when (fboundp 'winner-mode)
@@ -194,30 +191,30 @@
 
 
 
-;(autoloadp 'sublimity)
-; (autoloadp 'sublimity-scroll)
-; (autoloadp 'sublimity-map)
-; (autoloadp 'sublimity-attractive)
-; (autoloadp 'minimap-autoloads)
-;(setq sublimity-attractive-centering-width nil)
-;(sublimity-mode 1)
+                                        ;(autoloadp 'sublimity)
+                                        ; (autoloadp 'sublimity-scroll)
+                                        ; (autoloadp 'sublimity-map)
+                                        ; (autoloadp 'sublimity-attractive)
+                                        ; (autoloadp 'minimap-autoloads)
+                                        ;(setq sublimity-attractive-centering-width nil)
+                                        ;(sublimity-mode 1)
 
 
 
 
-;(autoloadp 'malabar-mode)
-;(setq malabar-groovy-lib-dir "/path/to/malabar/lib")
-;(add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
+                                        ;(autoloadp 'malabar-mode)
+                                        ;(setq malabar-groovy-lib-dir "/path/to/malabar/lib")
+                                        ;(add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
 ;;compile on save
-;(add-hook 'malabar-mode-hook
-;     (lambda ()
-;      (add-hook 'after-save-hook 'malabar-compile-file-silently
-;                  nil t)))
-    ;; Auto-populate an empty java file
-;    (add-hook 'malabar-mode-hook
-;          '(lambda ()
-;             (when (= 0 (buffer-size))
-;               (malabar-codegen-insert-class-template))))
+                                        ;(add-hook 'malabar-mode-hook
+                                        ;     (lambda ()
+                                        ;      (add-hook 'after-save-hook 'malabar-compile-file-silently
+                                        ;                  nil t)))
+;; Auto-populate an empty java file
+                                        ;    (add-hook 'malabar-mode-hook
+                                        ;          '(lambda ()
+                                        ;             (when (= 0 (buffer-size))
+                                        ;               (malabar-codegen-insert-class-template))))
 
 
 
@@ -229,17 +226,17 @@
 ;; (add-hook 'malabar-groovy-mode-hook 'flycheck-mode)
 
 ;; completion framework
-;(add-hook 'after-init-hook 'global-company-mode)
-;(autoloadp 'company)                                   ; load company mode
-;(autoloadp 'company-go)                                ; load company mode go backend
-;(setq company-tooltip-limit 20)                      ; bigger popup window
+                                        ;(add-hook 'after-init-hook 'global-company-mode)
+                                        ;(autoloadp 'company)                                   ; load company mode
+                                        ;(autoloadp 'company-go)                                ; load company mode go backend
+                                        ;(setq company-tooltip-limit 20)                      ; bigger popup window
 ;;(setq company-idle-delay .3)                         ; decrease delay before autocomp;letion popup shows
-;(setq company-echo-delay 0)                          ; remove annoying blinking
-;(setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
+                                        ;(setq company-echo-delay 0)                          ; remove annoying blinking
+                                        ;(setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
 
 ;; flycheck. for fuzzy check, install fuzzy...
-;(autoloadp 'flycheck)
-;(flycheck-mode t)
+                                        ;(autoloadp 'flycheck)
+                                        ;(flycheck-mode t)
 (add-hook 'after-init-hook #'global-flycheck-mode)
 (setq-default flycheck-emacs-lisp-load-path 'inherit)
 
@@ -248,17 +245,17 @@
 
 
 
-;(autoloadp 'linum-relative)
+                                        ;(autoloadp 'linum-relative)
 
-;(autoloadp 'eclim)
-;(global-eclim-mode)
-;(autoloadp 'eclimd)
-;(custom-set-variables
-;  '(eclim-eclipse-dirs '("~/app/eclipse"))
-;(autoloadp 'company)
-;(autoloadp 'company-emacs-eclim)
-;(company-emacs-eclim-setup)
-;(global-company-mode t)
+                                        ;(autoloadp 'eclim)
+                                        ;(global-eclim-mode)
+                                        ;(autoloadp 'eclimd)
+                                        ;(custom-set-variables
+                                        ;  '(eclim-eclipse-dirs '("~/app/eclipse"))
+                                        ;(autoloadp 'company)
+                                        ;(autoloadp 'company-emacs-eclim)
+                                        ;(company-emacs-eclim-setup)
+                                        ;(global-company-mode t)
 
 
 
@@ -279,12 +276,14 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
+    ("a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
  '(package-selected-packages
    (quote
-
-
-    (frame-fns solarized-theme emmet-mode css-eldoc web-mode json-mode tern-auto-complete tern js3-mode flycheck-rust rust-mode pt bash-completion go-projectile projectile php-mode yaml-mode dockerfile-mode auctex-latexmk cdlatex auctex smartrep operate-on-number easy-kill browse-kill-ring anzu expand-region volatile-highlights flx-isearch flx-ido minimap diminish ssh-config-mode go-eldoc exec-path-from-shell go-mode go-autocomplete golint auto-complete-auctex jedi ac-capf auto-complete git-gutter magit gitconfig-mode markdown-mode auto-async-byte-compile ein deferred fuzzy eshell-prompt-extras emacs-eclim multiple-cursors malabar-mode dired-hacks-utils undo-tree flycheck helm scpaste smex find-file-in-project ido-ubiquitous idle-highlight-mode smartparens better-defaults))))
+    (flyspell-lazy toml-mode toml latex-preview-pane latex-extra marcopolo perspective mu4e-maildirs-extension systemd emmet-mode css-eldoc web-mode json-mode tern-auto-complete tern js3-mode flycheck-rust rust-mode pt bash-completion go-projectile projectile php-mode yaml-mode docker-tramp docker dockerfile-mode auctex-latexmk cdlatex auctex smartrep operate-on-number easy-kill browse-kill-ring anzu expand-region volatile-highlights flx-isearch flx-ido minimap diminish ssh-config-mode go-eldoc exec-path-from-shell go-mode go-autocomplete golint auto-complete-auctex jedi ac-capf auto-complete git-gutter magit gitconfig-mode markdown-mode auto-async-byte-compile ein deferred fuzzy eshell-prompt-extras emacs-eclim multiple-cursors malabar-mode dired-hacks-utils undo-tree flycheck helm scpaste smex find-file-in-project ido-ubiquitous idle-highlight-mode smartparens better-defaults)))
+ '(uniquify-buffer-name-style (quote post-forward-angle-brackets) nil (uniquify))
+ '(uniquify-ignore-buffers-re "^\\*")
+ '(uniquify-min-dir-content 1)
+ '(uniquify-separator "/"))
 
 
 
