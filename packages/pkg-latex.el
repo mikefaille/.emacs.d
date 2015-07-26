@@ -54,7 +54,7 @@
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
 (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-(add-hook 'LaTeX-mode-hook #'latex-extra-mode)
+(add-hook 'LaTeX-mode-hook 'latex-extra-mode)
 
 
 (setq reftex-plug-into-AUCTeX t)
