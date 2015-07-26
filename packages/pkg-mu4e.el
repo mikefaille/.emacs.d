@@ -33,7 +33,7 @@
 
 
 (setq mu4e-maildir-shortcuts
-      '( ("/INBOX"               . ?i)
+      '( ("/Inbox"               . ?i)
          ("/[Gmail].Sent Mail"   . ?s)
          ("/[Gmail].Trash"       . ?t)
          ("/[Gmail].All Mail"    . ?a)))
