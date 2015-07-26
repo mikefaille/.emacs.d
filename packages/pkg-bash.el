@@ -22,10 +22,10 @@ bash-completion-dynamic-complete from bash-completion.el"
                     (comint-completion-addsuffix nil) )
       (if completions
                   completions))))
- 
+
 (setq ac-source-bash
       '((candidates . ac-bash-candidates)))
- 
+
 (add-hook 'shell-mode-hook
           (lambda()
             (add-to-list ac-sources '(ac-source-bash))
