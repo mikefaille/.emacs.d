@@ -1,6 +1,7 @@
 (require-package 'auctex)
 (require-package 'cdlatex)
 (require-package 'auctex-latexmk)
+(require-package 'latex-extra)
 (require 'smartparens-latex)            ; smartparens suppose to be instaled automaticly
 (require 'tex-mik)
 
@@ -36,12 +37,12 @@
 
 
 (add-hook 'LaTeX-mode-hook (lambda ()
-  (push 
-    '("Latexmk" "latexmk -pdf %s" TeX-run-command nil t 
+  (push
+    '("Latexmk" "latexmk -pdf %s" TeX-run-command nil t
       :help "Run Latexmk on file")
     TeX-command-list)))
 
-(setq pdf-latex-command "xelatex")
+(setq pdf-latex-command "lualatex")
 
 ;; AUCTeX configuration
 (setq TeX-auto-save t)
@@ -52,10 +53,14 @@
 (add-hook 'LaTeX-mode-hook 'visual-line-mode)
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
 (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
-
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+(add-hook 'LaTeX-mode-hook #'latex-extra-mode)
+
+
 (setq reftex-plug-into-AUCTeX t)
 
+(defun flymake-get-tex-args (file-name)
+  (list "pdflatex" (list "-file-line-error" "-draftmode" "-interaction=nonstopmode" file-name)))
 
 
 (provide 'pkg-latex)
