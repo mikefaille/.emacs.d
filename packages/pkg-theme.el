@@ -131,7 +131,18 @@
                                         frame-name
                                         "\""))))
 
+;; (add-hook 'window-setup-hook 'set-selected-frame-dark)
 (if (window-system)
     (set-selected-frame-dark))
+
+(if (daemonp)
+    (add-hook 'after-make-frame-functions
+              (lambda (frame)
+                (select-frame frame)
+                (set-selected-frame-dark)
+                ;; (load-theme 'tronesque t)
+                ))
+  ;; (load-theme 'tronesque t)
+  )
 
 (provide 'pkg-theme)
