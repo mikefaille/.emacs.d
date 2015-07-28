@@ -47,7 +47,7 @@
 ;; AUCTeX configuration
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
-(setq-default TeX-engine 'xetex)
+(setq-default TeX-engine 'luatex)
 (setq-default TeX-PDF-mode t)
 
 (add-hook 'LaTeX-mode-hook 'visual-line-mode)
