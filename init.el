@@ -81,44 +81,52 @@
 (require 'core-org)
 
 
+
 (defvar packages-dir
   (concat user-emacs-directory
           (convert-standard-filename "packages")) )
-
 (add-to-list 'load-path (expand-file-name packages-dir))
 
+(require 'main-custom)
 
-;; I recommend to load yas before ac-complete
+;; ;; I recommend to load yas before ac-complete
 (require 'pkg-git)
-;; (require 'pkg-yas)
+(require 'pkg-yas)
 (require 'pkg-ac-complete)
 (require 'pkg-flycheck)
-(require 'pkg-go)
+
+
 (require 'pkg-ssh)
-(require 'pkg-gutter)
+
 (require 'pkg-feel)
 
 (require 'pkg-python)
 (require 'pkg-latex)
-;;;;(require 'main-editor)
-;;;; (require 'pkg-gnome)
-(require 'main-custom)
+;;(require 'main-editor)
+;;(require 'pkg-gnome)
+
 (require 'pkg-docker)
 (require 'pkg-yaml)
 (require 'pkg-php)
-(require 'go-autocomplete)
-(require 'pkg-org)
+
+;;(require 'pkg-org)
 ;;(require 'pkg-projectile)
 (require 'pkg-bash)
 (require 'pkg-search)
 (require 'pkg-eshell)
 (require 'pkg-rust)
 (require 'pkg-emms)
-(require 'pkg-js)
+
 (require 'pkg-web)
 (require 'pkg-systemd)
 (require 'pkg-mu4e)
-;;(require 'pkg-wanderlust)
+
+
+;; depend on pkg-ac-complete
+;; (require 'pkg-js)
+;; (require 'pkg-go)
+;; (require 'go-autocomplete)
+
 
 (when (not package-archive-contents)
   (package-refresh-contents))
