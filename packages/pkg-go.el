@@ -12,7 +12,6 @@
 
 ;; go lint
 (require-package 'golint)
-
 (require-package 'go-autocomplete)
 (require-package 'go-mode)
 (require-package 'exec-path-from-shell)
