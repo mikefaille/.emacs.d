@@ -132,8 +132,8 @@
                                         "\""))))
 
 ;; ;; (add-hook 'window-setup-hook 'set-selected-frame-dark)
-;; (if (window-system)
-;;     (set-selected-frame-dark))
+(if (window-system)
+    (set-selected-frame-dark))
 
 (if (daemonp)
     (add-hook 'after-make-frame-functions
