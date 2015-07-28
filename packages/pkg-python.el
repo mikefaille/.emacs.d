@@ -1,4 +1,4 @@
-;(require-package 'jedi)
+(require-package 'jedi)
 
 
 
