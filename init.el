@@ -1,4 +1,4 @@
-;;; package ---
+;;; Package ---
 ;;; Commentary:
 ;; no welcome screen
 ;;; code:
@@ -123,9 +123,9 @@
 
 
 ;; depend on pkg-ac-complete
-;; (require 'pkg-js)
-;; (require 'pkg-go)
-;; (require 'go-autocomplete)
+(require 'pkg-js)
+(require 'pkg-go)
+(require 'go-autocomplete)
 
 
 (when (not package-archive-contents)
