@@ -84,13 +84,13 @@
 (global-set-key "\M-[1;5C"    'forward-word)      ; Ctrl+right   => forward word
 (global-set-key "\M-[1;5D"    'backward-word)     ; Ctrl+left    => backward word
 
-;
-; Cycle through windows backwards with C-x p
-(defun prev-window ()
-  (interactive)
-  (other-window -1))
+;; ;
+;; ; Cycle through windows backwards with C-x p
+;; (defun prev-window ()
+;;   (interactive)
+;;   (other-window -1))
 
-(define-key global-map (kbd "C-x p") 'prev-window)
+;; (define-key global-map (kbd "C-x p") 'prev-window)
 
 
 
