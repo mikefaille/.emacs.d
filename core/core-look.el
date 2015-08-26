@@ -50,7 +50,7 @@ scroll-preserve-screen-position 1)
 ;; http://stackoverflow.com/questions/812135/emacs-modes-command-attempted-to-use-minibuffer-while-in-minibuffer
 (setq enable-recursive-minibuffers t)
 
-(setq uniquify-buffer-name-style (quote post-forward-angle-brackets) nil (uniquify))
+(setq uniquify-buffer-name-style (quote post-forward-angle-brackets))
 (setq uniquify-ignore-buffers-re "^\\*")
 (setq uniquify-min-dir-content 1)
 
