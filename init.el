@@ -286,14 +286,6 @@
    (quote
     ("a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
 
- '(package-selected-packages
-   (quote
-    (org-caldav persp-projectile persp-mode bookmark+ projectile-speedbar circe erc-social-graph
-                (erc-social-graph)
-                erc-hl-nicks erc-track-score erc-image
-                (erc-image)
-                erc-colorize znc weechat flyspell-lazy toml-mode toml latex-preview-pane latex-extra marcopolo perspective mu4e-maildirs-extension systemd emmet-mode css-eldoc web-mode json-mode tern-auto-complete tern js3-mode flycheck-rust rust-mode pt bash-completion go-projectile projectile php-mode yaml-mode docker-tramp docker dockerfile-mode auctex-latexmk cdlatex auctex smartrep operate-on-number easy-kill browse-kill-ring anzu expand-region volatile-highlights flx-isearch flx-ido minimap diminish ssh-config-mode go-eldoc exec-path-from-shell go-mode go-autocomplete golint auto-complete-auctex jedi ac-capf auto-complete git-gutter magit gitconfig-mode markdown-mode auto-async-byte-compile ein deferred fuzzy eshell-prompt-extras emacs-eclim multiple-cursors malabar-mode dired-hacks-utils undo-tree flycheck helm scpaste smex find-file-in-project ido-ubiquitous idle-highlight-mode smartparens better-defaults)))
-
 
 
 (custom-set-faces
@@ -301,7 +293,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ ))
 
 
 (require 'pkg-theme)
