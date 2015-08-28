@@ -117,8 +117,7 @@
 ;(load-theme 'color-theme-sanityinc-solarized-dark)
 ;;(setq solarized-degrade nil)
 ;(setq frame-background-mode "black")
-(load-theme 'solarized-dark)
-(enable-theme 'solarized-dark)
+(load-theme 'solarized-dark t)
 
 
 
