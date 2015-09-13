@@ -127,6 +127,7 @@
 (require 'pkg-go)
 (require 'go-autocomplete)
 
+(require 'pkg-irc)
 
 (when (not package-archive-contents)
   (package-refresh-contents))
@@ -302,7 +303,7 @@
     ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
  '(package-selected-packages
    (quote
-    (frame-fns solarized-theme go-eldoc exec-path-from-shell go-mode go-autocomplete golint json-mode tern-auto-complete tern js3-mode mu4e-maildirs-extension systemd emmet-mode css-eldoc web-mode flycheck-rust rust-mode pt bash-completion php-mode yaml-mode latex-extra auctex-latexmk cdlatex auctex smartrep operate-on-number easy-kill browse-kill-ring anzu expand-region volatile-highlights flx-isearch flx-ido minimap diminish docker dockerfile-mode docker-tramp ssh-config-mode auto-complete-auctex jedi ac-capf auto-complete yasnippet git-gutter magit gitconfig-mode markdown-mode auto-async-byte-compile deferred fuzzy eshell-prompt-extras emacs-eclim multiple-cursors malabar-mode dired-hacks-utils undo-tree flycheck helm scpaste smex find-file-in-project ido-ubiquitous idle-highlight-mode smartparens better-defaults))))
+    (erc-hl-nicks erc-track-score erc-social-graph erc-image jdee frame-fns solarized-theme go-eldoc exec-path-from-shell go-mode go-autocomplete golint json-mode tern-auto-complete tern js3-mode mu4e-maildirs-extension systemd emmet-mode css-eldoc web-mode flycheck-rust rust-mode pt bash-completion php-mode yaml-mode latex-extra auctex-latexmk cdlatex auctex smartrep operate-on-number easy-kill browse-kill-ring anzu expand-region volatile-highlights flx-isearch flx-ido minimap diminish docker dockerfile-mode docker-tramp ssh-config-mode auto-complete-auctex jedi ac-capf auto-complete yasnippet git-gutter magit gitconfig-mode markdown-mode auto-async-byte-compile deferred fuzzy eshell-prompt-extras emacs-eclim multiple-cursors malabar-mode dired-hacks-utils undo-tree flycheck helm scpaste smex find-file-in-project ido-ubiquitous idle-highlight-mode smartparens better-defaults))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
