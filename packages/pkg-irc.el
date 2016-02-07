@@ -10,6 +10,7 @@
 (setq erc-modules
   (quote
    (autoaway autojoin button completion fill irccontrols keep-place list log match menu move-to-prompt netsplit networks noncommands notify notifications readonly ring stamp track)))
+
 '(erc-notify-list (quote ("aviau")))
 
 ;; ;; :password  (funcall
@@ -176,7 +177,7 @@ Use `erc-make-mode-line-buffer-name' to create buttons."
 
 
 (require-package 'erc-hl-nicks)
-(erc-hl-nicks-enable)
+;; (erc-hl-nicks-enable)
 
 
 ;; (setq erc-prompt (lambda () (concat "-" (buffer-name) "->")))
