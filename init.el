@@ -72,7 +72,7 @@
 
 
 ;; Always load newest byte code
-(setq load-prefer-newer )
+(setq load-prefer-newer t)
 
 (require 'eieio)
 (require 'core-packages)
@@ -279,36 +279,5 @@
 ;; This is your old M-x.
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 
-
-(require 'pkg-theme)
-;; (mapcar (lambda (face) (apply 'create-face-spec face))
-;;         `((company-tooltip (,@fg-base00 ,@bg-base02))
-;;           (company-tooltip-selection (,@fg-base1 ,@bg-base02))
-;;           (company-tooltip-mouse (,@fg-base1 ,@bg-base02))
-;;           (company-tooltip-common (,@fg-blue ,@bg-base02))
-;;           (company-tooltip-common-selection (,@fg-blue ,@bg-base01))
-;;           (company-tooltip-annotation (,@fg-yellow ,@bg-base02))
-;;           (company-scrollbar-fg (,@bg-base0))
-;;           (company-scrollbar-bg (,@bg-base02))
-;;           (company-preview (,@bg-green))
-;;           (company-preview-common (,@bg-base02))
-;;           (company-template-field (,@fg-base03 ,@bg-yellow) )))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
- '(package-selected-packages
-   (quote
-    (erc-hl-nicks erc-track-score erc-social-graph erc-image jdee frame-fns solarized-theme go-eldoc exec-path-from-shell go-mode go-autocomplete golint json-mode tern-auto-complete tern js3-mode mu4e-maildirs-extension systemd emmet-mode css-eldoc web-mode flycheck-rust rust-mode pt bash-completion php-mode yaml-mode latex-extra auctex-latexmk cdlatex auctex smartrep operate-on-number easy-kill browse-kill-ring anzu expand-region volatile-highlights flx-isearch flx-ido minimap diminish docker dockerfile-mode docker-tramp ssh-config-mode auto-complete-auctex jedi ac-capf auto-complete yasnippet git-gutter magit gitconfig-mode markdown-mode auto-async-byte-compile deferred fuzzy eshell-prompt-extras emacs-eclim multiple-cursors malabar-mode dired-hacks-utils undo-tree flycheck helm scpaste smex find-file-in-project ido-ubiquitous idle-highlight-mode smartparens better-defaults))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 
 (require 'pkg-theme)
