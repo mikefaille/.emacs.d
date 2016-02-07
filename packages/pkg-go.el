@@ -72,7 +72,7 @@
 (add-hook 'before-save-hook 'gofmt-before-save)
 
 
-;(require-package go-errcheck)
+;; (require-package go-errcheck)
 ;;(executable-interpret "go get github.com/kisielk/errcheck")
 
 
