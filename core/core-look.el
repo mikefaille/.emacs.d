@@ -17,6 +17,12 @@
 ;; the toolbar is just a waste of valuable screen estate
 ;; in a tty tool-bar-mode does not properly auto-load, and is
 ;; already disabled anyway
+
+;; http://www.emacswiki.org/emacs/AnsiColor
+;; https://www.gnu.org/software/emacs/manual/html_node/efaq/Escape-sequences-in-shell-output.html
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+(add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
+
 (when (fboundp 'tool-bar-mode)
 (tool-bar-mode -1))
 (menu-bar-mode -1)
