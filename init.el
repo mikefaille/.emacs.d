@@ -129,9 +129,6 @@
 
 (require 'pkg-irc)
 
-(when (not package-archive-contents)
-  (package-refresh-contents))
-
 
 ;; http://emacsredux.com/blog/2013/05/16/whitespace-cleanup/
 (add-hook 'before-save-hook 'whitespace-cleanup)
@@ -281,3 +278,17 @@
 
 
 (require 'pkg-theme)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (ensime sbt-mode web-mode volatile-highlights undo-tree tern-auto-complete systemd symon ssh-config-mode solarized-theme smex smartrep smartparens scpaste salt-mode rust-mode pt php-mode operate-on-number multiple-cursors mu4e-maildirs-extension minimap markdown-mode malabar-mode magit latex-extra json-mode js3-mode jedi ido-ubiquitous idle-highlight-mode helm golint go-scratch go-errcheck go-eldoc go-dlv go-autocomplete gitconfig-mode git-gutter fuzzy frame-fns flycheck-rust flx-isearch flx-ido find-file-in-project expand-region exec-path-from-shell eshell-prompt-extras erc-track-score erc-social-graph erc-image erc-hl-nicks emmet-mode emacs-eclim easy-kill dockerfile-mode docker-tramp docker dired-hacks-utils diminish css-eldoc cdlatex browse-kill-ring better-defaults bash-completion auto-complete-auctex auto-async-byte-compile auctex-latexmk anzu ac-capf))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
