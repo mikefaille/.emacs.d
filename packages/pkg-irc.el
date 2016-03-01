@@ -188,7 +188,7 @@ Use `erc-make-mode-line-buffer-name' to create buttons."
 Prompt for password first."
   (interactive)
 
-  (erc-tls :server "social.faille.io"
+  (erc-tls :server "faille.io"
            :port 6969
            :nick "darkmike"
            :password (concat "michael/freenode:" (funcall
@@ -206,7 +206,7 @@ Prompt for password first."
   (interactive)
 
 
-  (erc-tls :server "social.faille.io"
+  (erc-tls :server "faille.io"
            :port 6969
            :nick "darkmike"
            :password (concat "michael/freenode:" (funcall
