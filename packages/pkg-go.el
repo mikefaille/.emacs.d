@@ -27,9 +27,54 @@
 (setenv "GOPATH"
         ( concat
           (getenv "HOME") "/go" ;; ":"
-          ":/usr/local/go/"
+          ":/usr/local/go"
           ;; (getenv "GOPATH")
           ))
+
+(defun load-from-pathenv-ifexist(pathenv path-suffix)
+
+
+  (let ((path "") path-list )
+    (setq pathenv "GOPATH")
+    (setq path-suffix "/src/golang.org/x/tools/cmd/oracle/oracle.el" )
+    (setq path-list (parse-colon-path (getenv pathenv)))
+    (while (and path-list (not (file-readable-p path)))
+      (setq path-prefix (car path-list))
+
+      (setq path (concat path-prefix path-suffix))
+
+      (when (file-readable-p path)
+
+        (load-file path)
+        )
+      (setq path-list (cdr path-list )))
+    (file-readable-p path))
+  )
+
+
+
+;; (defun load-from-pathenv-ifexist(pathenv path-suffix)
+;; (let ((path "") path-list )
+;;   (setq pathenv "GOPATH")
+;;   (setq path-suffix "/src/golang.org/x/tools/cmd/oracle/oracle.el" )
+;;   (setq path-list (parse-colon-path (getenv pathenv)))
+;;   (while (and path-list (not (file-readable-p path)))
+;;     (setq path-prefix (car path-list))
+
+;;     (setq path (concat path-prefix path-suffix))
+
+;;     (when (file-readable-p path)
+;;       (print path)
+;;       (load-file path)
+;;       )
+;;     (setq path-list (cdr path-list )))
+;;   (if (file-readable-p path)
+;;       path
+;;     nil)
+;; )
+
+
+
 
 
 
@@ -67,7 +112,7 @@
 
 
              ;; TODO Fix this path
-             (add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/golang/lint/misc/emacs"))
+
              ;; Customize compile command to run go build
 
              (add-hook 'before-save-hook 'gofmt-before-save)
@@ -78,26 +123,13 @@
                                         ; Godef jump key binding
              (local-set-key (kbd "M-.") 'godef-jump)
 
-
-             (let ((file-oracle "$GOPATH/src/golang.org/x/tools/cmd/oracle/oracle.el"))
-               (when (file-exists-p file-oracle)
-                 (load-file file-oracle)
-
-                 )
-               )
-
+             (load-from-pathenv-ifexist "GOPATH"  "/src/golang.org/x/tools/cmd/oracle/oracle.el")
              (let ((oracle (executable-find "oracle")))
                (when oracle
                  (setq go-oracle-command oracle)
                  ))
 
-
-             (let ((file-go-autocomplete "$GOPATH/src/github.com/nsf/gocode/emacs/go-autocomplete.el"))
-               (when (file-exists-p file-go-autocomplete)
-                 (load-file file-go-autocomplete)
-                 )
-               )
-
+             (load-from-pathenv-ifexist "GOPATH" "/src/github.com/golang/lint/misc/emacs/golint.el" )
 
              ;; helper function
              (defun go-run ()
@@ -108,11 +140,11 @@
              (local-set-key (kbd "C-c C-c") 'go-run)
 
              (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)
-             ;; Enable go-oracle-mode if available
 
 
-             )
-          )
+
+             ))
+
 
 
 (provide 'pkg-go)
