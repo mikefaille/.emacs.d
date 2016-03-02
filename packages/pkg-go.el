@@ -46,36 +46,36 @@
 
 (with-eval-after-load 'go-mode
 
-     (require-package 'go-eldoc)
-     (go-eldoc-setup)
-     ;; Add to default go-mode key bindings
-     (let ((map go-mode-map))
-       (define-key map (kbd "C-c a") 'go-test-current-project) ;; current package, really
-       (define-key map (kbd "C-c m") 'go-test-current-file)
-       (define-key map (kbd "C-c .") 'go-test-current-test)
-       (define-key map (kbd "C-c b") 'go-run)
-       (define-key map (kbd "C-h f") 'godoc-at-point))
-     ;; Prefer goimports to gofmt if installed
-     (let ((goimports (executable-find "goimports")))
-       (when goimports
-         (setq gofmt-command goimports)))
+  (require-package 'go-eldoc)
+  (go-eldoc-setup)
+  ;; Add to default go-mode key bindings
+  (let ((map go-mode-map))
+    (define-key map (kbd "C-c a") 'go-test-current-project) ;; current package, really
+    (define-key map (kbd "C-c m") 'go-test-current-file)
+    (define-key map (kbd "C-c .") 'go-test-current-test)
+    (define-key map (kbd "C-c b") 'go-run)
+    (define-key map (kbd "C-h f") 'godoc-at-point))
+  ;; Prefer goimports to gofmt if installed
+  (let ((goimports (executable-find "goimports")))
+    (when goimports
+      (setq gofmt-command goimports)))
 
 
-     ;; stop whitespace being highlighted
-     (whitespace-toggle-options '(tabs))
+  ;; stop whitespace being highlighted
+  (whitespace-toggle-options '(tabs))
 
 
-     ;; TODO Fix this path
-     (add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/golang/lint/misc/emacs"))
-     ;; Customize compile command to run go build
+  ;; TODO Fix this path
+  (add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/golang/lint/misc/emacs"))
+  ;; Customize compile command to run go build
 
-     (add-hook 'before-save-hook 'gofmt-before-save)
+  (add-hook 'before-save-hook 'gofmt-before-save)
                                         ; Customize compile command to run go build
-     (if (not (string-match "go" compile-command))
-         (set (make-local-variable 'compile-command)
-              "go build -v && go test -v && go vet"))
+  (if (not (string-match "go" compile-command))
+      (set (make-local-variable 'compile-command)
+           "go build -v && go test -v && go vet"))
                                         ; Godef jump key binding
-     (local-set-key (kbd "M-.") 'godef-jump)
+  (local-set-key (kbd "M-.") 'godef-jump)
 
 
   (let ((file-oracle "$GOPATH/src/golang.org/x/tools/cmd/oracle/oracle.el"))
