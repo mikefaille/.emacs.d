@@ -36,8 +36,8 @@
 
   (let ((path "") path-list )
     (setq pathenv "GOPATH")
-    (setq path-suffix "/src/golang.org/x/tools/cmd/oracle/oracle.el" )
-    (setq path-list (parse-colon-path (getenv pathenv)))
+    ;; (setq path-suffix "/src/golang.org/x/tools/cmd/oracle/oracle.el" )
+    ;; (setq path-list (parse-colon-path (getenv pathenv)))
     (while (and path-list (not (file-readable-p path)))
       (setq path-prefix (car path-list))
 
