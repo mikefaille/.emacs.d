@@ -7,6 +7,13 @@
 (require 'erc-autoaway)
 
 
+;; (defun erc-modified-channels-display ()
+
+
+
+
+;;   )
+
 (setq erc-modules
   (quote
    (autoaway autojoin button completion fill irccontrols keep-place list log match menu move-to-prompt netsplit networks noncommands notify notifications readonly ring stamp track)))
