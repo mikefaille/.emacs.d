@@ -17,7 +17,7 @@
 
 (set-register ?o (cons 'file (concat org-directory "/notes.org")))
 (setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
-(ido-mode)
+
 
 
 (setq org-agenda-files (concat org-directory "/task.org"))
