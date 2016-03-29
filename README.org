@@ -1,5 +1,9 @@
 * Mike's .emacs.d
 
+ido branch. To know what master delete to get helm :
+check this commit 555f86c439bb4144869c486f3bbd0b8cfef27e96
+
+
 To install :
 
 #+begin_src sh
