@@ -82,7 +82,7 @@
 (require 'core-packages)
 (require 'core-look)
 (require 'core-feel)
-(require 'core-org)
+
 
 
 
@@ -92,6 +92,9 @@
 (add-to-list 'load-path (expand-file-name packages-dir))
 
 (require 'main-custom)
+
+
+(require 'pkg-org)
 
 ;; I recommend to load yas before ac-complete
 (require 'pkg-git)
@@ -113,7 +116,6 @@
 (require 'pkg-yaml)
 (require 'pkg-php)
 
-;;(require 'pkg-org)
 ;;(require 'pkg-projectile)
 (require 'pkg-bash)
 (require 'pkg-search)
