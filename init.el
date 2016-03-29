@@ -125,7 +125,7 @@
 
 (require 'pkg-web)
 (require 'pkg-systemd)
-(require 'pkg-mu4e)
+;; (require 'pkg-mu4e)
 
 
 ;; depend on pkg-ac-complete
