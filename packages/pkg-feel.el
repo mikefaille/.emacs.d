@@ -15,9 +15,9 @@
 (setq sp-hybrid-kill-entire-symbol nil)
 (show-smartparens-global-mode +1)
 
-;; super ido
-(require-package 'flx-ido)
-(flx-ido-mode 1)
+;; super;;  ido
+;; (require-package 'flx-ido)
+;; (flx-ido-mode 1)
 
 (require-package 'flx-isearch)
 (flx-isearch-mode)

@@ -30,7 +30,7 @@
 
 
 
-(global-set-key (kbd "M-x") 'helm-M-x)
+
 (setq helm-M-x-fuzzy-match t)
 
 
@@ -78,5 +78,7 @@
   (setq helm-grep-default-command "ack -Hn --no-group --no-color %e %p %f"
         helm-grep-default-recurse-command "ack -H --no-group --no-color %e %p %f"))
 (helm-autoresize-mode 1)
+
+(global-set-key (kbd "M-x") 'helm-M-x)
 
 (provide 'pkg-helm)
