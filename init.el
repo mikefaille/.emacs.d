@@ -134,7 +134,7 @@
 (require 'go-autocomplete)
 
 (require 'pkg-irc)
-
+(require 'pkg-helm)
 
 ;; http://emacsredux.com/blog/2013/05/16/whitespace-cleanup/
 (add-hook 'before-save-hook 'whitespace-cleanup)
