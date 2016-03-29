@@ -35,7 +35,7 @@
 
 (message "Mike's .emac.d is powering up... Be patient, Master %s!" current-user)
 
-(when (version< emacs-version "24.1")
+(when (version< emacs-version "24.4")
   (error "Mike's dot emacs requires at least GNU Emacs 24.4, but you're running %s" emacs-version))
 
 ;; Always load newest byte code
@@ -286,5 +286,12 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
-
-)
+ '(package-selected-packages
+   (quote
+    (yaml-mode web-mode volatile-highlights undo-tree tern-auto-complete systemd ssh-config-mode solarized-theme smex smartrep smartparens scpaste rust-mode pt php-mode org-pomodoro org-bullets org-beautify-theme operate-on-number multiple-cursors minimap markdown-mode malabar-mode magit latex-extra json-mode js3-mode jedi ido-ubiquitous idle-highlight-mode helm-projectile helm-package helm-descbinds golint go-mode go-autocomplete gitconfig-mode git-gutter fuzzy frame-fns flycheck-rust flx-isearch flx-ido find-file-in-project expand-region eshell-prompt-extras erc-track-score erc-social-graph erc-image erc-hl-nicks emmet-mode emacs-eclim easy-kill dockerfile-mode docker-tramp docker dired-hacks-utils diminish deft css-eldoc cdlatex browse-kill-ring better-defaults bash-completion auto-complete-auctex auto-async-byte-compile auctex-latexmk anzu ack ac-capf))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
