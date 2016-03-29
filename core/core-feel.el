@@ -9,7 +9,6 @@
 ;; (setq ido-enable-flex-matching t)
 ;; (setq ido-use-faces t)
 ;; https://github.com/lewang/flx
-(setq gc-cons-threshold 20000000)
 
 
 ;; ;(ido-mode 1)
