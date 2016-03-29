@@ -1,6 +1,7 @@
 (require-package 'helm)
+(require 'helm)
 (require 'helm-config)
-(helm-autoresize-mode 1)
+
 
 (defun pl/helm-alive-p ()
   (if (boundp 'helm-alive-p)
@@ -71,3 +72,11 @@
 
 (when (autoloadp 'golden-ratio)
   (add-to-list 'golden-ratio-inhibit-functions 'pl/helm-alive-p))
+
+
+(when (executable-find "ack")
+  (setq helm-grep-default-command "ack -Hn --no-group --no-color %e %p %f"
+        helm-grep-default-recurse-command "ack -H --no-group --no-color %e %p %f"))
+(helm-autoresize-mode 1)
+
+(provide 'pkg-helm)
