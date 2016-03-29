@@ -8,10 +8,12 @@
 
 (require 'org-protocol)
 (require 'org-capture)
+(package-install 'deft)
+
+
 (require-package 'org-bullets)
 
-
-(setq org-directory "~/owncloud/org")
+(setq org-directory "~/ownCloud/org")
 
 (setq org-default-notes-file (concat org-directory "/notes.org"))
 
@@ -40,14 +42,13 @@
 
 
 
-(with-eval-after-load 'deft-mode
-  ;; Deft config
-  (require-package 'deft)
-  (setq deft-directory org-directory)
-  (setq deft-default-extension "org")
-  (setq deft-extensions (quote ("org" "txt" "text" "md" "markdown")))
 
-  )
+;; Deft config
+(setq deft-directory org-directory)
+(setq deft-default-extension "org")
+(setq deft-extensions (quote ("org" "txt" "text" "md" "markdown")))
+
+
 
 (defvar org-capture-default-file (concat org-directory "/capture.org"))
 
@@ -64,7 +65,7 @@
 (with-eval-after-load 'org
 
 
-
+  (org-bullets-mode)
   ;; Org-Babel
 
   ;; Fontifying source blocks
@@ -98,11 +99,6 @@
   ;; done.
   ;; CANCELED
   ;; can be ignored. May include a note on why it’s been cancelled.
-
-
-
-
-
   (setq org-todo-keywords
         '((sequence "TODO(t)" "DOING(i)" "PENDING(p)" "MEETING(m)" "|" "DONE(d)" "CANCELED(c)")))
   )
