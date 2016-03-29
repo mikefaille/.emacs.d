@@ -1,3 +1,9 @@
 [submodule "git-packages/emacs-color-theme-solarized"]
 	path = git-packages/emacs-color-theme-solarized
 	url = https://github.com/calve/emacs-color-theme-solarized.git
+[submodule "git-packages/benchmark-init-el"]
+	path = git-packages/benchmark-init-el
+	url = https://github.com/dholm/benchmark-init-el.git
+[submodule "/home/michael/.emacs.d/git-packages/benchmark-init-el/"]
+	path = git-packages/benchmark-init-el
+	url = https://github.com/dholm/benchmark-init-el.git
