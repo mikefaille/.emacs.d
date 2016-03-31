@@ -42,13 +42,13 @@
 (setq load-prefer-newer t)
 
 (defvar core-dir
-  (concat user-emacs-directory
-          (convert-standard-filename "core")) )
+  (convert-standard-filename(concat user-emacs-directory
+          "core")) )
 
 
 (defvar main-savefile-dir
-  (concat user-emacs-directory
-          (convert-standard-filename "savefile")) )
+  (convert-standard-filename (concat user-emacs-directory
+           "savefile") ))
 
 
 ;; add core's directories to Emacs's `load-path'
