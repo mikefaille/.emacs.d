@@ -5,6 +5,9 @@
 (require 'smartparens-latex)            ; smartparens suppose to be instaled automaticly
 (require 'tex-mik)
 
+
+;; TODO https://github.com/cgroll/dot_emacs.d/blob/master/init-latex.org
+
 ;; sensible defaults for OS X, other OSes should be covered out-of-the-box
 (when (eq system-type 'darwin)
   (setq TeX-view-program-selection
@@ -55,6 +58,31 @@
 (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 (add-hook 'LaTeX-mode-hook 'latex-extra-mode)
+
+;; http://orgmode.org/worg/org-faq.html#using-xelatex-for-pdf-export
+(setq org-latex-default-packages-alist (list
+ ("AUTO" "inputenc" t)
+        ("T1" "fontenc" t)
+        ("" "fixltx2e" nil)
+        ("" "graphicx" t)
+        ("" "longtable" nil)
+        ("" "float" nil)
+        ("" "wrapfig" nil)
+        ("" "rotating" nil)
+        ("normalem" "ulem" t)
+        ("" "amsmath" t)
+        ("" "textcomp" t)
+        ("" "marvosym" t)
+        ("" "wasysym" t)
+        ("" "amssymb" t)
+        ("" "xunicode" t)
+        ("" "url" t)
+        ("" "rotating" t)
+        ("american" "babel" t)
+        ("babel" "csquotes" t)
+        ("" "soul" t)
+        ("xetex" "hyperref" nil)
+        "\\tolerance=1000"))
 
 
 (setq reftex-plug-into-AUCTeX t)
