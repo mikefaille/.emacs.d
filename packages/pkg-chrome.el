@@ -1,4 +1,4 @@
-(when (demonp)
+(when (daemonp)
   (require-package 'edit-server-htmlize)
   (setq edit-server-new-frame t)
   (autoload 'edit-server-maybe-dehtmlize-buffer "edit-server-htmlize" "edit-server-htmlize" t)
