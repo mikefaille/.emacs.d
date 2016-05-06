@@ -7,13 +7,14 @@
           (convert-standard-filename "savefile")) )
 
 
-(require-package 'smartparens)
-(autoloadp 'smartparens-config)
-(smartparens-global-mode)
-(setq sp-base-key-bindings 'paredit)
-(setq sp-autoskip-closing-pair 'always)
-(setq sp-hybrid-kill-entire-symbol nil)
-(show-smartparens-global-mode +1)
+;; (require-package 'smartparens)
+;; (autoloadp 'smartparens-config)
+;; (smartparens-global-mode)
+;; (setq sp-base-key-bindings 'paredit)
+
+;; (setq sp-autoskip-closing-pair 'always)
+;; (setq sp-hybrid-kill-entire-symbol nil)
+;; (show-smartparens-global-mode +1)
 
 ;; super;;  ido
 ;; (require-package 'flx-ido)
