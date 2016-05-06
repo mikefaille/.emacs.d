@@ -104,43 +104,46 @@
                (emacs-lisp . t)
                (ruby . t)
                (sh . t)
-               ))
+               )))
+
+          ;; (global-unset-key (kbd "C-<right>") )
+          ;; (global-set-key (kbd "C-<right>") 'forward-word)
+          ;; Notes / Tasks / TODOs
+
+          ;; Make custom markers for todo items:
+
+          ;; TODO
+          ;; something that needs to be done at some point. If it has a date, it should be done on that day but it may be moved.
+          ;; PENDING
+          ;; something that’s awaiting feedback from someone else. If it has a date, it needs followup if there hasn’t been any feedback at that time.
+          ;; MEETING
+          ;; a scheduled meeting and cannot easily be rescheduled.
+          ;; DOING
+          ;; In progress, needs to be finished
+          ;; DONE
+          ;; done.
+          ;; CANCELED
+          ;; can be ignored. May include a note on why it’s been cancelled.
+
+          (setq org-todo-keywords '((sequence "☛ TODO(t)" "|" "✔ DONE(d)")
+                                    (sequence "⚑ WAITING(w)" "|")
+                                    (sequence "|" "✘ CANCELED(c)")))
 
 
-            ;; Notes / Tasks / TODOs
-
-            ;; Make custom markers for todo items:
-
-            ;; TODO
-            ;; something that needs to be done at some point. If it has a date, it should be done on that day but it may be moved.
-            ;; PENDING
-            ;; something that’s awaiting feedback from someone else. If it has a date, it needs followup if there hasn’t been any feedback at that time.
-            ;; MEETING
-            ;; a scheduled meeting and cannot easily be rescheduled.
-            ;; DOING
-            ;; In progress, needs to be finished
-            ;; DONE
-            ;; done.
-            ;; CANCELED
-            ;; can be ignored. May include a note on why it’s been cancelled.
-
-            (setq org-todo-keywords '((sequence "☛ TODO(t)" "|" "✔ DONE(d)")
-                                      (sequence "⚑ WAITING(w)" "|")
-                                      (sequence "|" "✘ CANCELED(c)")))
 
 
-            ))
-
-;; (defun set-org-agenda-files ()
-;;   "Set agenda files using org folder."
-;;   (setq org-agenda-files  (list (directory-files org-directory t ".org$")
-;; )
-;;         ))
 
 
-;; (add-hook 'org-agenda-mode-hook (set-org-agenda-files))
+          ;; (defun set-org-agenda-files ()
+          ;;   "Set agenda files using org folder."
+          ;;   (setq org-agenda-files  (list (directory-files org-directory t ".org$")
+          ;; )
+          ;;         ))
 
-;; (remove-hook 'org-agenda-mode-hook set-org-agenda-files))
 
-(provide 'pkg-org)
+          ;; (add-hook 'org-agenda-mode-hook (set-org-agenda-files))
+
+          ;; (remove-hook 'org-agenda-mode-hook set-org-agenda-files))
+
+          (provide 'pkg-org))
 ;;
