@@ -3,9 +3,9 @@
 ;; no welcome screen
 ;;; code:
 
-(add-to-list 'load-path "~/.emacs.d/git-packages/benchmark-init-el/")
-(require 'benchmark-init)
-(benchmark-init/activate)
+;; (add-to-list 'load-path "~/.emacs.d/git-packages/benchmark-init-el/")
+;; (require 'benchmark-init)
+;; (benchmark-init/activate)
 
 (package-initialize)
 

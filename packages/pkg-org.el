@@ -9,16 +9,22 @@
 (require 'org-protocol)
 (require 'org-capture)
 (package-install 'deft)
-
+(require 'deft)
 
 (require-package 'org-bullets)
 
 (setq org-directory "~/ownCloud/org")
 
+(require 'org-clock)
+(setq org-clock-persist 'history)
+(org-clock-persistence-insinuate)
+
+
 (setq org-default-notes-file (concat org-directory "/notes.org"))
 
 (set-register ?o (cons 'file (concat org-directory "/notes.org")))
 (setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
+
 
 (setq org-latex-pdf-process '(
                               "latexmk -pdflatex='lualatex -shell-escape -interaction nonstopmode' -pdf -f  %f"
@@ -53,12 +59,12 @@
 
 
 
-;; Deft config
+;; deft config
 (setq deft-directory org-directory)
 (setq deft-default-extension "org")
 (setq deft-extensions (quote ("org" "txt" "text" "md" "markdown")))
-
-
+(global-set-key [f8] 'deft)
+(setq deft-auto-save-interval 5)
 
 (defvar org-capture-default-file (concat org-directory "/capture.org"))
 
