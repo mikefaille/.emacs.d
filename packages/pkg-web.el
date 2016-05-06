@@ -26,7 +26,17 @@
 
 
 (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
+
+
+(require 'smart-tab)
+(defun add-emmet-expand-to-smart-tab-completions ()
+  ;; Add an entry for current major mode in
+  ;; `smart-tab-completion-functions-alist' to use
+  ;; `emmet-expand-line'.
+  (add-to-list 'smart-tab-completion-functions-alist
+               (cons major-mode #'emmet-expand-line)))
 (add-hook 'sgml-mode-hook 'add-emmet-expand-to-smart-tab-completions)
+
 (add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
 
 (provide 'pkg-web)
