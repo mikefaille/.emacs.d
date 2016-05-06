@@ -68,4 +68,15 @@ directory to make multiple eshell windows easier."
 
 (global-set-key (kbd "C-!") 'eshell-toggle)
 
+
+
+(require 'em-smart)
+(setq eshell-where-to-jump 'begin)
+(setq eshell-review-quick-commands nil)
+(setq eshell-smart-space-goes-to-end t)
+
+(setq password-cache t) ; enable password caching
+(setq password-cache-expiry 3600) ; for one hour (time in secs)
+(setq eshell-prefer-lisp-functions t)
+
 (provide 'pkg-eshell)
