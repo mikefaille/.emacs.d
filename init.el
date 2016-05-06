@@ -95,9 +95,9 @@
 
 (require 'pkg-org)
 
-;; I recommend to load yas before ac-complete
+;;  recommend to load yas before ac-complete
 (require 'pkg-git)
-(require 'pkg-yas)
+;; (require 'pkg-yas)
 (require 'pkg-ac-complete)
 (require 'pkg-flycheck)
 
