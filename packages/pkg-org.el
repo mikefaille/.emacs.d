@@ -38,7 +38,7 @@
 
 
 
-(setq org-agenda-files (concat org-directory "/task.org"))
+;; (setq org-agenda-files (concat org-directory "/task.org"))
 
 
 (with-eval-after-load 'org-capture-mode
