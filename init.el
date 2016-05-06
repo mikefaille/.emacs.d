@@ -134,6 +134,7 @@
 
 (require 'pkg-irc)
 (require 'pkg-helm)
+(require 'pkg-chrome)
 
 ;; http://emacsredux.com/blog/2013/05/16/whitespace-cleanup/
 (add-hook 'before-save-hook 'whitespace-cleanup)
