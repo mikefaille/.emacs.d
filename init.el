@@ -133,7 +133,8 @@
 (require 'go-autocomplete)
 
 (require 'pkg-irc)
-(require 'pkg-helm)
+;; (require 'pkg-helm)
+(require 'pkg-ido)
 (require 'pkg-chrome)
 
 ;; http://emacsredux.com/blog/2013/05/16/whitespace-cleanup/
