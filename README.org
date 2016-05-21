@@ -1,13 +1,12 @@
 * Mike's .emacs.d
-
-To install :
+** To install :
 
 #+begin_src sh
 cd ~
 git clone git@github.com:mikefaille/.emacs.d.git --recursive
 #+end_src
 
-
+** Setup golang :
 To setup go bin for emacs.
 
 - First, install go.
@@ -20,15 +19,15 @@ Note : Have ~/go as GOPATH.
 #+end_src
 
 
-To use platium searcher :
-
+** To use platium searcher :
 - get it
 
 #+begin_src sh
 go get -u github.com/monochromegane/the_platinum_searcher/...
 #+end_src
 
-
+** Optionnal org-mode setup :
+Install this package : latexmk
 
 Python :
 
