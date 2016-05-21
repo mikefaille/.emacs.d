@@ -37,7 +37,7 @@
 
 
 (require 'package)
-(package-initialize)
+
 (when (not package-archive-contents)
   (package-refresh-contents))
 
@@ -53,8 +53,7 @@
 
 
 ; activate all the packages (in particular autoloads)
-
-
+(package-initialize)
 
 
 (defun require-package (package &optional min-version no-refresh)

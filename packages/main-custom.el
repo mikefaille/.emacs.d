@@ -1,4 +1,4 @@
-;;; prelude-custom.el --- Emacs Prelude: Prelude's customizable variables.
+;;; Prelude-custom.el --- Emacs Prelude: Prelude's customizable variables.
 ;;
 ;; Copyright © 2011-2014 Bozhidar Batsov
 ;;
