@@ -144,4 +144,7 @@
   ;; (load-theme 'tronesque t)
   )
 
+(require-package 'powerline)
+(powerline-center-theme)
+
 (provide 'pkg-theme)
