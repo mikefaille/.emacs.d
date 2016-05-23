@@ -2,9 +2,8 @@
 
 (require-package 'projectile)
 (require-package 'go-projectile)
-
-
-(require 'go-projectile)
+(projectile-global-mode t)
+;; (require 'go-projectile)
 (require-package 'exec-path-from-shell)
 
 (setq go-projectile-tools-path (concat (exec-path-from-shell-copy-env "HOME") "/go"))
@@ -12,12 +11,24 @@
 
 
 (projectile-global-mode)
+(setq projectile-completion-system 'ido)
+
+;; (setq projectile-keymap-prefix (kbd "C-c C-p"))
+(global-set-key (kbd "C-é") 'projectile-commander)
+(setq projectile-switch-project-action 'projectile-dired)
+
+(require-package 'perspective)
+(persp-mode)
+(require-package 'persp-projectile)
+
+;; (define-key projectile-mode-map (kbd "s-x") 'projectile-persp-switch-project)
+
+(define-key projectile-mode-map (kbd "C-<tab>") 'persp-next)
+(define-key projectile-mode-map (kbd "<C-iso-lefttab>") 'persp-prev)
 
 
 
-
-(require-package 'projectile)
 (setq projectile-cache-file (expand-file-name "projectile.cache" main-savefile-dir))
-(projectile-global-mode t)
+
 
 (provide 'pkg-projectile)
