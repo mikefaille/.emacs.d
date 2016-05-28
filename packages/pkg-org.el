@@ -6,7 +6,7 @@
 
 ;; http://orgmode.org/worg/org-tutorials/orgtutorial_dto.html
 
-
+(require-package 'org-plus-contrib)
 
 (require 'org-protocol)
 (require 'org-capture)
@@ -106,8 +106,7 @@
 
             (org-babel-do-load-languages
              'org-babel-load-languages
-             '((R . t)
-               (emacs-lisp . t)
+             '((emacs-lisp . t)
                (ruby . t)
                (sh . t)
                ))
