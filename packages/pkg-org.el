@@ -10,25 +10,38 @@
 
 (require 'org-protocol)
 (require 'org-capture)
+(require 'org-mobile)
 
+(require-package 'ox-reveal)
 ;; TODO : test it
 (require-package 'deft)
 ;; (require 'deft)
 
 (require-package 'org-bullets)
 
-(setq org-directory "~/ownCloud/org")
+(setq org-directory "~/org")
+
+(setq org-default-notes-file (concat org-directory "/notes.org"))
+
+;; as suggested here : http://sachachua.com/blog/2015/02/learn-take-notes-efficiently-org-mode/
+(setq org-completion-use-ido t)
+
+;; Set to the location of your Org files on your local system
+(setq org-mobile-files org-directory )
+;; Set to the name of the file where new notes will be stored
+(setq org-mobile-inbox-for-pull (concat org-mobile-files "/flagged.org"))
+;; TODO Set to <your syncthing directory root directory>/MobileOrg.
+(setq org-mobile-directory "~/ownCloud/org-mobile")
 
 (require 'org-clock)
 (setq org-clock-persist 'history)
 (org-clock-persistence-insinuate)
 
 
-(setq org-default-notes-file (concat org-directory "/notes.org"))
+
 
 (set-register ?o (cons 'file (concat org-directory "/notes.org")))
 (setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
-
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
 
