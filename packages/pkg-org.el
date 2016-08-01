@@ -38,6 +38,14 @@
 (org-clock-persistence-insinuate)
 
 
+;; (func (org-reveal2scp)
+;; (let (export-name)
+;;   (defvar export-name   (org-reveal-export-to-html))
+;;   (start-process "org-reveal2scp" "*org-reveal2scp*" "scp" export-name ":/var/" "-p" "222" )
+;; ⇒ #<process my-process>
+
+;;   )
+;; )
 
 
 (set-register ?o (cons 'file (concat org-directory "/notes.org")))
@@ -122,7 +130,9 @@
              '((emacs-lisp . t)
                (ruby . t)
                (sh . t)
-               ))
+               (ditaa . t)
+               (dot . t))
+               )
 
             ;; (global-unset-key (kbd "C-<right>") )
             ;; (global-set-key (kbd "C-<right>") 'forward-word)
@@ -169,6 +179,35 @@
             (setq org-log-done t))
           )
 
+
+
+(setq org-publish-project-alist
+      '(
+        ("org-DevOps-VilleMTL"
+         ;; Location of org files
+         :base-directory "~/src/DevOps-VilleMTL"
+         :base-extension "org"
+         :headline-levels 4
+
+         ;; Location of Jekyll files
+         :publishing-directory "~/Projects/randomgeekery.org/jekyll/"
+         :recursive t
+         :publishing-function org-publish-org-to-html
+
+         :html-extension "html"
+
+         ;; Only export section between <body></body>
+         :body-only t)
+
+        ("org-static-randomgeekery"
+         :base-directory "~/Projects/randomgeekery.org/org/"
+         :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg"
+         :publishing-directory "~/Projects/randomgeekery.org/"
+         :recursive t
+         :publishing-function org-publish-attachment)
+
+        ("rg" :components ("org-randomgeekery" "org-static-randomgeekery"))
+        ))
 
 
 (provide 'pkg-org)
