@@ -137,6 +137,8 @@
 (require 'pkg-ido)
 (require 'pkg-chrome)
 
+(require 'nix-mode)
+
 ;; http://emacsredux.com/blog/2013/05/16/whitespace-cleanup/
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
