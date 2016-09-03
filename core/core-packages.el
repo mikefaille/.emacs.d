@@ -42,14 +42,15 @@
   (package-refresh-contents))
 
 
-(defvar core-modules '(better-defaults smartparens idle-highlight-mode  find-file-in-project  smex scpaste  helm flycheck undo-tree dired-hacks-utils   flycheck malabar-mode  multiple-cursors  emacs-eclim eshell-prompt-extras fuzzy deferred auto-async-byte-compile markdown-mode async ) "A list of modules to ensure are installed at launch.")
+(defvar core-modules '(better-defaults smartparens idle-highlight-mode  find-file-in-project  smex scpaste  helm flycheck undo-tree dired-hacks-utils   flycheck malabar-mode  multiple-cursors   eshell-prompt-extras fuzzy deferred auto-async-byte-compile markdown-mode async ) "A list of modules to ensure are installed at launch.")
 
 (defvar-local enabled-modules '(nil) "A list of modules to ensure are installed at launch.")
 
 (add-to-list 'package-archives
              '("org" . "http://orgmode.org/elpa/") t)
 (add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/"))
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives
              '("elpy" . "http://jorgenschaefer.github.io/packages/"))
 
