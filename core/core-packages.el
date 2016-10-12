@@ -41,8 +41,7 @@
 (when (not package-archive-contents)
   (package-refresh-contents t))
 
-
-(defvar core-modules '(better-defaults smartparens idle-highlight-mode  find-file-in-project  smex scpaste  helm flycheck undo-tree dired-hacks-utils   flycheck malabar-mode  multiple-cursors   eshell-prompt-extras fuzzy deferred auto-async-byte-compile markdown-mode async ) "A list of modules to ensure are installed at launch.")
+(defvar core-modules '(better-defaults smartparens idle-highlight-mode  find-file-in-project  smex scpaste  helm flycheck undo-tree dired-hacks-utils   flycheck malabar-mode  eshell-prompt-extras fuzzy deferred auto-async-byte-compile markdown-mode async ) "A list of modules to ensure are installed at launch.")
 
 (defvar-local enabled-modules '(nil) "A list of modules to ensure are installed at launch.")
 
@@ -120,12 +119,6 @@ re-downloaded in order to locate PACKAGE."
 
 (add-subfolders-to-load-path2 (expand-file-name git-packages-dir))
 
-
-(require-package 'multiple-cursors)
-(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
 
 
