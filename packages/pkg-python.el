@@ -24,4 +24,8 @@
 ;; pip install importmagic
 ;; https://github.com/jorgenschaefer/elpy
 
+(require-package 'py-autopep8)
+(setq py-autopep8-options '("--max-line-length=120"))
+
+
 (provide 'pkg-python)
