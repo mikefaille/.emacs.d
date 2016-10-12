@@ -67,6 +67,12 @@
 (setq large-file-warning-threshold 100000000)
 
 
+(setenv "PATH"
+        ( concat
+          (getenv "HOME")
+          "/bin" ":"
+          (getenv "PATH")))
+
 ;; replace current selection by yank or type
 (delete-selection-mode 1)
 
