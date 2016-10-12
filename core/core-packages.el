@@ -39,7 +39,7 @@
 (require 'package)
 
 (when (not package-archive-contents)
-  (package-refresh-contents))
+  (package-refresh-contents t))
 
 
 (defvar core-modules '(better-defaults smartparens idle-highlight-mode  find-file-in-project  smex scpaste  helm flycheck undo-tree dired-hacks-utils   flycheck malabar-mode  multiple-cursors   eshell-prompt-extras fuzzy deferred auto-async-byte-compile markdown-mode async ) "A list of modules to ensure are installed at launch.")
@@ -69,7 +69,7 @@ re-downloaded in order to locate PACKAGE."
     (if (or (assoc package package-archive-contents) no-refresh)
         (package-install package)
       (progn
-        (package-refresh-contents)
+        (package-refresh-contents t)
         (require-package package min-version t)))))
 
 
