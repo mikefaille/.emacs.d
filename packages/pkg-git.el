@@ -24,4 +24,26 @@
 ;; Revert current hunk
 (global-set-key (kbd "C-x v r") 'git-gutter:revert-hunk)
 
+
+
+(defun git-add-files(files)
+  "Run git add with the input file"
+  (interactive)
+  (shell-command (format "git add %s" files)))
+
+(defun dired-git-add-marked-files()
+  "For each marked file in a dired buffer add it to the index"
+  (interactive)
+  (if (eq major-mode 'dired-mode)
+      (let ((filenames (dired-get-marked-files))
+	    (files ""))
+	(dolist (fn filenames)
+	  (setq fn (shell-quote-argument fn))
+	  (setq files (concat files " " fn)))
+	(git-add-files files))
+    (error (format "Not a Dired buffer \(%s\)" major-mode))))
+
+
+
+
 (provide 'pkg-git)
