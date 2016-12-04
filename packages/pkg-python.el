@@ -15,6 +15,10 @@
 (setq ein:use-auto-complete-superpack t)
 (setq ein:use-smartrep t)
 (add-hook 'ein:connect-mode-hook 'ein:jedi-setup)
+(setq python-guess-indent t)
+
+;; (setq-default indent-tabs-mode nil)
+;; (setq-default tab-width 4)
 
 
 ;; pip install jedi
