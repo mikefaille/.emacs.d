@@ -29,7 +29,7 @@ go get -u github.com/monochromegane/the_platinum_searcher/...
 ** Optionnal org-mode setup :
 Install this package : latexmk
 
-Python :
+** Python :
 
 Install jedi before, you must :
 M-x jedi:install-server
