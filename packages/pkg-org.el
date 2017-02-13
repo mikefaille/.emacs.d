@@ -122,8 +122,59 @@
 ;;   )
 
 
+;; TODO
+;; something that needs to be done at some point. If it has a date, it should be done on that day but it may be moved.
+;; PENDING
+;; something that’s awaiting feedback from someone else. If it has a date, it needs followup if there hasn’t been any feedback at that time.
+;; MEETING
+;; a scheduled meeting and cannot easily be rescheduled.
+;; DOING
+;; In progress, needs to be finished
+;; DONE
+;; done.
+;; CANCELED
+;; can be ignored. May include a note on why it’s been cancelled.
 
 (require 'org-bullets)
+(add-hook 'org-mode-hook
+          (lambda ()
+            (org-bullets-mode)
+
+            (visual-line-mode t)
+            ;; Org-Babel
+
+            ;; Fontifying source blocks
+(setq org-todo-keyword-faces
+      (quote (("TODO" :foreground "red" :weight bold)
+              ("NEXT" :foreground "turquoise" :weight bold)
+              ("DONE" :foreground "forest green" :weight bold)
+              ("WAITING" :foreground "orange" :weight bold)
+              ("HOLD" :foreground "magenta" :weight bold)
+              ("CANCELLED" :foreground "forest green" :weight bold)
+              ("MEETING" :foreground "forest green" :weight bold)
+              ("PHONE" :foreground "forest green" :weight bold))))
+
+
+(setq org-todo-state-tags-triggers
+      (quote (("CANCELLED" ("CANCELLED" . t))
+              ("WAITING" ("WAITING" . t))
+              ("HOLD" ("WAITING") ("HOLD" . t))
+              (done ("WAITING") ("HOLD"))
+              ("TODO" ("WAITING") ("CANCELLED") ("HOLD"))
+              ("NEXT" ("WAITING") ("CANCELLED") ("HOLD"))
+              ("DONE" ("WAITING") ("CANCELLED") ("HOLD")))))
+
+
+            ;; (global-unset-key (kbd "C-<right>") )
+            ;; (global-set-key (kbd "C-<right>") 'forward-word)
+            ;; Notes / Tasks / TODOs
+
+            ;; Make custom markers for todo items:
+
+
+
+
+
 (add-hook 'org-mode-hook
           (lambda ()
             (org-bullets-mode)
@@ -136,34 +187,7 @@
             ;; Enable syntax highlighting in src blocks.
 
             (setq-default org-src-fontify-natively t)
-
-
-            ;; (global-unset-key (kbd "C-<right>") )
-            ;; (global-set-key (kbd "C-<right>") 'forward-word)
-            ;; Notes / Tasks / TODOs
-
-            ;; Make custom markers for todo items:
-
-            ;; TODO
-            ;; something that needs to be done at some point. If it has a date, it should be done on that day but it may be moved.
-            ;; PENDING
-            ;; something that’s awaiting feedback from someone else. If it has a date, it needs followup if there hasn’t been any feedback at that time.
-            ;; MEETING
-            ;; a scheduled meeting and cannot easily be rescheduled.
-            ;; DOING
-            ;; In progress, needs to be finished
-            ;; DONE
-            ;; done.
-            ;; CANCELED
-            ;; can be ignored. May include a note on why it’s been cancelled.
-
-            (setq org-todo-keywords '((sequence "☛ TODO(t)" "|" "✔ DONE(d)")
-                                      (sequence "⚑ WAITING(w)" "|")
-                                      (sequence "|" "✘ CANCELED(c)")))
-
-
-
-
+            ))
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((R . t)
