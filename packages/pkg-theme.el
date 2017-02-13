@@ -143,8 +143,10 @@
                 ))
   ;; (load-theme 'tronesque t)
   )
+(require-package 'spaceline)
+(require 'spaceline-config)
+(spaceline-spacemacs-theme)
 
-(require-package 'powerline)
-(powerline-center-theme)
+
 
 (provide 'pkg-theme)
