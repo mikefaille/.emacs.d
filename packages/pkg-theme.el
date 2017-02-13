@@ -147,6 +147,10 @@
 (require 'spaceline-config)
 (spaceline-spacemacs-theme)
 
+(require-package 'diminish)
+(diminish 'auto-complete-mode)
+(diminish 'git-gutter-mode)
+
 
 
 (provide 'pkg-theme)
