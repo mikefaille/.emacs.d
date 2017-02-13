@@ -174,10 +174,14 @@
               ("NEXT" ("WAITING") ("CANCELLED") ("HOLD"))
               ("DONE" ("WAITING") ("CANCELLED") ("HOLD")))))
 
+;; Remove empty LOGBOOK drawers on clock out
+(defun bh/remove-empty-drawer-on-clock-out ()
+  (interactive)
+  (save-excursion
+    (beginning-of-line 0)
+    (org-remove-empty-drawer-at "LOGBOOK" (point))))
 
-            ;; (global-unset-key (kbd "C-<right>") )
-            ;; (global-set-key (kbd "C-<right>") 'forward-word)
-            ;; Notes / Tasks / TODOs
+(add-hook 'org-clock-out-hook 'bh/remove-empty-drawer-on-clock-out 'append)
 
             ;; Make custom markers for todo items:
 
@@ -226,6 +230,7 @@
 
        ))
 
+(setq org-log-done t)
 
 
 (setq org-publish-project-alist
