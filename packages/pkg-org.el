@@ -137,14 +137,6 @@
 
             (setq-default org-src-fontify-natively t)
 
-            (org-babel-do-load-languages
-             'org-babel-load-languages
-             '((emacs-lisp . t)
-               (ruby . t)
-               (sh . t)
-               (ditaa . t)
-               (dot . t))
-               )
 
             ;; (global-unset-key (kbd "C-<right>") )
             ;; (global-set-key (kbd "C-<right>") 'forward-word)
@@ -171,6 +163,17 @@
 
 
 
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((R . t)
+   (emacs-lisp . nil)
+   (ruby . t)
+   (sh . t)
+   (ditaa . t)
+   (plantuml . t)
+   (dot . t)
+   ))
 
 
 
