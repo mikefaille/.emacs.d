@@ -21,7 +21,17 @@
 
 (setq org-directory "~/org")
 
-(setq org-default-notes-file (concat org-directory "/notes.org"))
+(setq org-default-notes-file (concat org-directory "/refile.org"))
+
+(defun set-org-file (pkg-org/file)
+
+  (concat org-directory pkg-org/file)
+
+  )
+
+
+
+
 
 ;; as suggested here : http://sachachua.com/blog/2015/02/learn-take-notes-efficiently-org-mode/
 (setq org-completion-use-ido t)
@@ -201,22 +211,20 @@
 
 
 
-            ;; (defun set-org-agenda-files ()
-            ;;   "Set agenda files using org folder."
-            ;;   (setq org-agenda-files  (list (directory-files org-directory t ".org$")
-            ;; )
-            ;;         ))
 
 
-            ;; (add-hook 'org-agenda-mode-hook (set-org-agenda-files))
-
-            ;; (remove-hook 'org-agenda-mode-hook set-org-agenda-files))
 
 
-            (setq org-agenda-files (list (concat org-directory "/task.org") ))
 
-            (setq org-log-done t))
-          )
+
+(setq org-agenda-files
+      (list
+       (concat org-directory "/home/")
+       (concat org-directory "/clients/desjardins")
+       ;; (concat org-directory "/clients/ETS")
+
+
+       ))
 
 
 
