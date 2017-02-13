@@ -69,17 +69,29 @@
 
 
 (with-eval-after-load 'org-capture-mode
+(setq org-capture-templates
+      (quote
 
-  (setq org-capture-templates
-        (quote
-         (("w"
-           "Default template"
-           entry
-           (file+headline org-capture-default-file "Notes")
-           "* %^{Title}\n\n  Source: %u, %c\n\n  %i"
-           :empty-lines 1)
-          ;; ... more templates here ...
-          )))
+       (("t" "todo" entry (file (set-org-file  "/refile.org"))
+         "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
+        ("r" "respond" entry (file (set-org-file "/refile.org"))
+         "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
+        ("n" "note" entry (file (set-org-file "/refile.org"))
+         "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t)
+        ("j" "Journal" entry (file+datetree (set-org-file "~/git/org/diary.org"))
+         "* %?\n%U\n" :clock-in t :clock-resume t)
+        ("w" "org-protocol" entry (file (set-org-file "~/git/org/refile.org"))
+         "* TODO Review %c\n%U\n" :immediate-finish t)
+        ("m" "Meeting" entry (file (set-org-file "~/git/org/refile.org"))
+         "* MEETING with %? :MEETING:\n%U" :clock-in t :clock-resume t)
+        ("p" "Phone call" entry (file "~/git/org/refile.org")
+         "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)
+        ("h" "Habit" entry (file (set-org-file "~/git/org/refile.org"))
+         "* NEXT %?\n%U\n%a\nSCHEDULED: %(format-time-string \"%<<%Y-%m-%d %a .+1d/3d>>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n"))))
+
+
+
+
 
   )
 
