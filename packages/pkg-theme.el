@@ -130,19 +130,17 @@
                                         frame-name
                                         "\""))))
 
-;; ;; (add-hook 'window-setup-hook 'set-selected-frame-dark)
+;;; Configure frame at launch without deamon
 (if (window-system)
     (set-selected-frame-dark))
 
-(if (daemonp)
-    (add-hook 'after-make-frame-functions
-              (lambda (frame)
-                (select-frame frame)
-                (set-selected-frame-dark)
-                ;; (load-theme 'tronesque t)
-                ))
-  ;; (load-theme 'tronesque t)
-  )
+;;; Configure frame on new frame when emacs is already launch
+(add-hook 'after-make-frame-functions
+          (lambda (frame)
+            (select-frame frame)
+            (set-selected-frame-dark)
+            ))
+
 (require-package 'spaceline)
 (require 'spaceline-config)
 (spaceline-spacemacs-theme)
