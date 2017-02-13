@@ -1,7 +1,7 @@
 (require-package 'mu4e-maildirs-extension)
-(require 'mu4e)
-(require 'mu4e-contrib)
-(require 'smtpmail)
+(require-package 'mu4e)
+(require-package 'mu4e-contrib)
+(require-package 'smtpmail)
 
 (setq mu4e-maildir       "~/.mail/gmail")   ;; top-level Maildir
 
