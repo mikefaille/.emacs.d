@@ -148,7 +148,20 @@
 (require-package 'diminish)
 (diminish 'auto-complete-mode)
 (diminish 'git-gutter-mode)
+(diminish 'whitespace-mode)
+(diminish 'flyspell-mode)
+(diminish 'abbrev-mode)
 
 
+(defface smerge-refined-added
+  '((default
+      :inherit smerge-refined-change)
+    (((class color) (min-colors 88) (background light))
+     :background "#aaffaa")
+    (((class color) (min-colors 88) (background dark))
+     :background "#859900")
+    (t :inverse-video t))
+  "Face used for added characters shown by `smerge-refine'."
+  :version "24.3")
 
 (provide 'pkg-theme)
