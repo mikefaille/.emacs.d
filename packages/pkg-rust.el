@@ -36,7 +36,7 @@
                               ;; (define-key rust-mode-map (kbd "<f5>") 'rust-save-compile-and-run)
 
                               (define-key rust-mode-map (kbd "C-c C-c") 'rust-save-compile-and-run)
-
+                              (setq rust-format-on-save t)
 
                               ;; (eval-after-load 'flycheck
                               ;;   '(add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
