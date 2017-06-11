@@ -223,7 +223,10 @@ The body of the advice is in BODY."
 
 ;; ediff - don't start another frame
 (require 'ediff)
-(setq ediff-window-setup-function 'ediff-setup-windows-plain)
+(setq ediff-split-window-function 'split-window-horizontally)
+(setq ediff-merge-split-window-function 'split-window-vertically)
+
+;; (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
 ;; clean up obsolete buffers automatically
 (require 'midnight)
