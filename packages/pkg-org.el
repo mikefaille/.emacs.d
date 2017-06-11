@@ -17,6 +17,7 @@
 (require-package 'deft)
 ;; (require 'deft)
 
+
 (require-package 'org-bullets)
 
 (setq org-directory "~/org")
@@ -34,6 +35,7 @@
 
 
 ;; as suggested here : http://sachachua.com/blog/2015/02/learn-take-notes-efficiently-org-mode/
+(ido-mode)
 (setq org-completion-use-ido t)
 
 ;; Set to the location of your Org files on your local system
@@ -78,7 +80,37 @@
 ;; (setq org-agenda-files (concat org-directory "/task.org"))
 
 
-(with-eval-after-load 'org-capture-mode
+(add-to-list 'org-protocol-protocol-alist
+             '("Hello World"
+               :protocol "hello-world"
+               :function hello-world))
+
+(defun  hello-world (data)
+  "Say hello to the world."
+  (message (concat "hello " data))
+  nil)
+
+(setq server-kill-new-buffers nil)
+
+
+
+;; ("w" "Web site" entry
+;;  (file "")
+;;  "* %a :website:\n\n%U %?\n\n%:initial")
+;; ("p" "Protocol" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
+;;  "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
+;; ("w" "Firefox Capture Template" entry
+;;  (file+headline "ff-notes.org" "Firefox")
+;;  "* BOOKMARKS %T\n%c\%a\n%i\n Tan's Note:%?" :prepend t :jump-to-captured t :empty-lines-after 1 :unnarrowed t)
+
+;; ("w" "Firefox Capture Template" entry
+;;  (file+headline "chrome-notes.org" "Web/Notes")
+;;  "* BOOKMARKS %T\n%c\%a\n%i\n Tan's Note:%?" :prepend t :jump-to-captured t :empty-lines-after 1 :unnarrowed t)
+
+;; ("L" "Protocol Link" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
+;;  "* %? [[%:link][%:description]] \nCaptured On: %U")
+;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
+
 (setq org-capture-templates
       (quote
 
@@ -102,8 +134,55 @@
 
 
 
+;; (defconst org-protocol-protocol-alist-default
+;;   '(("org-capture" :protocol "capture"
+;;      :function org-protocol-capture
+;;      :kill-client t)
+;;     ;; ...
+;;     ))
 
-  )
+;; (with-eval-after-load 'org-capture-mode
+
+;;   (advice-add 'org-capture-finalize :after 'kk/delete-frame-if-neccessary)
+;;   (advice-add 'org-capture-kill :after 'kk/delete-frame-if-neccessary)
+;;   (advice-add 'org-capture-refile :after 'kk/delete-frame-if-neccessary)
+;;   (defvar kk/delete-frame-after-capture 0 "Whether to delete the last frame after the current capture")
+
+;;   (defun kk/delete-frame-if-neccessary (&rest r)
+;;     (cond
+;;      ((= kk/delete-frame-after-capture 0) nil)
+;;      ((> kk/delete-frame-after-capture 1)
+;;       (setq kk/delete-frame-after-capture (- kk/delete-frame-after-capture 1)))
+;;      (t
+;;       (setq kk/delete-frame-after-capture 0)
+;;       (delete-frame))))
+
+
+;;   (setq org-capture-templates
+;;         (quote
+;;          (("w"
+;;            "Default template"
+;;            entry
+;;            (file+headline org-capture-default-file "Notes")
+;;            "* %^{Title}\n\n  Source: %u, %c\n\n  %i"
+;;            :empty-lines 1)
+
+
+;;           ("p" "Protocol" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
+;;            "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
+;;           ("L" "Protocol Link" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
+;;            "* %? [[%:link][%:description]] %(progn (setq kk/delete-frame-after-capture 2) \"\")\nCaptured On: %U"
+;;            :empty-lines 1)
+
+
+
+
+;;           ;; ... more templates here ...
+;;           )))
+
+
+;;   )
+
 
 
 
@@ -150,8 +229,7 @@
           (lambda ()
             (org-bullets-mode)
 
-            (visual-line-mode t)
-            ;; Org-Babel
+            (visual-line-mode t)))
 
             ;; Fontifying source blocks
 (setq org-todo-keyword-faces
@@ -183,7 +261,8 @@
 
 (add-hook 'org-clock-out-hook 'bh/remove-empty-drawer-on-clock-out 'append)
 
-            ;; Make custom markers for todo items:
+(setq org-use-fast-todo-selection t)
+(setq org-treat-S-cursor-todo-selection-as-state-change nil)
 
 
 
@@ -213,12 +292,27 @@
    (dot . t)
    ))
 
+;; (global-unset-key (kbd "C-<right>") )
+;; (global-set-key (kbd "C-<right>") 'forward-word)
+;; Notes / Tasks / TODOs
+
+;; Make custom markers for todo items:
 
 
 
 
 
 
+;; (defun set-org-agenda-files ()
+;;   "Set agenda files using org folder."
+;;   (setq org-agenda-files  (list (directory-files org-directory t ".org$")
+;; )
+;;         ))
+
+
+;; (add-hook 'org-agenda-mode-hook (set-org-agenda-files))
+
+;; (remove-hook 'org-agenda-mode-hook set-org-agenda-files))
 
 
 (setq org-agenda-files
@@ -231,6 +325,8 @@
        ))
 
 (setq org-log-done t)
+;; )
+
 
 
 (setq org-publish-project-alist
@@ -262,5 +358,6 @@
         ))
 
 
+
+
 (provide 'pkg-org)
-;;
