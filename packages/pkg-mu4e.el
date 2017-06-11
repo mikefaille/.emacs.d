@@ -40,15 +40,14 @@
 
 ;; something about ourselves
 (setq
- user-mail-address "michael.faille.1@ens.etsmtl.ca"
- user-full-name  "Michaël Faille"
  mu4e-reply-to-address "michael.faille.io"
+ user-mail-address "michael.faille.io"
+ user-full-name  "Michaël Faille"
+
  mu4e-compose-signature
  (concat
   "---\n"
   "Michaël Faille\n"
-  "Étudiant au baccalauréat en génie des technologies de l'information\n"
-  "Université du Québec - École de technologie supérieure, Montréal (Québec)\n"
   ))
 
 ;;alternatively, for emacs-24 you can use:
