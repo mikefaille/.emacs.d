@@ -88,7 +88,7 @@
 (require 'core-packages)
 (require 'core-look)
 (require 'core-feel)
-
+(require 'core-util)
 
 
 
