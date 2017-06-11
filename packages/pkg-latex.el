@@ -1,7 +1,7 @@
 (require-package 'auctex)
 (require-package 'cdlatex)
 (require-package 'auctex-latexmk)
-(require-package 'latex-extra)
+;; (require-package 'latex-extra)
 (require 'smartparens-latex)            ; smartparens suppose to be instaled automaticly
 (require 'tex-mik)
 
@@ -57,7 +57,7 @@
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
 (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-(add-hook 'LaTeX-mode-hook 'latex-extra-mode)
+
 
 ;; ;; http://orgmode.org/worg/org-faq.html#using-xelatex-for-pdf-export
 ;; (setq org-latex-default-packages-alist (list
