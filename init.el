@@ -101,7 +101,7 @@
 
 
 (require 'pkg-org)
-
+(require 'pkg-discover)
 ;;  recommend to load yas before ac-complete
 (require 'pkg-git)
 ;; (require 'pkg-yas)
