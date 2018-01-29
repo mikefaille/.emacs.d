@@ -38,10 +38,11 @@
 
 (require 'package)
 
+;; TODO make it async
 (when (not package-archive-contents)
   (package-refresh-contents t))
 
-(defvar core-modules '(better-defaults smartparens idle-highlight-mode  find-file-in-project  smex scpaste  helm flycheck undo-tree dired-hacks-utils   flycheck malabar-mode  eshell-prompt-extras fuzzy deferred auto-async-byte-compile markdown-mode async ) "A list of modules to ensure are installed at launch.")
+(defvar core-modules '(better-defaults smartparens idle-highlight-mode  find-file-in-project  smex scpaste  helm flycheck undo-tree dired-hacks-utils   flycheck   eshell-prompt-extras fuzzy deferred auto-async-byte-compile markdown-mode async ) "A list of modules to ensure are installed at launch.")
 
 (defvar-local enabled-modules '(nil) "A list of modules to ensure are installed at launch.")
 
