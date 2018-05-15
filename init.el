@@ -144,7 +144,7 @@
 (require 'pkg-ido)
 ;; (require 'pkg-chrome)
 
-(require 'nix-mode)
+;; (require 'nix-mode)
 (require 'pkg-multipleCursor)
 (require 'pkg-mouvement)
 
