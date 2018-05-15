@@ -1,6 +1,7 @@
 ;; sudo npm install -g tern
 
-(require-package 'js3-mode)
+(require-package 'js2-mode)
+(require-package 'ac-js2)
 (require-package 'tern)
 (require-package 'tern-auto-complete)
 (require-package 'json-mode)
@@ -12,19 +13,19 @@
 ;; C-c C-f: format the region/buffer with json-reformat (https://github.com/gongo/json-reformat)
 ;; C-c C-p: display a path to the object at point with json-snatcher (https://github.com/Sterlingg/json-snatcher)
 
-(add-hook 'js3-mode-hook
-          (lambda ()
-            (setq js3-auto-indent-p t
-                  js3-curly-indent-offset 0
-                  js3-enter-indents-newline t
-                  js3-expr-indent-offset 2
-                  js3-indent-on-enter-key t
-                  js3-lazy-commas t
-                  js3-lazy-dots t
-                  js3-lazy-operators t
-                  js3-paren-indent-offset 2
-                  js3-square-indent-offset 4)
-            (linum-mode 1)))
+;; (add-hook 'js3-mode-hook
+;;           (lambda ()
+;;             (setq js3-auto-indent-p t
+;;                   js3-curly-indent-offset 0
+;;                   js3-enter-indents-newline t
+;;                   js3-expr-indent-offset 2
+;;                   js3-indent-on-enter-key t
+;;                   js3-lazy-commas t
+;;                   js3-lazy-dots t
+;;                   js3-lazy-operators t
+;;                   js3-paren-indent-offset 2
+;;                   js3-square-indent-offset 4)
+;;             (linum-mode 1)))
 
 ;; https://github.com/Fuco1/smartparens/issues/239
 ;; (defadvice js3-enter-key (after fix-sp-state activate)
@@ -35,7 +36,7 @@
 ;;                nil
 ;;                :post-handlers
 ;;                '((ome-create-newline-and-enter-sexp js3-enter-key))))
-(add-to-list 'ac-modes 'js3-mode)
+;; (add-to-list 'ac-modes 'js3-mode)
 
 
 (when (package-installed-p 'js2-mode)
