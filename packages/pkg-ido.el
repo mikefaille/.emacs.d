@@ -1,5 +1,5 @@
 (require-package 'smex)
-(require-package 'browse-kill-ring+)
+(require-package 'browse-kill-ring)
 (require-package 'flx-ido)
 (smex-initialize)
 (global-set-key (kbd "M-x") 'smex)
