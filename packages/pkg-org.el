@@ -283,7 +283,8 @@
             ))
 (org-babel-do-load-languages
  'org-babel-load-languages
- '((R . t)
+ '(
+   ;; (R . t)
    (emacs-lisp . nil)
    (ruby . t)
    (sh . t)
