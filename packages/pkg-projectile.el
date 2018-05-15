@@ -18,8 +18,8 @@
 (setq projectile-switch-project-action 'projectile-dired)
 
 (require-package 'perspective)
-(persp-mode)
 (require-package 'persp-projectile)
+(persp-mode)
 
 ;; (define-key projectile-mode-map (kbd "s-x") 'projectile-persp-switch-project)
 
