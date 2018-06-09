@@ -287,7 +287,7 @@
    ;; (R . t)
    (emacs-lisp . nil)
    (ruby . t)
-   (sh . t)
+   (shell . t)
    (ditaa . t)
    (plantuml . t)
    (dot . t)
