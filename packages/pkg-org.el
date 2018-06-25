@@ -11,8 +11,10 @@
 (require 'org-protocol)
 (require 'org-capture)
 (require 'org-mobile)
+(require-package 'ob-ipython)
 
 (require-package 'ox-reveal)
+
 ;; TODO : test it
 (require-package 'deft)
 ;; (require 'deft)
@@ -291,7 +293,11 @@
    (ditaa . t)
    (plantuml . t)
    (dot . t)
-   ))
+   (ipython . t)
+   (python . t)
+   (ein . t)
+    ))
+
 
 ;; (global-unset-key (kbd "C-<right>") )
 ;; (global-set-key (kbd "C-<right>") 'forward-word)
