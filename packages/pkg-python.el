@@ -1,6 +1,7 @@
 ;; (require-package 'jedi)
 (require-package 'elpy)
 (require-package 'py-autopep8)
+(require-package 'ein)
 
 ;; Load python-mode
 (add-hook 'python-mode-hook 'elpy)
