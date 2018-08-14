@@ -11,8 +11,7 @@
 
 
 ;; go lint
-(require-package 'golint)
-(require-package 'go-autocomplete)
+
 (require-package 'go-mode)
 
 (setenv "PATH"
@@ -90,10 +89,13 @@
                           (local-set-key (kbd "C-c i") 'go-goto-imports)))
 
 
+
 (add-hook 'go-mode-hook ;; guessing
           '(lambda ()
+	     (require-package 'company-go)
+	     (require-package 'golint)
 
-
+	     (add-to-list 'company-backends 'company-go)
 
              (require-package 'go-eldoc)
              (go-eldoc-setup)

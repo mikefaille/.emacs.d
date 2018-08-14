@@ -1,4 +1,8 @@
-;; (require-package 'jedi)
+(require 'company)                                   ; load company mode
+(require 'company-go)                                ; load company mode go backend
+
+
+(require-package 'jedi)
 (require-package 'elpy)
 (require-package 'py-autopep8)
 (require-package 'ein)
@@ -13,6 +17,11 @@
 (setq elpy-rpc-python-command "python3")
 ;; For interactive shell
 (setq python-shell-interpreter "python3")
+(defun my/python-mode-hook ()
+  (add-to-list 'company-backends 'company-jedi))
+
+(add-hook 'python-mode-hook 'my/python-mode-hook)
+
 (setq elpy-rpc-backend "jedi")
 (setq python-shell-interpreter "ipython3"
       python-shell-interpreter-args "-i --simple-prompt")

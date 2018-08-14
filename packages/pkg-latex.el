@@ -6,6 +6,9 @@
 (require 'tex-mik)
 
 
+
+(require-package 'company-auctex)
+(company-auctex-init)
 ;; TODO https://github.com/cgroll/dot_emacs.d/blob/master/init-latex.org
 
 ;; sensible defaults for OS X, other OSes should be covered out-of-the-box
@@ -40,10 +43,19 @@
 
 
 (add-hook 'LaTeX-mode-hook (lambda ()
-  (push
-    '("Latexmk" "latexmk -pdf %s" TeX-run-command nil t
-      :help "Run Latexmk on file")
-    TeX-command-list)))
+
+			     (add-to-list 'company-backends 'company-math-symbols-unicode)
+			     (defun my-latex-mode-setup ()
+			       (setq-local company-backends
+					   (append '((company-math-symbols-latex company-latex-commands))
+						   company-backends)))
+			     (add-hook 'LaTex-mode-hook 'my-latex-mode-setup)
+
+
+			     (push
+			      '("Latexmk" "latexmk -pdf %s" TeX-run-command nil t
+				:help "Run Latexmk on file")
+			      TeX-command-list)))
 
 (setq pdf-latex-command "lualatex")
 
