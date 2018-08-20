@@ -1,4 +1,4 @@
-(require-package 'lsp-ui)
+(require 'lsp-ui)
 (require-package 'lsp-haskell)
 (add-hook 'lsp-mode-hook 'lsp-ui-mode)
 (add-hook 'haskell-mode-hook #'lsp-haskell-enable)
