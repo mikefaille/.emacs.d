@@ -116,7 +116,8 @@
 (require 'pkg-docker)
 (require 'pkg-feel)
 
-(require 'pkg-python)
+;; (require 'pkg-elpa-python)
+(require 'pkg-lsp-python)
 (require 'pkg-latex)
 ;;(require 'main-editor)
 ;;(require 'pkg-gnome)
