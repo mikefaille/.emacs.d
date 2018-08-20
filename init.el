@@ -139,7 +139,6 @@
 ;; depend on pkg-ac-complete
 (require 'pkg-js)
 (require 'pkg-go)
-(require 'go-autocomplete)
 
 (require 'pkg-irc)
 ;; (require 'pkg-helm)

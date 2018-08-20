@@ -8,10 +8,6 @@
                                         ;
 ;; go get github.com/golang/lint/golint
                                         ; autoloadp package : auto-complete
-
-
-;; go lint
-
 (require-package 'go-mode)
 
 (setenv "PATH"
@@ -54,37 +50,6 @@
 
 
 
-;; (defun load-from-pathenv-ifexist(pathenv path-suffix)
-;; (let ((path "") path-list )
-;;   (setq pathenv "GOPATH")
-;;   (setq path-suffix "/src/golang.org/x/tools/cmd/oracle/oracle.el" )
-;;   (setq path-list (parse-colon-path (getenv pathenv)))
-;;   (while (and path-list (not (file-readable-p path)))
-;;     (setq path-prefix (car path-list))
-
-;;     (setq path (concat path-prefix path-suffix))
-
-;;     (when (file-readable-p path)
-;;       (print path)
-;;       (load-file path)
-;;       )
-;;     (setq path-list (cdr path-list )))
-;;   (if (file-readable-p path)
-;;       path
-;;     nil)
-;; )
-
-
-
-
-
-
-;; (require-package go-errcheck)
-;;(executable-interpret "go get github.com/kisielk/errcheck")
-
-
-                                        ; go-goto-imports
-;; If you decide you want to look at your imports or edit them manually, go-goto-imports will take you to them automatically, placing your cursor after the last import. It isn’t bound to a key, either, mainly because I couldn’t come up with a good default that didn’t violate Emacs guidelines. But you can bind it manually, just like before:
 (add-hook 'go-mode-hook (lambda ()
                           (local-set-key (kbd "C-c i") 'go-goto-imports)))
 
@@ -96,7 +61,7 @@
 	     (require-package 'golint)
 
 	     (add-to-list 'company-backends 'company-go)
-
+	     (company-go-show-annotation t)
              (require-package 'go-eldoc)
              (go-eldoc-setup)
              ;; Add to default go-mode key bindings
@@ -144,10 +109,6 @@
 
              (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)
 
-
-
              ))
-
-
 
 (provide 'pkg-go)
