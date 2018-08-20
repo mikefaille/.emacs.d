@@ -9,7 +9,7 @@
 
 (package-initialize)
 
-(require 'cl)
+
 
 (setq inhibit-startup-message t)
 (setq inhibit-splash-screen t)
@@ -100,6 +100,7 @@
 (require 'main-custom)
 
 
+
 (require 'pkg-org)
 (require 'pkg-discover)
 ;;  recommend to load yas before ac-complete
@@ -109,7 +110,6 @@
 ;; (require 'pkg-ac-complete)
 (require 'pkg-company)
 (require 'pkg-flycheck)
-
 
 (require 'pkg-ssh)
 
@@ -135,7 +135,6 @@
 (require 'pkg-web)
 (require 'pkg-systemd)
 ;; (require 'pkg-mu4e)
-
 
 ;; depend on pkg-ac-complete
 (require 'pkg-js)
@@ -194,17 +193,11 @@
 
 ;;(add-to-list 'custom-theme-load-path "~/.emacs.d/elpa")
 
-
-
-
                                         ;(require 'yasnippet)
 (require 'undo-tree)
 
 (when (fboundp 'winner-mode)
   (winner-mode 1))
-
-
-
 
 
 ;; java
@@ -214,83 +207,8 @@
                                   global-semantic-mru-bookmark-mode))
 (semantic-mode 1)
 
-
-
-
-
-                                        ;(autoloadp 'sublimity)
-                                        ; (autoloadp 'sublimity-scroll)
-                                        ; (autoloadp 'sublimity-map)
-                                        ; (autoloadp 'sublimity-attractive)
-                                        ; (autoloadp 'minimap-autoloads)
-                                        ;(setq sublimity-attractive-centering-width nil)
-                                        ;(sublimity-mode 1)
-
-
-
-
-                                        ;(autoloadp 'malabar-mode)
-                                        ;(setq malabar-groovy-lib-dir "/path/to/malabar/lib")
-                                        ;(add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
-;;compile on save
-                                        ;(add-hook 'malabar-mode-hook
-                                        ;     (lambda ()
-                                        ;      (add-hook 'after-save-hook 'malabar-compile-file-silently
-                                        ;                  nil t)))
-;; Auto-populate an empty java file
-                                        ;    (add-hook 'malabar-mode-hook
-                                        ;          '(lambda ()
-                                        ;             (when (= 0 (buffer-size))
-                                        ;               (malabar-codegen-insert-class-template))))
-
-
-
-;; (add-hook 'after-init-hook (lambda ()
-;;                              (message "activate-malabar-mode")
-;;                              (activate-malabar-mode)))
-
-;; (add-hook 'malabar-java-mode-hook 'flycheck-mode)
-;; (add-hook 'malabar-groovy-mode-hook 'flycheck-mode)
-
-;; completion framework
-                                        ;(add-hook 'after-init-hook 'global-company-mode)
-                                        ;(autoloadp 'company)                                   ; load company mode
-                                        ;(autoloadp 'company-go)                                ; load company mode go backend
-                                        ;(setq company-tooltip-limit 20)                      ; bigger popup window
-;;(setq company-idle-delay .3)                         ; decrease delay before autocomp;letion popup shows
-                                        ;(setq company-echo-delay 0)                          ; remove annoying blinking
-                                        ;(setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
-
-;; flycheck. for fuzzy check, install fuzzy...
-                                        ;(autoloadp 'flycheck)
-                                        ;(flycheck-mode t)
 (add-hook 'after-init-hook #'global-flycheck-mode)
 (setq-default flycheck-emacs-lisp-load-path 'inherit)
-
-
-
-
-
-
-                                        ;(autoloadp 'linum-relative)
-
-                                        ;(autoloadp 'eclim)
-                                        ;(global-eclim-mode)
-                                        ;(autoloadp 'eclimd)
-                                        ;(custom-set-variables
-                                        ;  '(eclim-eclipse-dirs '("~/app/eclipse"))
-                                        ;(autoloadp 'company)
-                                        ;(autoloadp 'company-emacs-eclim)
-                                        ;(company-emacs-eclim-setup)
-                                        ;(global-company-mode t)
-
-
-
-
-
-;; (autoloadp 'smex) ; Not needed if you use package.el
-;; (smex-initialize) ; Can be omitted. This might cause a (minimal) delay
-;;                   ; when Smex is auto-initialized on its first
 
 ;; This is your old M-x.
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
