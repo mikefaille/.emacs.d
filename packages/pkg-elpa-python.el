@@ -1,5 +1,4 @@
 (require 'company)                                   ; load company mode
-(require 'company-go)                                ; load company mode go backend
 
 
 (require-package 'jedi)
