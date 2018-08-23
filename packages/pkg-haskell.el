@@ -1,5 +1,6 @@
 (require 'lsp-ui)
 (require-package 'lsp-haskell)
+(require 'lsp-haskell)
 (add-hook 'lsp-mode-hook 'lsp-ui-mode)
 (add-hook 'haskell-mode-hook #'lsp-haskell-enable)
 (add-hook 'haskell-mode-hook 'flycheck-mode)
