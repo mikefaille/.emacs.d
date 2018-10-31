@@ -81,9 +81,6 @@
 ;        (convert-standard-filename "savefile")) )
 
 
-;; Always load newest byte code
-(setq load-prefer-newer t)
-
 (require 'eieio)
 (require 'core-packages)
 (require 'core-look)
