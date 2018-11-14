@@ -7,8 +7,10 @@
 ;; (require 'benchmark-init)
 ;; (benchmark-init/activate)
 
-(package-initialize)
+(setq make-backup-files nil) ; stop creating backup~ files
+(setq auto-save-default nil) ; stop creating #autosave# files
 
+(package-initialize)
 
 
 (setq inhibit-startup-message t)
