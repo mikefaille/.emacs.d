@@ -6,7 +6,6 @@
 
 ;; http://orgmode.org/worg/org-tutorials/orgtutorial_dto.html
 
-(require-package 'org-plus-contrib)
 
 (require 'org-protocol)
 (require 'org-capture)
