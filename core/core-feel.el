@@ -56,23 +56,6 @@
   (windmove-default-keybindings))
 (windmove-default-keybindings 'meta)
 
-
-;; ;; emacs gnomeshell integration
-;; (when (daemonp)
-;;   (defadvice desktop-restore-file-buffer
-;;     (around my-desktop-restore-file-buffer-advice)
-;;     "Be non-interactive while starting a daemon."
-;;     (let ((noninteractive t))
-;;       ad-do-it))
-;;   (ad-activate 'desktop-restore-file-buffer)
-;;   (setq desktop-dirname             "~/.emacs.d/desktop/"
-;;         desktop-base-file-name      (concat (daemonp) ".desktop")
-;;         desktop-base-lock-name      (concat (daemonp) ".lock")
-;;         desktop-path                (list desktop-dirname)
-;;         desktop-save                t
-;;         desktop-files-not-to-save   "^$" ;reload tramp paths
-;;         desktop-load-locked-desktop t)
-;;   (desktop-save-mode 1))
 (require 'electric)
 (add-hook 'prog-mode 'electric-pair-local-mode)
 
@@ -81,14 +64,6 @@
 ;; http://marc-abramowitz.com/archives/2006/10/05/ctrl-left-and-ctrl-right-in-bash-and-emacs/
 (global-set-key "\M-[1;5C"    'forward-word)      ; Ctrl+right   => forward word
 (global-set-key "\M-[1;5D"    'backward-word)     ; Ctrl+left    => backward word
-
-;; ;
-;; ; Cycle through windows backwards with C-x p
-;; (defun prev-window ()
-;;   (interactive)
-;;   (other-window -1))
-
-;; (define-key global-map (kbd "C-x p") 'prev-window)
 
 
 

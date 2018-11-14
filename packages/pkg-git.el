@@ -44,7 +44,6 @@
 	(git-add-files files))
     (error (format "Not a Dired buffer \(%s\)" major-mode))))
 
-
 ;; ;; see here https://magit.vc/manual/magit/Wip-Modes.html
 (add-hook 'prog-mode-hook 'magit-wip-after-save-local-mode)
 (add-hook 'text-mode-hook 'magit-wip-after-save-local-mode)

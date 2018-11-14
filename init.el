@@ -191,22 +191,6 @@
 ;; auto byte compile
 (require 'auto-async-byte-compile)
 (add-hook 'emacs-lisp-mode-hook 'enable-auto-async-byte-compile-mode)
-
-
-;; ;(require 'color-theme-solarized)l
-;; ;; Color theme
-;; (add-to-list 'load-path "~/.emacs.d/themes/solarized/")
-;; (require 'color-theme)
-;; ;(require 'color-theme-solarized-dark)
-;; (eval-after-load "color-theme"
-;;   '(progn
-;; (color-theme-initialize)
-;; (color-theme-solarized-dark)))
-;; (setq color-theme-is-global t)
-
-;;(add-to-list 'custom-theme-load-path "~/.emacs.d/elpa")
-
-                                        ;(require 'yasnippet)
 (require 'undo-tree)
 
 (when (fboundp 'winner-mode)
@@ -228,23 +212,3 @@
 
 
 (require 'pkg-theme)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(eshell-cmpl-autolist t)
- '(eshell-cmpl-cycle-completions t)
- '(eshell-cmpl-expand-before-complete t)
- '(eshell-modules-list
-   (quote
-    (eshell-alias eshell-banner eshell-basic eshell-cmpl eshell-dirs eshell-glob eshell-hist eshell-ls eshell-pred eshell-prompt eshell-script eshell-term eshell-unix eshell-xtra)))
- '(package-selected-packages
-   (quote
-    (powerline-center-theme powerline persp-projectile perspective ag exec-path-from-shell go-projectile jinja2-mode projectile-speedbar ansible salt-mode browse-kill-ring+ yaml-mode web-mode volatile-highlights undo-tree tern-auto-complete systemd ssh-config-mode solarized-theme smex smartrep smartparens scpaste rust-mode pt php-mode org-pomodoro org-bullets org-beautify-theme operate-on-number multiple-cursors minimap markdown-mode malabar-mode magit latex-extra json-mode js3-mode jedi ido-ubiquitous idle-highlight-mode helm-projectile helm-package helm-descbinds golint go-mode go-autocomplete gitconfig-mode git-gutter fuzzy frame-fns flycheck-rust flx-isearch flx-ido find-file-in-project expand-region eshell-prompt-extras erc-track-score erc-social-graph erc-image erc-hl-nicks emmet-mode emacs-eclim easy-kill dockerfile-mode docker-tramp docker dired-hacks-utils diminish deft css-eldoc cdlatex browse-kill-ring better-defaults bash-completion auto-complete-auctex auto-async-byte-compile auctex-latexmk anzu ack ac-capf))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
