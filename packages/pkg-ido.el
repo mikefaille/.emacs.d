@@ -1,11 +1,5 @@
-(require-package 'smex)
 (require-package 'browse-kill-ring)
 (require-package 'flx-ido)
-(smex-initialize)
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
-;; This is your old M-x.
-(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 
 (ido-mode 1)
 (ido-everywhere 1)
@@ -18,5 +12,18 @@
 (setq ido-enable-flex-matching t)
 (setq ido-use-faces t)
 
+;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Icomplete.html
+;; for better ido selection behavior
+(icomplete-mode t)
+
+(global-set-key
+ "\M-x"
+ (lambda ()
+   (interactive)
+   (call-interactively
+    (intern
+     (ido-completing-read
+      "M-x "
+      (all-completions "" obarray 'commandp))))))
 
 (provide 'pkg-ido)
