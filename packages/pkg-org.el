@@ -294,7 +294,7 @@
    (dot . t)
    (ipython . t)
    (python . t)
-   (ein . t)
+   ;; (ein . t)
     ))
 
 
