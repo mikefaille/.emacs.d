@@ -61,9 +61,23 @@
 (unless (file-exists-p main-savefile-dir)
 (make-directory main-savefile-dir))
 
-;; reduce the frequency of garbage collection by making it happen on
-;; each 50MB of allocated data (the default is on every 0.76MB)
-(setq gc-cons-threshold 50000000)
+;; INCREASE GC
+;; Increasing GC is a common way to speed up Emacs. gc-cons-threshold sets at what point Emacs should invoke its garbage collector Some people set it to a really larger number permanently. This works well until the garbage is actually collected (then you have to wait a long time). I’ve decided to just set it temporarily to a large number so we only garbage collect once on startup. After that we reset it to the standard value. Read @bling’s post for more info on this.
+;; source https://matthewbauer.us/bauer/
+(defvar file-name-handler-alist-backup
+  file-name-handler-alist)
+(setq gc-cons-threshold
+      most-positive-fixnum
+      file-name-handler-alist nil)
+(add-hook 'after-init-hook
+	  (lambda ()
+	    (garbage-collect)
+	    (setq gc-cons-threshold
+		  (car (get 'gc-cons-threshold 'standard-value))
+		  file-name-handler-alist
+		  (append
+		   file-name-handler-alist-backup
+		   file-name-handler-alist))))
 
 ;; warn when opening files bigger than 100MB
 (setq large-file-warning-threshold 100000000)
