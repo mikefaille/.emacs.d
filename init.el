@@ -103,7 +103,6 @@
 ;;  recommend to load yas before ac-complete
 (require 'pkg-git)
 ;; (require 'pkg-yas)
-(require 'pkg-ac-complete)
 ;; (require 'pkg-ac-complete)
 (require 'pkg-company)
 (require 'pkg-flycheck)
