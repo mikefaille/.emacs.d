@@ -114,7 +114,9 @@
 (require 'pkg-feel)
 
 ;; (require 'pkg-elpa-python)
-(require 'pkg-lsp-python)
+;; (require 'pkg-lsp-python)
+(require 'pkg-eglot-python)
+
 (require 'pkg-latex)
 ;;(require 'main-editor)
 ;;(require 'pkg-gnome)
