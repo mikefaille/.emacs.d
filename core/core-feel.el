@@ -73,6 +73,8 @@
 ;;         desktop-files-not-to-save   "^$" ;reload tramp paths
 ;;         desktop-load-locked-desktop t)
 ;;   (desktop-save-mode 1))
+(require 'electric)
+(add-hook 'prog-mode 'electric-pair-local-mode)
 
 
 ;; Tweaks for tmux's support for Ctrl+arrows
