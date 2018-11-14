@@ -9,6 +9,7 @@
 ;; go get github.com/golang/lint/golint
                                         ; autoloadp package : auto-complete
 (require-package 'go-mode)
+(require-package 'eglot)
 
 (setenv "PATH"
         ( concat
@@ -57,7 +58,15 @@
 
 (add-hook 'go-mode-hook ;; guessing
           '(lambda ()
+	     (eglot-ensure)
+	     (define-key eglot-mode-map (kbd "C-c h") 'eglot-help-at-point)
+	     (define-key eglot-mode-map (kbd "<f6>") 'xref-find-definitions)
+
 	     (require-package 'company-go)
+
+
+	     ;; Golint differs from gofmt. Gofmt reformats Go source code, whereas golint prints out style mistakes.
+	     ;; Golint differs from govet. Govet is concerned with correctness, whereas golint is concerned with coding style. Golint is in use at Google, and it seeks to match the accepted style of the open source Go project.
 	     (require-package 'golint)
 
 	     (add-to-list 'company-backends 'company-go)
