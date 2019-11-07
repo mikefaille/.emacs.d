@@ -95,6 +95,7 @@
         ( concat
           (getenv "HOME")
           "/bin" ":"
+	  "/usr/local/bin/:"
           (getenv "PATH")))
 
 ;; replace current selection by yank or type
