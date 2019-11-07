@@ -13,6 +13,14 @@
 (package-initialize)
 
 
+;; something for OS X if true
+;; optional something if not
+(if (eq system-type 'darwin)
+
+    (Setq mac-control-modifier 'control)
+  (setq mac-command-modifier 'meta)
+  (setq mac-option-modifier nil))
+
 (setq inhibit-startup-message t)
 (setq inhibit-splash-screen t)
 ;; (if (not server-mode)
