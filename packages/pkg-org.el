@@ -10,7 +10,6 @@
 (require 'org-protocol)
 (require 'org-capture)
 (require 'org-mobile)
-(require-package 'ob-ipython)
 
 (require-package 'ox-reveal)
 
@@ -292,7 +291,6 @@
    (ditaa . t)
    (plantuml . t)
    (dot . t)
-   (ipython . t)
    (python . t)
    ;; (ein . t)
     ))
