@@ -13,6 +13,29 @@
 (package-initialize)
 
 
+;; Clean following config later
+;; (shell-command-to-string "keychain -k && keychain -q --noask --agents gpg --inherit any")
+;; (setenv       "SSH_AUTH_SOCK" "/Users/michael/.gnupg/S.gpg-agent.ssh")
+;; (getenv "SSH_AUTH_SOCK")
+
+;; (setenv       "PATH" (concat "/usr/local/bin/:" (getenv "PATH") ))
+
+;; (Gpg (shell-command-to-string "keychain -q --noask --agents gpg --eval")))
+
+;; (set-default-font “Terminus-9”)
+
+;; (defun copy-from-osx ()
+;;   (shell-command-to-string "pbpaste"))
+
+;; (defun paste-to-osx (text &optional push)
+;;   (let ((process-connection-type nil))
+;;     (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
+;;       (process-send-string proc text)
+;;       (process-send-eof proc))))
+
+;; (setq interprogram-cut-function 'paste-to-osx)
+;; (setq interprogram-paste-function 'copy-from-osx)
+
 ;; something for OS X if true
 ;; optional something if not
 (if (eq system-type 'darwin)
