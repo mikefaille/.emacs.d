@@ -1,4 +1,3 @@
-(require-package 'gitconfig-mode)
 (require-package 'magit)
 (require 'magit-wip)
 (require-package 'git-gutter)
@@ -25,7 +24,7 @@
 ;; Revert current hunk
 (global-set-key (kbd "C-x v r") 'git-gutter:revert-hunk)
 
-
+(set git-commit-major-mode 'markdown-mode)
 
 (defun git-add-files(files)
   "Run git add with the input file"
