@@ -1,6 +1,6 @@
 (require-package 'gitconfig-mode)
 (require-package 'magit)
-(require 'magit-wip)
+;; (require 'magit-wip)
 (require-package 'git-gutter)
 
 ;; If you enable global minor mode
@@ -45,8 +45,8 @@
     (error (format "Not a Dired buffer \(%s\)" major-mode))))
 
 
-;; see here https://magit.vc/manual/magit/Wip-Modes.html
-(add-hook 'prog-mode-hook 'magit-wip-mode)
-(add-hook 'text-mode-hook 'magit-wip-mode)
+;; ;; see here https://magit.vc/manual/magit/Wip-Modes.html
+;; (add-hook 'prog-mode-hook 'magit-wip-mode)
+;; (add-hook 'text-mode-hook 'magit-wip-mode)
 
 (provide 'pkg-git)
