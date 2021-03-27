@@ -62,15 +62,15 @@
 	     (define-key eglot-mode-map (kbd "C-c h") 'eglot-help-at-point)
 	     (define-key eglot-mode-map (kbd "<f6>") 'xref-find-definitions)
 
-	     (require-package 'company-go)
-
+	     ;; (require-package 'company-go)
+	     ;; (require 'company-go)
 
 	     ;; Golint differs from gofmt. Gofmt reformats Go source code, whereas golint prints out style mistakes.
 	     ;; Golint differs from govet. Govet is concerned with correctness, whereas golint is concerned with coding style. Golint is in use at Google, and it seeks to match the accepted style of the open source Go project.
 	     (require-package 'golint)
 
-	     (add-to-list 'company-backends 'company-go)
-	     (company-go-show-annotation t)
+	     ;; (add-to-list 'company-backends 'company-go)
+ 	     ;; (company-go-show-annotation t)
              (require-package 'go-eldoc)
              (go-eldoc-setup)
              ;; Add to default go-mode key bindings
