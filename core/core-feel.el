@@ -1,6 +1,7 @@
 ;; mouse integration
 (require 'mouse) ;; needed for iterm2 compatibility
 
+(setq eldoc-idle-delay 1)
 
 ;; (ido-mode 1)
 ;; (ido-everywhere 1)
