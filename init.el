@@ -52,6 +52,10 @@
 (message "Loading core...")
 (add-to-list 'default-frame-alist '(background-mode . dark))
 
+
+;; use native compilation over byte compilation
+(setq native-comp-deferred-compilation t)
+
 ;; recompile all from prelude
 (defun recompile-init ()
 "Byte-compile all your dotfiles again."
