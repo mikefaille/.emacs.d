@@ -67,5 +67,27 @@
 
 
 
+;; Revert buffers when the underlying file has changed
+;; One thing that can be annoying about Emacs when you first start using it is that it doesn't automatically refresh file buffers when the file on disk has been changed outside of Emacs. This can often happen when you're using tools that generate some kind of text file output that you need to read in an Emacs buffer.
+;; The global-auto-revert-mode will make Emacs watch the files for all open buffers for changes on disk and it will automatically refresh those buffers if they don't have unsaved changes!
+(global-auto-revert-mode 1)
+
+;; Revert Dired and other buffers
+(setq global-auto-revert-non-file-buffers t)
+
+;; Move customization variables to a separate file and load it
+(setq custom-file (locate-user-emacs-file "custom-vars.el"))
+(load custom-file 'noerror 'nomessage)
+
+
+;; saveplace remembers your location in a file when saving files
+(require 'saveplace)
+(setq save-place-file (expand-file-name "saveplace" main-savefile-dir))
+
+;; activate it for all buffers
+(setq-default save-place t)
+
+;; required for lsp performance
+(setq read-process-output-max (* 1024 1024))
 
 (provide 'core-feel)

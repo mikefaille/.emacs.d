@@ -34,15 +34,6 @@
 (setq uniquify-ignore-buffers-re "^\\*") ; don't muck with special buffers
 
 
-;; saveplace remembers your location in a file when saving files
-(require 'saveplace)
-(setq save-place-file (expand-file-name "saveplace" main-savefile-dir))
-
-
-;; activate it for all buffers
-(setq-default save-place t)
-
-
 ;; savehist keeps track of some history
 (require 'savehist)
 (setq savehist-additional-variables
