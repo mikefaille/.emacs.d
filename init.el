@@ -40,7 +40,7 @@
 ;; optional something if not
 (if (eq system-type 'darwin)
 
-    (Setq mac-control-modifier 'control)
+  (setq mac-control-modifier 'control)
   (setq mac-command-modifier 'meta)
   (setq mac-option-modifier nil))
 
