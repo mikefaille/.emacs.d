@@ -69,6 +69,11 @@ scroll-preserve-screen-position 1)
 ;; Defaults to nil
 (setq uniquify-separator "/")
 
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
+;; prevent ui dialog for prompt
+(setq use-dialog-box nil)
+
 
 (provide 'core-look)
 ;;; prelude-ui.el ends here
