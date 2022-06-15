@@ -10,8 +10,6 @@
 (setq make-backup-files nil) ; stop creating backup~ files
 (setq auto-save-default nil) ; stop creating #autosave# files
 
-(package-initialize)
-
 
 ;; Clean following config later
 ;; (shell-command-to-string "keychain -k && keychain -q --noask --agents gpg --inherit any")
@@ -26,7 +24,6 @@
 
 ;; (defun copy-from-osx ()
 ;;   (shell-command-to-string "pbpaste"))
-
 ;; (defun paste-to-osx (text &optional push)
 ;;   (let ((process-connection-type nil))
 ;;     (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
@@ -192,7 +189,7 @@
 ;; (require 'pkg-mu4e)
 
 ;; depend on pkg-ac-complete
-(require 'pkg-js)
+;; (require 'pkg-js)
 (require 'pkg-go)
 
 (require 'pkg-irc)
@@ -203,7 +200,8 @@
 ;; (require 'nix-mode)
 (require 'pkg-multipleCursor)
 (require 'pkg-mouvement)
-
+(require 'pkg-dhall)
+(require 'pkg-terraform-lsp)
 ;; http://emacsredux.com/blog/2013/05/16/whitespace-cleanup/
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
@@ -253,3 +251,17 @@
 
 
 (require 'pkg-theme)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(minibuffer-message-clear-timeout 4)
+ '(package-selected-packages
+   '(lsp-pyright ripgrep terraform-mode lsp-python-ms k8s-mode lsp-java d-mode golint company-go dart-mode sudo-edit lsp-haskell haskell-mode dhall-mode elpy poetry graphviz-dot-mode lsp-ui lsp-mode flycheck-yamllint indent-tools circe weechat persp-projectile solarized-theme ace-jump-buffer zop-to-char ace-window multiple-cursors flx-ido erc-hl-nicks erc-track-score erc-social-graph erc-image tern-auto-complete tern ac-js2 js2-mode systemd web-mode flycheck-rust rust-mode pt bash-completion perspective exec-path-from-shell go-projectile projectile php-mode yaml-mode company-auctex auctex-latexmk cdlatex auctex eglot smartrep operate-on-number easy-kill browse-kill-ring anzu expand-region volatile-highlights flx-isearch minimap diminish docker dockerfile-mode docker-tramp ssh-config-mode company git-gutter magit gitconfig-mode discover-my-major discover org-brain org-bullets deft ox-reveal markdown-mode auto-async-byte-compile deferred fuzzy eshell-prompt-extras dired-hacks-utils undo-tree flycheck helm scpaste smex find-file-in-project idle-highlight-mode smartparens nix-mode)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

@@ -38,6 +38,10 @@
 
 (require 'package)
 
+
+; activate all the packages (in particular autoloads)
+(package-initialize)
+
 ;; TODO make it async
 (when (not package-archive-contents)
   (package-refresh-contents t))
@@ -51,9 +55,6 @@
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
 
-
-; activate all the packages (in particular autoloads)
-(package-initialize)
 
 
 (defun require-package (package &optional min-version no-refresh)
