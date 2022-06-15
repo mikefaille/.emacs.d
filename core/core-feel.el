@@ -2,6 +2,9 @@
 (require 'mouse) ;; needed for iterm2 compatibility
 
 (setq eldoc-idle-delay 1)
+(add-hook 'prog-mode-hook (show-paren-mode t))
+;; highlight brackets if visible, else entire expression
+(setq show-paren-style 'mixed)
 
 ;; (ido-mode 1)
 ;; (ido-everywhere 1)

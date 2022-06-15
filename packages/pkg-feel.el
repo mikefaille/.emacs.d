@@ -273,6 +273,7 @@ indent yanked text (with prefix arg don't indent)."
 ;; saner regex syntax
 (require 're-builder)
 (setq reb-re-syntax 'string)
+
 (require 'eshell)
 (setq eshell-directory-name (expand-file-name "eshell" main-savefile-dir))
 (setq semanticdb-default-save-directory
@@ -303,9 +304,9 @@ indent yanked text (with prefix arg don't indent)."
 ;; ;; enable Main's keybindings
 ;; (main-global-mode t)
 
-;; sensible undo
-(global-undo-tree-mode)
-(diminish 'undo-tree-mode)
+;; ;; sensible undo
+;; (global-undo-tree-mode)
+;; (diminish 'undo-tree-mode)
 
 ;; enable winner-mode to manage window configurations
 (winner-mode +1)
@@ -353,10 +354,5 @@ and file 'filename' will be opened and cursor set on line 'linenumber'"
 (cons (string-to-number (match-string 2 name))
 (string-to-number (or (match-string 3 name) ""))))
 fn))) files)))
-
-
-(show-paren-mode 1)
-;; highlight brackets if visible, else entire expression
-(setq show-paren-style 'mixed)
 
 (provide 'pkg-feel)
