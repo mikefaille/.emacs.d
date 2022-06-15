@@ -1,5 +1,6 @@
 (require-package 'magit)
-;; (require 'magit-wip)
+
+(require 'magit)
 (require-package 'git-gutter)
 
 ;; If you enable global minor mode
