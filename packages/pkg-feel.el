@@ -364,4 +364,8 @@ and file 'filename' will be opened and cursor set on line 'linenumber'"
 fn))) files)))
 
 
+(show-paren-mode 1)
+;; highlight brackets if visible, else entire expression
+(setq show-paren-style 'mixed)
+
 (provide 'pkg-feel)
