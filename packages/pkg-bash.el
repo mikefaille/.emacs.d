@@ -1,5 +1,13 @@
 (require-package 'bash-completion)
 
+(defun turn-off-indent-tabs-mode ()
+  (setq indent-tabs-mode nil)
+  (setq  tab-width 8))
+
+
+(add-hook 'sh-mode-hook #'turn-off-indent-tabs-mode)
+
+
 (defun ac-bash-candidates ()
 "This function is a modifed version of
 bash-completion-dynamic-complete from bash-completion.el"
