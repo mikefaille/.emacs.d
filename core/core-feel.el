@@ -10,6 +10,11 @@
 ;; (setq ido-use-faces t)
 ;; https://github.com/lewang/flx
 
+(global-set-key (kbd "S-C-<left>") 'shrink-window-horizontally)
+(global-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)
+(global-set-key (kbd "S-C-<down>") 'shrink-window)
+(global-set-key (kbd "S-C-<up>") 'enlarge-window)
+
 
 ;; ;(ido-mode 1)
 ;; (setq ido-use-filename-at-point 'guess)

@@ -61,12 +61,6 @@
 
 (global-set-key (kbd "C-c C-1") 'recompile-init)
 
-(global-set-key (kbd "C-s-<left>") 'shrink-window-horizontally)
-(global-set-key (kbd "C-s-<right>") 'enlarge-window-horizontally)
-(global-set-key (kbd "C-s-<down>") 'shrink-window)
-(global-set-key (kbd "C-s-<up>") 'enlarge-window)
-
-
 (setq debug-on-error t)
 
 (defvar current-user
