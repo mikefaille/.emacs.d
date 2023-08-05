@@ -1,21 +1,21 @@
+;; Require necessary packages
 (require-package 'browse-kill-ring)
 (require-package 'flx-ido)
 
-(ido-mode 1)
-(ido-everywhere 1)
-
-
+;; Enable ido mode and flx-ido mode
 (ido-mode 1)
 (ido-everywhere 1)
 (flx-ido-mode 1)
-;; disable ido faces to see flx highlights.
+
+;; Enable flexible matching and use faces in ido
 (setq ido-enable-flex-matching t)
 (setq ido-use-faces t)
 
-;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Icomplete.html
-;; for better ido selection behavior
+;; Enable icomplete mode for better ido selection behavior
+;; See https://www.gnu.org/software/emacs/manual/html_node/emacs/Icomplete.html for more info
 (icomplete-mode t)
 
+;; Override M-x to use ido for command selection
 (global-set-key
  "\M-x"
  (lambda ()

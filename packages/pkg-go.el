@@ -1,123 +1,60 @@
 ;;;; go config
-;; install godef
-
-;;go get -u github.com/nsf/gocode
-
-;; go get -u code.google.com/p/rog-go/exp/cmd/godef
-;;go install -v code.google.com/p/rog-go/exp/cmd/godef
-                                        ;
-;; go get github.com/golang/lint/golint
-                                        ; autoloadp package : auto-complete
 (require-package 'go-mode)
 (require-package 'eglot)
 
-(setenv "PATH"
-        ( concat
-          "/usr/local/go/bin" ":"
-          (getenv "HOME") "/go/bin" ":"
+(setq go-path (concat (getenv "HOME") "/go")
+      go-bin "/usr/local/go/bin"
+      go-tools '("goimports" "godef" "oracle" "golint"))
 
-          (getenv "PATH")
-          )
-        )
+(defun add-to-PATH (path)
+  "Add PATH to the PATH environment variable and `exec-path'."
+  (setenv "PATH" (concat path path-separator (getenv "PATH")))
+  (add-to-list 'exec-path path))
 
-(setenv "GOPATH"
-        ( concat
-          (getenv "HOME") "/go" ;; ":"
-          ":/usr/local/go"
-          ;; (getenv "GOPATH")
-          ))
+(defun set-go-environment ()
+  "Set environment variables for Go development."
+  (setenv "GOPATH" (concat go-path ":/usr/local/go"))
+  (add-to-PATH go-bin)
+  (add-to-PATH (concat go-path "/bin")))
 
-(setq exec-path (split-string (getenv "PATH") path-separator))
+(defun load-go-tool (tool)
+  "Load the Go tool TOOL if it exists."
+  (let ((toolpath (concat go-path "/src/" tool "/" tool ".el")))
+    (when (file-readable-p toolpath)
+      (load-file toolpath))))
 
-(defun load-from-pathenv-ifexist(pathenv path-suffix)
+(defun setup-go-mode ()
+  "Setup for Go development."
+  ;; Set environment variables
+  (set-go-environment)
 
+  ;; Set compile command
+  (set (make-local-variable 'compile-command)
+       "go build -v && go test -v && go vet")
 
-  (let ((path "") path-list )
-    (setq pathenv "GOPATH")
-    ;; (setq path-suffix "/src/golang.org/x/tools/cmd/oracle/oracle.el" )
-    ;; (setq path-list (parse-colon-path (getenv pathenv)))
-    (while (and path-list (not (file-readable-p path)))
-      (setq path-prefix (car path-list))
+  ;; Set jump key binding
+  (local-set-key (kbd "M-.") 'godef-jump)
 
-      (setq path (concat path-prefix path-suffix))
+  ;; Set run key binding
+  (local-set-key (kbd "C-c C-c") (lambda ()
+                                   (interactive)
+                                   (compile (concat "go run " (buffer-file-name)))))
 
-      (when (file-readable-p path)
+  ;; Stop highlighting whitespace
+  (whitespace-toggle-options '(tabs))
 
-        (load-file path)
-        )
-      (setq path-list (cdr path-list )))
-    (file-readable-p path))
-  )
+  ;; Run gofmt before saving
+  (add-hook 'before-save-hook 'gofmt-before-save)
 
+  ;; Use goimports if available
+  (let ((goimports (executable-find "goimports")))
+    (when goimports
+      (setq gofmt-command goimports)))
 
+  ;; Load go tools
+  (dolist (tool go-tools)
+    (load-go-tool tool)))
 
-(add-hook 'go-mode-hook (lambda ()
-                          (local-set-key (kbd "C-c i") 'go-goto-imports)))
-
-
-
-(add-hook 'go-mode-hook ;; guessing
-          '(lambda ()
-	     (eglot-ensure)
-	     (define-key eglot-mode-map (kbd "C-c h") 'eglot-help-at-point)
-	     (define-key eglot-mode-map (kbd "<f6>") 'xref-find-definitions)
-
-	     ;; (require-package 'company-go)
-	     ;; (require 'company-go)
-
-	     ;; Golint differs from gofmt. Gofmt reformats Go source code, whereas golint prints out style mistakes.
-	     ;; Golint differs from govet. Govet is concerned with correctness, whereas golint is concerned with coding style. Golint is in use at Google, and it seeks to match the accepted style of the open source Go project.
-	     (require-package 'golint)
-
-	     ;; (add-to-list 'company-backends 'company-go)
- 	     ;; (company-go-show-annotation t)
-             (require-package 'go-eldoc)
-             (go-eldoc-setup)
-             ;; Add to default go-mode key bindings
-             (let ((map go-mode-map))
-               (define-key map (kbd "C-c a") 'go-test-current-project) ;; current package, really
-               (define-key map (kbd "C-c m") 'go-test-current-file)
-               (define-key map (kbd "C-c .") 'go-test-current-test)
-               (define-key map (kbd "C-c b") 'go-run)
-               (define-key map (kbd "C-h f") 'godoc-at-point))
-             ;; Prefer goimports to gofmt if installed
-             (let ((goimports (executable-find "goimports")))
-               (when goimports
-                 (setq gofmt-command goimports)))
-
-
-             ;; stop whitespace being highlighted
-             (whitespace-toggle-options '(tabs))
-
-
-             ;; Customize compile command to run go build
-
-             (add-hook 'before-save-hook 'gofmt-before-save)
-                                        ; Customize compile command to run go build
-             (if (not (string-match "go" compile-command))
-                 (set (make-local-variable 'compile-command)
-                      "go build -v && go test -v && go vet"))
-                                        ; Godef jump key binding
-             (local-set-key (kbd "M-.") 'godef-jump)
-
-             (load-from-pathenv-ifexist "GOPATH"  "/src/golang.org/x/tools/cmd/oracle/oracle.el")
-             (let ((oracle (executable-find "oracle")))
-               (when oracle
-                 (setq go-oracle-command oracle)
-                 ))
-
-             (load-from-pathenv-ifexist "GOPATH" "/src/github.com/golang/lint/misc/emacs/golint.el" )
-
-             ;; helper function
-             (defun go-run ()
-               "run current buffer"
-               (interactive)
-               (compile (concat "go run " (buffer-file-name))))
-
-             (local-set-key (kbd "C-c C-c") 'go-run)
-
-             (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)
-
-             ))
+(add-hook 'go-mode-hook 'setup-go-mode)
 
 (provide 'pkg-go)

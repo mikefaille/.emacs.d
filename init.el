@@ -1,261 +1,89 @@
-;;; Package ---
-;;; Commentary:
-;; no welcome screen
-;;; code:
-
-;; (add-to-list 'load-path "~/.emacs.d/git-packages/benchmark-init-el/")
-;; (require 'benchmark-init)
-;; (benchmark-init/activate)
-
-(setq make-backup-files nil) ; stop creating backup~ files
-(setq auto-save-default nil) ; stop creating #autosave# files
-
-
-;; Clean following config later
-;; (shell-command-to-string "keychain -k && keychain -q --noask --agents gpg --inherit any")
-;; (setenv       "SSH_AUTH_SOCK" "/Users/michael/.gnupg/S.gpg-agent.ssh")
-;; (getenv "SSH_AUTH_SOCK")
-
-;; (setenv       "PATH" (concat "/usr/local/bin/:" (getenv "PATH") ))
-
-;; (Gpg (shell-command-to-string "keychain -q --noask --agents gpg --eval")))
-
-;; (set-default-font “Terminus-9”)
-
-;; (defun copy-from-osx ()
-;;   (shell-command-to-string "pbpaste"))
-;; (defun paste-to-osx (text &optional push)
-;;   (let ((process-connection-type nil))
-;;     (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
-;;       (process-send-string proc text)
-;;       (process-send-eof proc))))
-
-;; (setq interprogram-cut-function 'paste-to-osx)
-;; (setq interprogram-paste-function 'copy-from-osx)
-
-;; something for OS X if true
-;; optional something if not
-(if (eq system-type 'darwin)
-
-  (setq mac-control-modifier 'control)
-  (setq mac-command-modifier 'meta)
-  (setq mac-option-modifier nil))
-
-(setq inhibit-startup-message t)
-(setq inhibit-splash-screen t)
-;; (if (not server-mode)
-;;     (server-start nil t))
-(ansi-color-for-comint-mode-on)
-(message "Loading core...")
-(add-to-list 'default-frame-alist '(background-mode . dark))
-
-
-;; use native compilation over byte compilation
-(setq native-comp-deferred-compilation t)
-
-;; recompile all from prelude
-(defun recompile-init ()
-"Byte-compile all your dotfiles again."
-(interactive)
-(byte-recompile-directory user-emacs-directory 0))
-
-(global-set-key (kbd "C-c C-1") 'recompile-init)
-
-(setq debug-on-error t)
-
-(defvar current-user
-      (getenv
-       (if (equal system-type 'windows-nt) "USERNAME" "USER")))
-
+;; Fundamental configuration
+(defvar current-user (getenv (if (equal system-type 'windows-nt) "USERNAME" "USER")))
 (message "Mike's .emac.d is powering up... Be patient, Master %s!" current-user)
-
 (when (version< emacs-version "24.4")
   (error "Mike's dot emacs requires at least GNU Emacs 24.4, but you're running %s" emacs-version))
+(setq-default
+ make-backup-files nil
+ auto-save-default nil
+ inhibit-startup-message t
+ inhibit-splash-screen t
+ gc-cons-threshold most-positive-fixnum
+ load-prefer-newer t
+ ring-bell-function 'ignore
+ large-file-warning-threshold 100000000
+ native-comp-async-report-warnings-errors nil)
 
-;; Always load newest byte code
-(setq load-prefer-newer t)
+;; Optimizations for faster startup
+(setq file-name-handler-alist-original file-name-handler-alist)
+(setq file-name-handler-alist nil)
 
-(defvar core-dir
-  (convert-standard-filename(concat user-emacs-directory
-          "core")) )
-
-
-(defvar main-savefile-dir
-  (convert-standard-filename (concat user-emacs-directory
-           "savefile") ))
-
-
-;; add core's directories to Emacs's `load-path'
-(add-to-list 'load-path (expand-file-name core-dir))
-
-
-(unless (file-exists-p main-savefile-dir)
-(make-directory main-savefile-dir))
-
-;; INCREASE GC
-;; Increasing GC is a common way to speed up Emacs. gc-cons-threshold sets at what point Emacs should invoke its garbage collector Some people set it to a really larger number permanently. This works well until the garbage is actually collected (then you have to wait a long time). I’ve decided to just set it temporarily to a large number so we only garbage collect once on startup. After that we reset it to the standard value. Read @bling’s post for more info on this.
-;; source https://matthewbauer.us/bauer/
-(defvar file-name-handler-alist-backup
-  file-name-handler-alist)
-(setq gc-cons-threshold
-      most-positive-fixnum
-      file-name-handler-alist nil)
-(add-hook 'after-init-hook
+(add-hook 'emacs-startup-hook
 	  (lambda ()
-	    (garbage-collect)
-	    (setq gc-cons-threshold
-		  (car (get 'gc-cons-threshold 'standard-value))
-		  file-name-handler-alist
-		  (append
-		   file-name-handler-alist-backup
-		   file-name-handler-alist))))
+	    (setq gc-cons-threshold (car (get 'gc-cons-threshold 'standard-value))
+		  file-name-handler-alist file-name-handler-alist-original)))
 
-;; warn when opening files bigger than 100MB
-(setq large-file-warning-threshold 100000000)
+;; Define directories for core and package configurations, and for savefiles
+(defconst core-dir (expand-file-name "core" user-emacs-directory))
+(defconst packages-dir (expand-file-name "packages" user-emacs-directory))
+(defconst main-savefile-dir (expand-file-name "savefile" user-emacs-directory))
 
+(add-to-list 'load-path core-dir)
+(add-to-list 'load-path packages-dir)
 
-(setenv "PATH"
-        ( concat
-          (getenv "HOME")
-          "/bin" ":"
-	  "/usr/local/bin/:"
-          (getenv "PATH")))
+;; Ensure savefile directory exists
+(unless (file-exists-p main-savefile-dir)
+  (make-directory main-savefile-dir))
 
-;; replace current selection by yank or type
-(delete-selection-mode 1)
-
-;(defvar main-savefile-dir
-;(concat user-emacs-directory
-;        (convert-standard-filename "savefile")) )
-
-
-(require 'eieio)
+;; Load core and package configurations
 (require 'core-packages)
 (require 'core-look)
 (require 'core-feel)
 (require 'core-util)
-
-
-
-(defvar packages-dir
-  (concat user-emacs-directory
-          (convert-standard-filename "packages")) )
-(add-to-list 'load-path (expand-file-name packages-dir))
-
-(require 'main-custom)
-
-
-
 (require 'pkg-org)
 (require 'pkg-discover)
-;;  recommend to load yas before ac-complete
 (require 'pkg-git)
-;; (require 'pkg-yas)
-;; (require 'pkg-ac-complete)
 (require 'pkg-company)
 (require 'pkg-flycheck)
-
 (require 'pkg-ssh)
-
 (require 'pkg-docker)
 (require 'pkg-feel)
-
-;; (require 'pkg-elpa-python)
 (require 'pkg-lsp-python)
-;; (require 'pkg-eglot-python)
-
 (require 'pkg-latex)
-;;(require 'main-editor)
-;;(require 'pkg-gnome)
-
 (require 'pkg-yaml)
 (require 'pkg-php)
-
 (require 'pkg-projectile)
 (require 'pkg-bash)
 (require 'pkg-search)
 (require 'pkg-eshell)
 (require 'pkg-rust)
 (require 'pkg-emms)
-
 (require 'pkg-web)
 (require 'pkg-systemd)
-;; (require 'pkg-mu4e)
-
-;; depend on pkg-ac-complete
-;; (require 'pkg-js)
-(require 'pkg-go)
-
-(require 'pkg-irc)
-;; (require 'pkg-helm)
-(require 'pkg-ido)
-;; (require 'pkg-chrome)
-
-;; (require 'nix-mode)
 (require 'pkg-multipleCursor)
 (require 'pkg-mouvement)
-(require 'pkg-dhall)
-(require 'pkg-terraform-lsp)
-;; http://emacsredux.com/blog/2013/05/16/whitespace-cleanup/
-(add-hook 'before-save-hook 'whitespace-cleanup)
+;; (require 'pkg-dhall)
+;; (require 'pkg-terraform-lsp)
+(require 'pkg-go)
+(require 'pkg-irc)
+(require 'pkg-ido)
+(require 'pkg-theme)
 
-
-;; top like
-;; (global-set-key (kbd "C-x p") 'proced)
-
-
+;; Remove .elc files on save
 (defun remove-elc-on-save ()
-  "If you're saving an elisp file, likely the .elc is no longer valid."
+  "If you're saving an Elisp file, the .elc is likely no longer valid."
   (add-hook 'after-save-hook
             (lambda ()
               (if (file-exists-p (concat buffer-file-name "c"))
-                  (delete-file (concat buffer-file-name "c"))))
-            nil
-            t))
+                  (delete-file (concat buffer-file-name "c"))))))
 
-
-
+;; Other configurations
 (add-hook 'emacs-lisp-mode-hook 'remove-elc-on-save)
-
-
 (add-to-list 'auto-mode-alist '("\\.log\\'" . auto-revert-mode))
 
-
-;; auto byte compile
-(require 'auto-async-byte-compile)
-(add-hook 'emacs-lisp-mode-hook 'enable-auto-async-byte-compile-mode)
-(require 'undo-tree)
-
+;; Enable winner mode
 (when (fboundp 'winner-mode)
   (winner-mode 1))
 
-
-;; java
-(setq semantic-default-submodes '(global-semantic-idle-scheduler-mode
-                                  global-semanticdb-minor-mode
-                                  global-semantic-idle-summary-mode
-                                  global-semantic-mru-bookmark-mode))
-(semantic-mode 1)
-
-(add-hook 'after-init-hook #'global-flycheck-mode)
-(setq-default flycheck-emacs-lisp-load-path 'inherit)
-
-;; This is your old M-x.
-(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
-
-
-(require 'pkg-theme)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(minibuffer-message-clear-timeout 4)
- '(package-selected-packages
-   '(lsp-pyright ripgrep terraform-mode lsp-python-ms k8s-mode lsp-java d-mode golint company-go dart-mode sudo-edit lsp-haskell haskell-mode dhall-mode elpy poetry graphviz-dot-mode lsp-ui lsp-mode flycheck-yamllint indent-tools circe weechat persp-projectile solarized-theme ace-jump-buffer zop-to-char ace-window multiple-cursors flx-ido erc-hl-nicks erc-track-score erc-social-graph erc-image tern-auto-complete tern ac-js2 js2-mode systemd web-mode flycheck-rust rust-mode pt bash-completion perspective exec-path-from-shell go-projectile projectile php-mode yaml-mode company-auctex auctex-latexmk cdlatex auctex eglot smartrep operate-on-number easy-kill browse-kill-ring anzu expand-region volatile-highlights flx-isearch minimap diminish docker dockerfile-mode docker-tramp ssh-config-mode company git-gutter magit gitconfig-mode discover-my-major discover org-brain org-bullets deft ox-reveal markdown-mode auto-async-byte-compile deferred fuzzy eshell-prompt-extras dired-hacks-utils undo-tree flycheck helm scpaste smex find-file-in-project idle-highlight-mode smartparens nix-mode)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+;; Cleanup whitespace on save
+(add-hook 'before-save-hook 'whitespace-cleanup)

@@ -1,5 +1,8 @@
+(require-package 'lsp-mode)
 (require 'lsp-mode)
+(require-package 'lsp-ui)
 (require 'lsp-ui)
+
 (require-package 'lsp-pyright)
 (require 'lsp-pyright)
 ;; (add-hook 'python-mode-hook #'lsp-python-enable)

@@ -1,4 +1,4 @@
-;; sudo npm install -g tern
+;; JavaScript and JSON settings
 
 (require-package 'js2-mode)
 (require-package 'ac-js2)
@@ -8,48 +8,26 @@
 (require-package 'json-reformat)
 (require-package 'json-snatcher)
 
-;; json :
+;; Set up Tern.js
+(defun setup-tern-mode ()
+  "Configure tern-mode."
+  (tern-mode t)
+  (when (package-installed-p 'tern-auto-complete)
+    (tern-ac-setup)))
 
-;; C-c C-f: format the region/buffer with json-reformat (https://github.com/gongo/json-reformat)
-;; C-c C-p: display a path to the object at point with json-snatcher (https://github.com/Sterlingg/json-snatcher)
-
-;; (add-hook 'js3-mode-hook
-;;           (lambda ()
-;;             (setq js3-auto-indent-p t
-;;                   js3-curly-indent-offset 0
-;;                   js3-enter-indents-newline t
-;;                   js3-expr-indent-offset 2
-;;                   js3-indent-on-enter-key t
-;;                   js3-lazy-commas t
-;;                   js3-lazy-dots t
-;;                   js3-lazy-operators t
-;;                   js3-paren-indent-offset 2
-;;                   js3-square-indent-offset 4)
-;;             (linum-mode 1)))
-
-;; https://github.com/Fuco1/smartparens/issues/239
-;; (defadvice js3-enter-key (after fix-sp-state activate)
-;;   (setq sp-last-operation 'sp-self-insert))
-
-;; (sp-local-pair 'js3-mode
-;;                "{"
-;;                nil
-;;                :post-handlers
-;;                '((ome-create-newline-and-enter-sexp js3-enter-key))))
-;; (add-to-list 'ac-modes 'js3-mode)
-
-
+;; Enable Tern.js when entering JS2 mode
 (when (package-installed-p 'js2-mode)
-  (add-hook 'js2-mode-hook (lambda () (tern-mode t))))
-(when (package-installed-p 'js3-mode)
-  (add-hook 'js3-mode-hook (lambda () (tern-mode t))))
+  (add-hook 'js2-mode-hook 'setup-tern-mode))
+
+;; Set tern-command
 (setq tern-command (cons (executable-find "tern") '()))
-(eval-after-load 'tern
-  '(progn
-     (require 'tern-auto-complete)
-     (tern-ac-setup)))
 
-
-
+;; JSON mode settings
+(add-hook 'json-mode-hook
+	  (lambda ()
+	    ;; Set formatting keybindings
+	    (local-set-key (kbd "C-c C-f") 'json-reformat-region)
+	    ;; Set path display keybindings
+	    (local-set-key (kbd "C-c C-p") 'jsons-print-path)))
 
 (provide 'pkg-js)

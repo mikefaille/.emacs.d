@@ -1,35 +1,45 @@
-* Mike's .emacs.d
-** To install :
+* Mike's Emacs Configuration
+This repository contains my personal Emacs configuration. The setup includes optimized settings for different programming languages, especially Go, and various tools to improve productivity.
+
+** Installation
+To install the configuration, clone this repository into your home directory as follows:
 
 #+begin_src sh
 cd ~
 git clone git@github.com:mikefaille/.emacs.d.git --recursive
 #+end_src
 
-** Setup golang :
-To setup go bin for emacs.
+The =--recursive= flag ensures that all submodules are also cloned.
 
-- First, install go.
-Note : Have ~/go as GOPATH.
+** Setting Up Go
+To setup Go in Emacs:
 
-- Second, in emacs :
+1. Install Go. Ensure that your =GOPATH= is set to =~/go=.
+2. In Emacs, run the following command:
 
 #+begin_src lisp
- M-x go-projectile-install-tools
+M-x go-projectile-install-tools
 #+end_src
 
+This will install the necessary Go tools.
 
-** To use platium searcher :
-- get it
+** Platinum Searcher
+To use the Platinum Searcher within this configuration, you need to install it first:
 
 #+begin_src sh
 go get -u github.com/monochromegane/the_platinum_searcher/...
 #+end_src
 
-** Optionnal org-mode setup :
-Install this package : latexmk
+** Optional Setup for Org-mode
+For LaTeX support in Org-mode, you need to install =latexmk=.
 
-** Python :
+** Python Setup
+For Python development, the =jedi= package is used. To install the jedi server, run the following command in Emacs:
 
-Install jedi before, you must :
+#+begin_src lisp
 M-x jedi:install-server
+#+end_src
+
+This configuration provides a robust foundation for Python development, including autocompletion, syntax checking, and more.
+
+Enjoy using this Emacs configuration, and feel free to customize it to your liking!

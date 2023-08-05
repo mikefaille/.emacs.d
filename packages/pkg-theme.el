@@ -2,7 +2,6 @@
 
 (load-theme 'solarized-dark t)
 
-
 (defun set-emacs-frames (variant)
   (dolist (frame (frame-list))
     (let* ((window-id (frame-parameter frame 'outer-window-id))

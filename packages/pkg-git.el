@@ -1,4 +1,6 @@
+(use-package magit)
 (require-package 'magit)
+
 
 (require 'magit)
 (require-package 'git-gutter)
