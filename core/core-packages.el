@@ -30,12 +30,16 @@
     (package-refresh-contents)
     (setq package-refreshed-this-session t)))
 
+
 (defun require-package (package)
   "Ensure PACKAGE is installed."
   (unless (package-installed-p package)
     (maybe-refresh-package-contents package)
-    (eval `(use-package ,package
-             :ensure t))))
+    (condition-case err
+        (eval `(use-package ,package
+                 :ensure t))
+      (error (message "Failed to install %s: %S" package err)))))
+
 
 (defun module-list-install (modules-list)
   "Install missing modules from MODULES-LIST."
