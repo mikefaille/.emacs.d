@@ -68,6 +68,11 @@
 (require 'pkg-irc)
 (require 'pkg-ido)
 (require 'pkg-theme)
+;; Execute the following only if emacs is compiled with treesit
+(if (featurep 'treesit)
+   (require 'pkg-combobulate))
+
+
 
 ;; Remove .elc files on save
 (defun remove-elc-on-save ()
