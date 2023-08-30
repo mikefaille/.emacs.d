@@ -14,6 +14,9 @@
  large-file-warning-threshold 100000000
  native-comp-async-report-warnings-errors nil)
 
+;; BUG
+(setq outline-minor-mode-prefix "\C-c \C-o")
+
 ;; Optimizations for faster startup
 (setq file-name-handler-alist-original file-name-handler-alist)
 (setq file-name-handler-alist nil)
@@ -26,7 +29,9 @@
 ;; Define directories for core and package configurations, and for savefiles
 (defconst core-dir (expand-file-name "core" user-emacs-directory))
 (defconst packages-dir (expand-file-name "packages" user-emacs-directory))
+(defconst theme-dir (expand-file-name "theme" user-emacs-directory))
 (defconst main-savefile-dir (expand-file-name "savefile" user-emacs-directory))
+
 
 (add-to-list 'load-path core-dir)
 (add-to-list 'load-path packages-dir)
@@ -67,10 +72,12 @@
 (require 'pkg-go)
 (require 'pkg-irc)
 (require 'pkg-ido)
-(require 'pkg-theme)
+(add-to-list 'custom-theme-load-path theme-dir)
+(load-theme 'my-solarized-dark t)
+;; (require 'pkg-theme)
 ;; Execute the following only if emacs is compiled with treesit
-(if (featurep 'treesit)
-   (require 'pkg-combobulate))
+;; (if (featurep 'treesit)
+;;    (require 'pkg-combobulate))
 
 
 
@@ -78,9 +85,9 @@
 (defun remove-elc-on-save ()
   "If you're saving an Elisp file, the .elc is likely no longer valid."
   (add-hook 'after-save-hook
-            (lambda ()
-              (if (file-exists-p (concat buffer-file-name "c"))
-                  (delete-file (concat buffer-file-name "c"))))))
+	    (lambda ()
+	      (if (file-exists-p (concat buffer-file-name "c"))
+		  (delete-file (concat buffer-file-name "c"))))))
 
 ;; Other configurations
 (add-hook 'emacs-lisp-mode-hook 'remove-elc-on-save)

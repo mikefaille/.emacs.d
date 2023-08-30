@@ -10,6 +10,9 @@
 (global-set-key [mouse-6] 'scroll-left)
 (global-set-key [mouse-7] 'scroll-right)
 
+;; Window divider mode
+(window-divider-mode t)
+
 ;; Window Manipulation
 (global-set-key (kbd "S-C-<left>") 'shrink-window-horizontally)
 (global-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)
