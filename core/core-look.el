@@ -7,9 +7,9 @@
 
 ;;; Code:
 
-;; AnsiColor for Shell Mode
-(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
-(add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
+;; ;; AnsiColor for Shell Mode
+;; (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+;; (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
 
 ;; UI Settings
 (when (fboundp 'tool-bar-mode)

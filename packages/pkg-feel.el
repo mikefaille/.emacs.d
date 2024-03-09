@@ -57,20 +57,6 @@
 (global-set-key [remap kill-ring-save] 'easy-kill)
 (global-set-key [remap mark-sexp] 'easy-mark)
 
-;; Operate-on-number
-(smartrep-define-key global-map "C-c ."
-'(("+" . apply-operation-to-number-at-point)
-("-" . apply-operation-to-number-at-point)
-("*" . apply-operation-to-number-at-point)
-("/" . apply-operation-to-number-at-point)
-("\\" . apply-operation-to-number-at-point)
-("^" . apply-operation-to-number-at-point)
-("<" . apply-operation-to-number-at-point)
-(">" . apply-operation-to-number-at-point)
-("#" . apply-operation-to-number-at-point)
-("%" . apply-operation-to-number-at-point)
-("'" . operate-on-number-at-point)))
-
 ;; Ensure server visit files in the correct format
 (defadvice server-visit-files (before parse-numbers-in-lines (files proc &optional nowait) activate)
   "Open file with emacsclient with cursors positioned on requested line.

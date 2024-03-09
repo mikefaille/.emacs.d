@@ -4,6 +4,8 @@
 (setq eshell-review-quick-commands nil)
 (setq eshell-smart-space-goes-to-end t)
 
+;; TODO in recent version of emacs, the function named shell-mode is not recognized anymore..
+
 ;; (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 ;; (add-hook 'eshell-preoutput-filter-functions
@@ -57,13 +59,13 @@ directory to make multiple eshell windows easier."
 
 
 
-(defun eshell-toggle ()
-  (if (bound-and-true-p 'shell-mode)
-       (eshell-here)
-    (eshell/x)
-    )
+;;(defun eshell-toggle ()
+;;  (if (bound-and-true-p 'shell-mode)
+;;       (eshell-here)
+;;    (eshell/x)
+;;    )
 
-  )
+;;  )
 
 
 (global-set-key (kbd "C-!") 'eshell-toggle)
