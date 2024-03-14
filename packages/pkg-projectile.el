@@ -1,10 +1,10 @@
 ;;; pkg-projectile.el ---
 
 ;; Ensure necessary packages are loaded
-(require 'projectile)
-(require 'go-projectile)
-(require 'exec-path-from-shell)
-(require 'perspective)
+(require-package 'projectile)
+(require-package 'go-projectile)
+(require-package 'exec-path-from-shell)
+(require-package 'perspective)
 
 ;; Projectile Configuration
 (setq projectile-completion-system 'ido
