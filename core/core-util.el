@@ -10,4 +10,6 @@
                   (get-char-property (point) 'face))))
     (if face (message "Face: %s" face) (message "No face at %d" pos))))
 
+
+
 (provide 'core-util)

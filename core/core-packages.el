@@ -4,7 +4,13 @@
 
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
                          ("org" . "https://orgmode.org/elpa/")
+			 ("melpa-stable" . "https://stable.melpa.org/packages/")
                          ("elpa" . "https://elpa.gnu.org/packages/")))
+
+(setq package-archive-priorities '(("org"  . 5)
+				   ("melpa-stable" . 3)
+                                   ("melpa"    . 2)
+                                   ("elpa" . 1)))
 
 (package-initialize)
 
@@ -59,6 +65,16 @@
   (setq comp-deferred-compilation t))
 (when (boundp 'comp-speed)
   (setq comp-speed 3))
+
+
+(use-package auto-compile
+  :config (auto-compile-on-load-mode))
+;; we want to make sure that all packages added for configuration are installed, for this we use use-package-ensure.
+;; Always compile packages, and use the newest version available.
+
+(setq load-prefer-newer t)
+(require 'use-package-ensure)
+(setq use-package-always-ensure t)
 
 (provide 'core-packages)
 ;;; core-packages.el ends

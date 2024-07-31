@@ -1,14 +1,11 @@
 ;; Install necessary packages
-(require-package 'diminish)
-(require-package 'minimap)
-(require-package 'flx-isearch)
-(require-package 'expand-region)
-(require-package 'easy-kill)
-(require-package 'operate-on-number)
-(require-package 'smartrep)
+(use-package diminish :ensure t)
 
-;; Load smartrep
-(require 'smartrep)
+(require-package 'minimap)
+;; (require-package 'flx-isearch)
+(require-package 'expand-region)
+
+(require-package 'operate-on-number)
 
 ;; Variables
 (defvar main-savefile-dir
@@ -40,10 +37,11 @@
 
 ;; Highlight the current line
 (global-hl-line-mode +1)
-(require-package 'volatile-highlights)
-(require 'volatile-highlights)
-(volatile-highlights-mode t)
-(diminish 'volatile-highlights-mode)
+(use-package volatile-highlights
+  :config
+  (volatile-highlights-mode t))
+
+;; (diminish 'volatile-highlights-mode)
 
 ;; Whitespace-mode config
 (require 'whitespace)
@@ -53,9 +51,6 @@
 ;; Compilation from Emacs
 (add-hook 'compilation-filter-hook 'main-colorize-compilation-buffer)
 
-;; Easy-kill
-(global-set-key [remap kill-ring-save] 'easy-kill)
-(global-set-key [remap mark-sexp] 'easy-mark)
 
 ;; Ensure server visit files in the correct format
 (defadvice server-visit-files (before parse-numbers-in-lines (files proc &optional nowait) activate)

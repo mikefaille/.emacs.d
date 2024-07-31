@@ -4,6 +4,10 @@
 (require 'mouse)  ; needed for iterm2 compatibility
 (xterm-mouse-mode t)
 
+(require  'flymake)
+(define-key flymake-mode-map (kbd "M-n") 'flymake-goto-next-error)
+(define-key flymake-mode-map (kbd "M-p") 'flymake-goto-prev-error)
+
 ;; Mouse Scrolling
 (global-set-key [mouse-4] 'scroll-down-command)
 (global-set-key [mouse-5] 'scroll-up-command)

@@ -10,10 +10,13 @@
 (setq projectile-completion-system 'ido
       projectile-switch-project-action 'projectile-dired
       projectile-cache-file (expand-file-name "projectile.cache" main-savefile-dir)
-      projectile-project-search-path '("~/src" "/etc/nixos")
+      projectile-project-search-path '("~/src")
       go-projectile-tools-path (concat (exec-path-from-shell-copy-env "HOME") "/go"))
 
 (projectile-mode t)
+
+(add-hook 'project-find-functions #'project-projectile)
+
 
 ;; Key bindings for Projectile
 (global-set-key (kbd "C-é") 'projectile-commander)

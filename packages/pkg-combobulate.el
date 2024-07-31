@@ -2,6 +2,13 @@
 
 (straight-use-package
  '(combotulate :type git :host github :repo "mickeynp/combobulate"))
+(use-package treesit-auto
+
+  :config
+  (setq treesit-auto-install 'prompt)
+  (global-treesit-auto-mode))
+(setq treesit-auto-install 'prompt)
+
 
 (use-package treesit
   :mode (("\\.tsx\\'" . tsx-ts-mode))
@@ -20,6 +27,7 @@
                 (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.20.3" "typescript/src"))
                 (yaml . ("https://github.com/ikatyang/tree-sitter-yaml" "v0.5.0"))
 		(dart . ("https://github.com/UserNobody14/tree-sitter-dart" "master"))
+		(go . ("https://github.com/smacker/go-tree-sitter" "master" "src") )
 		))
       (add-to-list 'treesit-language-source-alist grammar)
       ;; Only install `grammar' if we don't already have it
@@ -44,6 +52,7 @@
            (json-mode . json-ts-mode)
            (js-json-mode . json-ts-mode)
 	   (dart-mode . dart-ts-mode)
+	   (go-mode . go-ts-mode)
 	   ))
     (add-to-list 'major-mode-remap-alist mapping))
   :config
@@ -51,30 +60,7 @@
   ;; Do not forget to customize Combobulate to your liking:
   ;;
   ;;  M-x customize-group RET combobulate RET
-  ;;
-  (use-package combobulate
-    :straight '(combotulate :type git :host github :repo "mickeynp/combobulate")
-    :preface
-    ;; You can customize Combobulate's key prefix here.
-    ;; Note that you may have to restart Emacs for this to take effect!
-    (setq combobulate-key-prefix "C-c o")
-
-    ;; Optional, but recommended.
-    ;;
-    ;; You can manually enable Combobulate with `M-x
-    ;; combobulate-mode'.
-    :hook
-      ((python-ts-mode . combobulate-mode)
-       (js-ts-mode . combobulate-mode)
-       (html-ts-mode . combobulate-mode)
-       (css-ts-mode . combobulate-mode)
-       (yaml-ts-mode . combobulate-mode)
-       (typescript-ts-mode . combobulate-mode)
-       (json-ts-mode . combobulate-mode)
-       (tsx-ts-mode . combobulate-mode))
-    ;; Amend this to the directory where you keep Combobulate's source
-      ;; code.
-))
+)
 
 
 (provide 'pkg-combobulate)

@@ -3,10 +3,10 @@
 (require-package 'cdlatex)
 (require-package 'auctex-latexmk)
 (require 'smartparens-latex)
-(require 'tex-mik)
-(require-package 'company-auctex)
+;; (require 'tex-mik)
+;; (require-package 'company-auctex)
 
-(company-auctex-init)
+;; (company-auctex-init)
 
 ;; Configure TeX-view-program based on system type
 (setq TeX-view-program-selection
@@ -22,6 +22,25 @@
         ("PDF Viewer" "open %o")
         ("HTML Viewer" "open %o")))
 
+
+;; Adding specific backends and LaTeXmk for LaTeX
+(add-hook 'LaTeX-mode-hook (lambda ()
+  ;; Prioritize Orderless completion with Carpe and Prescient in LaTeX-mode
+  (setq-local completion-at-point-functions '(orderless-completion-at-point prescient-completion-at-point cape-tex cape-keyword cape-dabbrev cape-file))
+
+  ;; Latexmk command for easy compilation
+  (push '("Latexmk" "latexmk -pdf %s" TeX-run-command nil t :help "Run Latexmk on file")
+        TeX-command-list)))
+
+;; (with-eval-after-load 'eglot
+;;   (add-to-list 'eglot-server-programs
+;;                `(latex-mode . ("digestif" :build
+;;                                (:executable:
+;; 				(tectonic)
+;; 				))
+;; 			    )))
+
+
 ;; LaTeX mode defaults
 (defun prelude-latex-mode-defaults ()
   "Default Prelude hook for `LaTeX-mode'."
@@ -33,17 +52,6 @@
     (`cdlatex (turn-on-cdlatex))))
 
 (add-hook 'LaTeX-mode-hook 'prelude-latex-mode-defaults)
-
-;; Adding company-backend and latexmk for LaTeX
-(add-hook 'LaTeX-mode-hook (lambda ()
-  (add-to-list 'company-backends 'company-math-symbols-unicode)
-  (setq-local company-backends
-              (append '((company-math-symbols-latex company-latex-commands))
-                      company-backends))
-  (push
-   '("Latexmk" "latexmk -pdf %s" TeX-run-command nil t
-     :help "Run Latexmk on file")
-   TeX-command-list)))
 
 ;; Set lualatex as the default compiler
 (setq pdf-latex-command "lualatex")

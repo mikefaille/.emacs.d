@@ -1,33 +1,16 @@
 (use-package magit)
-(require-package 'magit)
 
 
-(require 'magit)
-(require-package 'git-gutter)
+(use-package git-gutter
+  :hook (prog-mode . git-gutter-mode)
+  :config
+  (setq git-gutter:update-interval 0.02))
 
-;; If you enable global minor mode
-(global-git-gutter-mode t)
-
-;; ;; If you would like to use git-gutter.el and linum-mode
-;; (git-gutter:linum-setup)
-
-;; If you enable git-gutter-mode for some modes
-(add-hook 'prog-mode-hook 'git-gutter-mode)
-
-(global-set-key (kbd "C-x C-g") 'git-gutter-mode)
-(global-set-key (kbd "C-x v =") 'git-gutter:popup-hunk)
-
-;; Jump to next/previous hunk
-(global-set-key (kbd "C-x p") 'git-gutter:previous-hunk)
-(global-set-key (kbd "C-x n") 'git-gutter:next-hunk)
-
-;; Stage current hunk
-(global-set-key (kbd "C-x v s") 'git-gutter:stage-hunk)
-
-;; Revert current hunk
-(global-set-key (kbd "C-x v r") 'git-gutter:revert-hunk)
-
-(set git-commit-major-mode 'markdown-mode)
+(use-package git-gutter-fringe
+  :config
+  (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
+  (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
+  (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
 
 (defun git-add-files(files)
   "Run git add with the input file"
