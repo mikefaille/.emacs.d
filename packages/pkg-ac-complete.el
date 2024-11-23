@@ -1,4 +1,4 @@
-;;; package --- Suma auto-complete
+;; package --- Suma auto-complete
 
 ;;; Commentary:
 

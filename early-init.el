@@ -1,3 +1,5 @@
+(setq package-enable-at-startup nil)
+
 (defvar current-user (getenv (if (equal system-type 'windows-nt) "USERNAME" "USER")))
 (message "Mike's .emac.d is powering up... Be patient, Master %s!" current-user)
 (when (version< emacs-version "24.4")
@@ -33,8 +35,11 @@
 
 (add-hook 'emacs-startup-hook
 	  (lambda ()
-	    (setq gc-cons-threshold (car (get 'gc-cons-threshold 'standard-value))
+	    (setq gc-cons-threshold 100000000 ;; 100mb
 		  file-name-handler-alist file-name-handler-alist-original)))
+
+;; Increase the amount of data which Emacs reads from the process
+(setq read-process-output-max (* 1024 1024)) ;; 1mb
 
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)

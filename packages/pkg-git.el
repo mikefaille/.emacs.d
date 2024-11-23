@@ -1,4 +1,21 @@
-(use-package magit)
+(use-package magit
+  :config
+  ;; Remove obsolete hooks before enabling wip-mode
+  (setq magit-status-sections-hook
+        '(magit-insert-status-headers
+          magit-insert-merge-log
+          magit-insert-rebase-sequence
+          magit-insert-am-sequence
+          magit-insert-sequencer-sequence
+          magit-insert-untracked-files
+          magit-insert-unstaged-changes
+          magit-insert-staged-changes
+          magit-insert-stashes
+          magit-insert-unpulled-from-pushremote
+          magit-insert-unpulled-from-upstream
+          magit-insert-unpushed-to-pushremote
+          magit-insert-unpushed-to-upstream))
+  (magit-wip-mode 1))
 
 
 (use-package git-gutter
@@ -29,9 +46,5 @@
 	(git-add-files files))
     (error (format "Not a Dired buffer \(%s\)" major-mode))))
 
-
-;; ;; see here https://magit.vc/manual/magit/Wip-Modes.html
-;; (add-hook 'prog-mode-hook 'magit-wip-mode)
-;; (add-hook 'text-mode-hook 'magit-wip-mode)
 
 (provide 'pkg-git)

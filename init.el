@@ -5,6 +5,7 @@
 (add-to-list 'load-path packages-dir)
 
 ;; Load core and package configurations
+;; (require 'pkg-elpaca)
 (require 'pkg-ido)
 (require 'pkg-corfu2)
 (require 'pkg-org)
@@ -33,10 +34,11 @@
 ;; (require 'pkg-terraform-lsp)
 ;; (require 'pkg-go)
 (require 'pkg-irc)
-(require 'pkg-straight)
+;; (require 'pkg-straight)
+
 
 (require 'pkg-flutter)
-
+(require 'pkg-terraform)
 ;; (require 'pkg-corfu)
 
 ;; (require 'pkg-combobulate)
@@ -44,7 +46,8 @@
 ;; (require 'pkg-theme)
 (load-theme 'my-solarized-dark t)
 
-(straight-use-package 'gptel)
+
+;; (use-package 'gptel)
 
 ;; Llama.cpp offers an OpenAI compatible API
 ;; (gptel-make-openai "llama-cpp"          ;Any name
