@@ -4,9 +4,14 @@
 (require 'mouse)  ; needed for iterm2 compatibility
 (xterm-mouse-mode t)
 
-(require  'flymake)
-(define-key flymake-mode-map (kbd "M-n") 'flymake-goto-next-error)
-(define-key flymake-mode-map (kbd "M-p") 'flymake-goto-prev-error)
+(require 'flymake)
+
+(defun my-flymake-mode-hook ()
+  (define-key flymake-mode-map (kbd "M-n") 'flymake-goto-next-error)
+  (define-key flymake-mode-map (kbd "M-p") 'flymake-goto-prev-error))
+
+
+(add-hook 'flymake-mode-hook 'my-flymake-mode-hook)
 
 (pixel-scroll-precision-mode)
 
@@ -48,7 +53,7 @@
 ;; Saveplace
 (require 'saveplace)
 (setq-default save-place t)
-(setq save-place-file (expand-file-name "saveplace" main-savefile-dir))
+;; (setq save-place-file (expand-file-name "saveplace" main-savefile-dir))
 
 ;; Eldoc Mode
 (setq eldoc-idle-delay 1)

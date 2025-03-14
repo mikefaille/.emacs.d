@@ -1,218 +1,206 @@
-;;; pkg-corfu2.el --- Enhanced completion with Corfu and Orderless -*- lexical-binding: t -*-
-
-;;; Commentary:
-;; This package provides an enhanced completion experience using Corfu,
-;; Cape, Orderless, Vertico, Consult, and related packages.
-
-;;; Code:
-
 (require 'use-package)
-(require 'completion-preview)  ;; Require completion-preview
+(require 'orderless)
+(require 'completion-preview);; Corfu for Completion
 
+(use-package all-the-icons
+  :if (display-graphic-p))
 (use-package corfu
-  :ensure t
-  :after cape
-  :custom
+:ensure t
+:after cape
+:custom
   (corfu-cycle t)
-  (corfu-auto t)          ;; Keep corfu-auto as it is
-  (corfu-auto-prefix 2)   ;; Keep corfu-auto-prefix as it is
-  (corfu-popupinfo-delay '(0.5 . 0.2))
+  (corfu-auto t)              ; Auto completion ON
+  (corfu-auto-prefix 2)
+  (corfu-popupinfo-delay '(0.5. 0.2))
   (corfu-preview-current 'insert)
-  (corfu-preselect 'always)  ;; Experiment with this
-  (corfu-on-exact-match nil)
-  :bind (:map corfu-map
-          ("M-p" . corfu-previous)
-          ("M-n" . corfu-next)
-          ("M-d" . corfu-info-documentation))
-  :init
+  (corfu-preselect 'none)     ; Don't preselect anything
+  (corfu-on-exact-match nil)  ; Don't complete on exact match
+:bind (:map corfu-map
+              ("M-p". corfu-previous)
+              ("M-n". corfu-next)
+              ("M-d". corfu-info-documentation)
+              ("<return>". newline-and-indent)
+              ("RET". newline-and-indent)
+              ("<tab>". corfu-insert-dedicated); Dedicated insert key
+              ("TAB". corfu-insert-dedicated))
+:init
   (global-corfu-mode)
-  (global-completion-preview-mode)) ;; Enable completion-preview globally
-
+  (global-completion-preview-mode));; Corfu Popup Info (Optional)
 (use-package corfu-popupinfo
-  :ensure nil
-  :after corfu
-  :hook (corfu-mode . corfu-popupinfo-mode)
-  :custom
-  (corfu-popupinfo-delay '(0.5 . 0.2)))
+:ensure nil
+:after corfu
+:hook (corfu-mode. corfu-popupinfo-mode)
+:custom
+  (corfu-popupinfo-delay '(0.5. 0.2)));; Corfu Echo (Optional)
 
 (use-package corfu-echo
-  :ensure nil
-  :after corfu
-  :hook (corfu-mode . corfu-echo-mode)
-  :custom
-  (corfu-doc-border "#FFB6C1")        ;; Customize border color (light pink)
-  (corfu-doc-max-width 60)            ;; Adjust documentation width
-  (corfu-doc-position 'window))       ;; Position documentation window ('window or 'inline)
-
-
-
+:ensure nil; Not in MELPA by default
+:after corfu
+:hook (corfu-mode. corfu-echo-mode)
+:custom
+   (corfu-doc-border "#FFB6C1")        ;; Customize border color (light pink)
+   (corfu-doc-max-width 60)            ;; Adjust documentation width
+ (corfu-doc-position 'window)
+  (corfu-echo-documentation t)
+  (corfu-echo-delay 0.5)
+  (corfu-echo-max-width 60))
 (use-package cape
-  :ensure t
-  :defer nil  ; Don't defer loading
-  :init  ; Move configuration to :config to ensure cape is loaded
-
-
-
-  (setq completion-at-point-functions
-              (list
-    (cape-capf-super
-     #'cape-file
-     #'cape-dabbrev
-     #'cape-abbrev  ; Changed from cape-keyword
-     #'cape-line
-     #'cape-dict)))
-
-  ;; Configure Cape settings
+:ensure t
+:init
+ (setq completion-at-point-functions
+        (list 
+              (cape-capf-buster #'cape-lsp) ; Apply capf-buster to cape-lsp
+              #'cape-file
+              #'cape-keywords
+              #'cape-dabbrev
+              #'cape-abbrev
+              #'cape-history
+              #'cape-line
+              #'cape-symbols
+              #'cape-dict))
   (setq cape-dabbrev-min-length 2
         cape-dabbrev-check-other-buffers 'some)
 
-  ;; Ensure Cape works well with Corfu
-  (advice-add 'cape-wrap-buster :around 'cape-capf-buster)
 
-  :bind (("C-c p t" . complete-tag)
-         ("C-c p d" . cape-dabbrev)
-         ("C-c p h" . cape-history)
-         ("C-c p s" . cape-symbol)
-         ("C-c p a" . cape-abbrev)
-         ("C-c p i" . cape-ispell)
-         ("C-c p l" . cape-line)
-         ("C-c p w" . cape-dict)))
+:bind (("C-c p t". complete-tag)
 
+
+
+       ("C-c p d". cape-dabbrev)
+         ("C-c p h". cape-history)
+         ("C-c p s". cape-symbol)
+         ("C-c p a". cape-abbrev)
+         ("C-c p i". cape-ispell)
+         ("C-c p l". cape-line)
+         ("C-c p w". cape-dict)));; Orderless - Flexible Completion
 (use-package orderless
-  :ensure t
-  :custom
+:ensure t
+:custom
   (completion-styles '(orderless basic))
-  (completion-category-overrides '((file (styles . (partial-completion orderless)))
-                                   (command (styles orderless-prefixes orderless))
-                                   (variable (styles orderless-prefixes orderless))
-                                   (symbol (styles orderless-prefixes orderless))))
+  (completion-category-overrides '((file (styles. (partial-completion orderless)))
+                                  (command (styles orderless-prefixes orderless))
+                                  (variable (styles orderless-prefixes orderless))
+                                  (symbol (styles orderless-prefixes orderless))))
   (orderless-component-separator #'orderless-escapable-split-on-space)
   (orderless-matching-styles '(orderless-literal orderless-regexp orderless-initialism orderless-flex))
-  :config
+:config
   (setq orderless-style-dispatchers '(orderless-affix-dispatch))
-  (setq completion-category-defaults nil))
-
+  (setq completion-category-defaults nil));; Vertico - Vertical Completion UI (Optional, but recommended)
 (use-package vertico
-  :ensure t
-  :custom
+:ensure t
+:custom
   (vertico-cycle t)
   (vertico-count 13)
   (vertico-resize t)
   (vertico-multiform-mode t)
-  :init
+:init
   (vertico-mode)
-  :config
+:config
   (setq vertico-multiform-categories
         '((file grid)
           (consult-grep buffer)
-          (consult-location buffer)))
+          (consult-location buffer))));; Persist history
 
-  ;; Persist history over Emacs restarts
-  (use-package savehist
-    :init
-    (savehist-mode))
 
-  ;; Add extensions
-  (use-package vertico-directory
-    :after vertico
-    :ensure nil
-    ;; More convenient directory navigation commands
-    :bind (:map vertico-map
-                ("RET" . vertico-directory-enter)
-                ("DEL" . vertico-directory-delete-char)
-                ("M-DEL" . vertico-directory-delete-word))
-    ;; Tidy shadowed file names
-    :hook (rfn-eshadow-update-overlay . vertico-directory-tidy)))
 
+
+;; Vertico Directory (Optional)
+(use-package vertico-directory
+:after vertico
+:ensure nil
+:bind (:map vertico-map
+              ("RET". vertico-directory-enter)
+              ("DEL". vertico-directory-delete-char)
+              ("M-DEL". vertico-directory-delete-word))
+:hook (rfn-eshadow-update-overlay. vertico-directory-tidy));; Marginalia - Annotations (Optional)
 (use-package marginalia
-  :ensure t
-  :init (marginalia-mode)
-  :custom
+:ensure t
+:init (marginalia-mode)
+:custom
   (marginalia-align 'right)
-  (marginalia-max-relative-age 0))
-
+  (marginalia-max-relative-age 0));; Consult - Enhanced Searching (Optional, but highly recommended)
 (use-package consult
-  :ensure t
-  :bind (("C-s" . consult-line)
-         ("C-x b" . consult-buffer)
-         ("M-y" . consult-yank-pop)
-         ("M-g g" . consult-goto-line)
-         ("C-x C-r" . consult-recent-file)
-         ("C-c i" . consult-imenu)
-         ("C-c m" . consult-mark)
-         ("M-s h" . consult-history)
-         ("M-s m" . consult-mode-command)
-         ("C-x r b" . consult-bookmark)
-         ("C-c k" . consult-kmacro))
-  :custom
+:ensure t
+:bind (("C-s". consult-line)
+         ("C-x b". consult-buffer)
+         ("M-y". consult-yank-pop)
+         ("M-g g". consult-goto-line)
+         ("C-x C-r". consult-recent-file)
+         ("C-c i". consult-imenu)
+         ("C-c m". consult-mark)
+         ("M-s h". consult-history)
+         ("M-s m". consult-mode-command)
+         ("C-x r b". consult-bookmark)
+         ("C-c k". consult-kmacro))
+:custom
   (consult-preview-key 'any)
   (consult-narrow-key "<")
-  :config
-  ;; Check if ripgrep (rg) is available
+:config
   (when (executable-find "rg")
-    ;; Only bind and configure ripgrep if it's available
     (global-set-key (kbd "M-s r") #'consult-ripgrep)
-
-    ;; Configure consult-ripgrep to use .gitignore
     (setq consult-ripgrep-args
           (concat "rg --null --line-buffered --color=ansi --max-columns=1000 "
-                  "--no-heading --line-number . -H --no-ignore --hidden "
-                  "-g !.git")))
-
-  ;; Configure the asynchronous search behavior
+                  "--no-heading --line-number. -H --no-ignore --hidden "
+                  "-g!.git")))
   (setq consult-async-min-input 2)
   (setq consult-async-refresh-delay 0.15)
   (setq consult-async-input-throttle 0.2)
-  (setq consult-async-input-debounce 0.1))
-
+  (setq consult-async-input-debounce 0.1));; Consult Xref (Optional)
 (use-package consult-xref
-  :ensure nil  ; It's part of consult, so we don't need to ensure it separately
-  :after (consult xref)
-  :config
+:ensure nil
+:after (consult xref)
+:config
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref)
   (consult-customize
    consult-xref
-   :preview-key
-   (list :debounce 0.2 'any)))
-
+ :preview-key
+   (list:debounce 0.2 'any)));; consult-project-extra (Optional)
 (use-package consult-project-extra
-  :ensure t
-  :after consult
-  :bind (("C-c p f" . consult-project-extra-find)
-         ("C-c p o" . consult-project-extra-find-other-window)))
-
+:ensure t
+:after consult
+:bind (("C-c p f". consult-project-extra-find)
+         ("C-c p o". consult-project-extra-find-other-window)));; Embark - Contextual Actions (Optional, but recommended)
 (use-package embark
-  :ensure t
-  :bind (("C-." . embark-act)
-         ("M-." . embark-dwim)
-         ("C-h B" . embark-bindings))
-  :init
-  (setq prefix-help-command #'embark-prefix-help-command))
-
+:ensure t
+:bind (("C-.". embark-act)
+         ("M-.". embark-dwim)
+         ("C-h B". embark-bindings))
+:init
+  (setq prefix-help-command #'embark-prefix-help-command));; Embark Consult (Integration)
 (use-package embark-consult
-  :ensure t
-  :after (embark consult)
-  :hook
-  (embark-collect-mode . consult-preview-at-point-mode))
-
+:ensure t
+:after (embark consult)
+:hook
+  (embark-collect-mode. consult-preview-at-point-mode));; Kind Icon (Optional)
 (use-package kind-icon
-  :ensure t
-  :after corfu
-  :custom
+:ensure t
+:after corfu
+:custom
   (kind-icon-use-icons t)
   (kind-icon-default-face 'corfu-default)
   (kind-icon-blend-background nil)
   (kind-icon-blend-frac 0.08)
-  :config
-
-  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
-
-
-;; Enable recursive minibuffers and savehist
+:config
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter));; Recursive minibuffers and savehist
 (setq enable-recursive-minibuffers t)
 (use-package savehist
-  :init
-  (savehist-mode))
+   :init
+   (savehist-mode))
 
-(provide 'pkg-corfu2)
+(use-package emacs
+  :custom
+  ;; TAB cycle if there are only few candidates
+  ;; (completion-cycle-threshold 3)
+
+  ;; Emacs 30 and newer: Disable Ispell completion function.
+  ;; Try `cape-dict' as an alternative.
+  (text-mode-ispell-word-completion nil)
+
+
+  ;; Hide commands in M-x which do not apply to the current mode.  Corfu
+  ;; commands are hidden, since they are not used via M-x. This setting is
+  ;; useful beyond Corfu.
+  (read-extended-command-predicate #'command-completion-default-include-p))
+
+(provide 'pkg-corfu2);;; pkg-corfu2.el ends here

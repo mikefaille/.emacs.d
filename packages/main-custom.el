@@ -1,4 +1,4 @@
-;;; Prelude-custom.el --- Emacs Prelude: Prelude's customizable variables.
+´;;; Prelude-custom.el --- Emacs Prelude: Prelude's customizable variables.
 ;;
 ;; Copyright © 2011-2014 Bozhidar Batsov
 ;;
@@ -34,6 +34,8 @@
 "Non-nil values enable Main's auto save."
 :type 'boolean
 :group 'main)
+
+
 
 (defcustom main-guru t
 "Non-nil values enable `guru-mode'."

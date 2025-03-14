@@ -63,16 +63,8 @@
 ;; ;; Ensure the cl-generic package is required
 ;; (require 'cl-generic)
 
-;; ;; Re-declare lsp-execute-command as a generic function
-;; (cl-defgeneric lsp-execute-command (command &optional arguments)
-;;   "Execute a command in the LSP server.")
-
-
 ;; (cl-defgeneric lsp-clients-extract-signature-on-hover (signature)
 ;;   "Extract signature on hover in LSP clients.")
-
-;; (cl-defgeneric lsp-execute-command (command &optional arguments)
-;;   "Execute a command in the LSP server.")
 
 
 ;; ;; Re-declare lsp-process-id as a generic function
