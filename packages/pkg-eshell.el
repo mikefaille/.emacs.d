@@ -1,94 +1,56 @@
-(require 'eshell)
-(require 'em-smart)
-(setq eshell-where-to-jump 'begin)
-(setq eshell-review-quick-commands nil)
-(setq eshell-smart-space-goes-to-end t)
+;;; pkg-eshell.el --- Eshell configuration -*- lexical-binding: t -*-
 
-;; TODO in recent version of emacs, the function named shell-mode is not recognized anymore..
+;;; Commentary:
+;; This package configures Eshell, the Emacs shell.
 
-;; (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+;;; Code:
 
-;; (add-hook 'eshell-preoutput-filter-functions
-;;           'ansi-color-filter-apply)
+(use-package eshell
+  :defer t
+  :config
+  (use-package em-smart
+    :defer t)
+  (setq eshell-where-to-jump 'begin)
+  (setq eshell-review-quick-commands nil)
+  (setq eshell-smart-space-goes-to-end t)
 
-;; (add-hook 'eshell-preoutput-filter-functions
-;;           'ansi-color-apply)
-
-;;  (ansi-color-for-comint-mode-on)
-;;   (defun eshell-handle-ansi-color ()
-;;     (ansi-color-apply-on-region eshell-last-output-start                                 eshell-last-output-end))
-;;   (add-hook 'eshell-mode-hook
-;;                   '(lambda ()
-;;                                              (add-to-list
-;;                                                                  'eshell-output-filter-functions
-;;  'eshell-handle-ansi-color)))
-
-
-;;                                         (eval-after-load 'esh-opt
-;;                                          (progn
-;;                                            (autoloadp 'eshell-prompt-extras)))
-;;                                            (setq eshell-highlight-prompt nil
-;;                                                  eshell-prompt-function 'epe-theme-lambda)
-
-
-(defun eshell-here ()
-  "Opens up a new shell in the directory associated with the
+  (defun eshell-here ()
+    "Opens up a new shell in the directory associated with the
 current buffer's file. The eshell is renamed to match that
 directory to make multiple eshell windows easier."
-  (interactive)
-  (let* ((parent (if (buffer-file-name)
-                     (file-name-directory (buffer-file-name))
-                   default-directory))
-         (height (/ (window-total-height) 3))
-         (name   (car (last (split-string parent "/" t)))))
-    (split-window-vertically (- height))
-    (other-window 1)
-    (eshell "new")
-    (rename-buffer (concat "*eshell: " name "*"))
+    (interactive)
+    (let* ((parent (if (buffer-file-name)
+                       (file-name-directory (buffer-file-name))
+                     default-directory))
+           (height (/ (window-total-height) 3))
+           (name   (car (last (split-string parent "/" t)))))
+      (split-window-vertically (- height))
+      (other-window 1)
+      (eshell "new")
+      (rename-buffer (concat "*eshell: " name "*"))
 
-    (insert (concat "ls"))
-    (eshell-send-input)))
+      (insert (concat "ls"))
+      (eshell-send-input)))
 
-(defun eshell/x ()
-  (insert "exit")
-  (eshell-send-input)
-  (delete-window))
+  (defun eshell/x ()
+    (insert "exit")
+    (eshell-send-input)
+    (delete-window))
 
+  (global-set-key (kbd "C-!") 'eshell-toggle)
 
+  (setq password-cache t) ; enable password caching
+  (setq password-cache-expiry 3600) ; for one hour (time in secs)
+  (setq eshell-prefer-lisp-functions t)
+  (add-hook 'eshell-mode-hook 'eshell-smart-initialize)
 
+  ;; Start eshell or switch to it if it's active.
+  (global-set-key (kbd "C-x m") 'eshell)
 
+  ;; Start a new eshell even if one is active.
+  (global-set-key (kbd "C-x M") (lambda () (interactive) (eshell t)))
 
-
-;;(defun eshell-toggle ()
-;;  (if (bound-and-true-p 'shell-mode)
-;;       (eshell-here)
-;;    (eshell/x)
-;;    )
-
-;;  )
-
-
-(global-set-key (kbd "C-!") 'eshell-toggle)
-
-
-
-(require 'em-smart)
-(setq eshell-where-to-jump 'begin)
-(setq eshell-review-quick-commands nil)
-(setq eshell-smart-space-goes-to-end t)
-
-(setq password-cache t) ; enable password caching
-(setq password-cache-expiry 3600) ; for one hour (time in secs)
-(setq eshell-prefer-lisp-functions t)
-(add-hook 'eshell-mode-hook 'eshell-smart-initialize)
-
-;; Start eshell or switch to it if it's active.
-(global-set-key (kbd "C-x m") 'eshell)
-
-;; Start a new eshell even if one is active.
-(global-set-key (kbd "C-x M") (lambda () (interactive) (eshell t)))
-
-;; Start a regular shell if you prefer that.
-(global-set-key (kbd "C-x M-m") 'shell)
+  ;; Start a regular shell if you prefer that.
+  (global-set-key (kbd "C-x M-m") 'shell))
 
 (provide 'pkg-eshell)

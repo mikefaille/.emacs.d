@@ -1,31 +1,46 @@
-(require-package 'web-mode)
+;;; pkg-web.el --- Web mode configuration -*- lexical-binding: t -*-
 
-(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.css\\'" . css-mode))
+;;; Commentary:
+;; This package configures web-mode for editing web templates.
 
-(setq web-mode-engines-alist
-      '(("php"    . "\\.phtml\\'")
-        ("blade"  . "\\.blade\\.")
-       ))
+;;; Code:
 
-(add-hook 'web-mode-hook
-          (lambda ()
-            (whitespace-mode -1)
-            (with-eval-after-load 'sgml-mode
-              (require-package 'emmet-mode)
-              (emmet-mode 1))
-            (with-eval-after-load 'css-mode
-              (require-package 'emmet-mode)
-              (emmet-mode 1))
-            (with-eval-after-load 'web-mode
-              (require-package 'css-eldoc))
-            ))
+(use-package web-mode
+  :defer t
+  :mode ("\\.html?\\'" . web-mode)
+  :mode ("\\.phtml\\'" . web-mode)
+  :mode ("\\.tpl\\.php\\'" . web-mode)
+  :mode ("\\.[agj]sp\\'" . web-mode)
+  :mode ("\\.as[cp]x\\'" . web-mode)
+  :mode ("\\.erb\\'" . web-mode)
+  :mode ("\\.mustache\\'" . web-mode)
+  :mode ("\\.djhtml\\'" . web-mode)
+  :mode ("\\.css\\'" . css-mode)
+  :config
+  ;; Define the web mode engines.
+  (setq web-mode-engines-alist
+        '(("php"    . "\\.phtml\\'")
+          ("blade"  . "\\.blade\\.")))
+  ;; Add a hook to web-mode.
+  (add-hook 'web-mode-hook
+            (lambda ()
+              ;; Disable whitespace-mode in web-mode.
+              (whitespace-mode -1)
+              ;; Enable emmet-mode for sgml-mode.
+              (with-eval-after-load 'sgml-mode
+                (use-package emmet-mode
+                  :defer t
+                  :config
+                  (emmet-mode 1)))
+              ;; Enable emmet-mode for css-mode.
+              (with-eval-after-load 'css-mode
+                (use-package emmet-mode
+                  :defer t
+                  :config
+                  (emmet-mode 1)))
+              ;; Enable css-eldoc for web-mode.
+              (with-eval-after-load 'web-mode
+                (use-package css-eldoc
+                  :defer t)))))
 
 (provide 'pkg-web)

@@ -26,33 +26,14 @@
       use-package-always-demand nil
       use-package-expand-minimally t)
 
-(defvar core-modules '(smartparens idle-highlight-mode find-file-in-project smex scpaste helm flycheck undo-tree dired-hacks-utils flycheck eshell-prompt-extras fuzzy deferred auto-async-byte-compile markdown-mode async))
-
-(defvar package-refreshed-this-session nil)
-
-(defun maybe-refresh-package-contents (package)
-  "Refresh package contents if PACKAGE is not installed and if contents have not been refreshed this session."
-  (unless (or package-refreshed-this-session (package-installed-p package))
-    (package-refresh-contents)
-    (setq package-refreshed-this-session t)))
-
-
 (defun require-package (package)
-  "Ensure PACKAGE is installed."
+  "Ensure PACKAGE is installed, with error handling."
   (unless (package-installed-p package)
-    (maybe-refresh-package-contents package)
     (condition-case err
-        (eval `(use-package ,package
-                 :ensure t))
+        (progn
+          (package-refresh-contents)
+          (package-install package))
       (error (message "Failed to install %s: %S" package err)))))
-
-
-(defun module-list-install (modules-list)
-  "Install missing modules from MODULES-LIST."
-  (dolist (module modules-list)
-    (require-package module)))
-
-(module-list-install core-modules)
 
 (defun add-subfolders-to-load-path (parent-dir)
   "Add subfolders of PARENT-DIR to load path."

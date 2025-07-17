@@ -1,11 +1,31 @@
-;; Install necessary packages
-(use-package diminish :ensure t)
+;;; pkg-feel.el --- General look and feel -*- lexical-binding: t -*-
+
+;;; Commentary:
+;; This package configures the general look and feel of Emacs.
+
+;;; Code:
+
+(require-package 'diminish)
+(use-package diminish
+  :defer t)
 
 (require-package 'minimap)
-;; (require-package 'flx-isearch)
+(use-package minimap
+  :defer t)
+
 (require-package 'expand-region)
+(use-package expand-region
+  :defer t)
 
 (require-package 'operate-on-number)
+(use-package operate-on-number
+  :defer t)
+
+(require-package 'volatile-highlights)
+(use-package volatile-highlights
+  :defer t
+  :config
+  (volatile-highlights-mode t))
 
 ;; Variables
 (defvar main-savefile-dir
@@ -37,11 +57,6 @@
 
 ;; Highlight the current line
 (global-hl-line-mode +1)
-(use-package volatile-highlights
-  :config
-  (volatile-highlights-mode t))
-
-;; (diminish 'volatile-highlights-mode)
 
 ;; Whitespace-mode config
 (require 'whitespace)

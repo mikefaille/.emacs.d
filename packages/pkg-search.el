@@ -1,10 +1,12 @@
-;; go get -u github.com/monochromegane/the_platinum_searcher/...
+;;; pkg-search.el --- The Platinum Searcher configuration -*- lexical-binding: t -*-
+
+;;; Commentary:
+;; This package configures pt, The Platinum Searcher, for searching files.
+
+;;; Code:
 
 (require-package 'pt)
-
-
-;; usage
-
-;; M-x pt-regexp or M-x projectile-pt
+(use-package pt
+  :defer t)
 
 (provide 'pkg-search)
