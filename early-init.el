@@ -22,12 +22,6 @@
 
 
 (global-display-line-numbers-mode 1)
-(require 'linum)
-(global-linum-mode 0)
-(global-linum-mode -1)
-
-;; BUG
-(setq outline-minor-mode-prefix "\C-c \C-o")
 
 ;; Optimizations for faster startup
 (setq file-name-handler-alist-original file-name-handler-alist)
@@ -46,9 +40,6 @@
 (push '(vertical-scroll-bars) default-frame-alist)
 
 
-(setq package-enable-at-startup nil)
-
-
 (defconst main-savefile-dir (expand-file-name "savefile" user-emacs-directory))
 ;; Ensure savefile directory exists
 (unless (file-exists-p main-savefile-dir)
@@ -61,7 +52,6 @@
 (require 'core-packages)
 (require 'core-feel)
 (require 'core-util)
-(require 'core-native-comp)
 (require 'core-look)
 
 (package-initialize)

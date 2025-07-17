@@ -1,7 +1,18 @@
-(require-package 'ace-window)
-(require-package 'avy)
-(require-package 'zop-to-char)
-(require-package 'ace-jump-buffer)
+;;; pkg-mouvement.el --- Mouvement configuration -*- lexical-binding: t -*-
+
+;;; Commentary:
+;; This package configures various packages for efficient navigation.
+
+;;; Code:
+
+(use-package ace-window
+  :defer t)
+(use-package avy
+  :defer t)
+(use-package zop-to-char
+  :defer t)
+(use-package ace-jump-buffer
+  :defer t)
 
 ;; Avy configuration for word or subword navigation
 (global-set-key (kbd "C-c j") 'avy-goto-word-or-subword-1)
