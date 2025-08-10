@@ -1,63 +1,92 @@
-;;; core-look.el ---
+;; -*- lexical-binding: t; -*-
+;; core-look.el --- Core look & feel settings (UI, mode line, interaction)
 
-;; License:
-;; This program is free software; you can redistribute it and/or modify it
-;; under the terms of the GNU General Public License as published by the
-;; Free Software Foundation; either version 3 of the License, or any later version.
+(require 'use-package)
 
-;;; Code:
+;; --- Basic UI Settings ---
 
-;; ;; AnsiColor for Shell Mode
-;; (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
-;; (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
+;; Disable blinking cursor (can also be in early-init.el)
+(blink-cursor-mode -1)
 
-;; UI Settings
-(when (fboundp 'tool-bar-mode)
-  (tool-bar-mode -1))        ; disable toolbar
-(menu-bar-mode -1)           ; disable menubar
-(blink-cursor-mode -1)       ; disable blinking cursor
+;; Fringe width (visual preference)
+(use-package fringe
+  :ensure nil ; Built-in
+  :config
+  ;; Check if fringe-mode function exists (older Emacs might not have it)
+  (when (fboundp 'fringe-mode)
+    (fringe-mode 4))) ; Adjust width as desired (pixels)
 
-;; Startup Settings
-(setq inhibit-startup-screen t)  ; disable startup screen
+;; Window Dividers (visual preference - ensure loaded once)
+;; If already enabled in core-feel.el or elsewhere, remove this.
+;; (use-package window-divider
+;;   :ensure nil ; Built-in (Emacs 29+)
+;;   :hook (after-init . window-divider-mode))
 
-;; Scrolling Settings
-(setq scroll-margin 0
-      scroll-conservatively 100000
-      scroll-preserve-screen-position 1)
+;; --- Mode Line Configuration ---
 
-;; Mode Line Settings
-(line-number-mode t)
-(column-number-mode t)
-(size-indication-mode t)
+;; Basic mode line indicators (built-in)
+(use-package simple
+  :ensure nil ; Built-in package providing modes below
+  :config
+  ;; These enable minor modes globally. Consider using hooks (e.g., prog-mode-hook)
+  ;; for line/column numbers if you don't want them everywhere.
+  ;; Alternatively, use a dedicated mode-line package for more control.
+  (line-number-mode t)
+  (column-number-mode t)
+  ;; size-indication-mode is usually part of the default mode-line format
+  ;; (size-indication-mode t)
+  )
 
-;; Fringe Settings
-(when (fboundp 'fringe-mode)
-  (fringe-mode 4))  ; set fringe width to 4 pixels
+;; --- Interaction Settings ---
 
-;; Enable y/n answers
+;; Use y/n instead of yes/no prompts
 (fset 'yes-or-no-p 'y-or-n-p)
 
-;; Frame Title Settings
+;; Disable UI dialog boxes for prompts
+(setq use-dialog-box nil)
+
+;; Enable recursive minibuffers (if not set elsewhere)
+;; (setq enable-recursive-minibuffers t)
+
+;; --- Scrolling Configuration ---
+(setq scroll-margin 0 ; No margin triggering scroll near top/bottom
+      scroll-conservatively 10000 ; Scroll full screen if possible
+      scroll-preserve-screen-position t) ; Try to keep point stationary on screen
+
+;; --- Buffer Name Handling ---
+(use-package uniquify
+  :ensure nil ; Built-in
+  :custom
+  ;; Make buffer names unique, e.g., foo<bar/baz/>
+  (uniquify-buffer-name-style 'post-forward-angle-brackets)
+  (uniquify-ignore-buffers-re "^\\*") ; Ignore special buffers
+  (uniquify-min-dir-content 1)
+  (uniquify-separator "/"))
+
+;; --- Frame Title ---
 (setq frame-title-format
-      '("" invocation-name " eMikes - "
-        (:eval (if (buffer-file-name)
-                   (abbreviate-file-name (buffer-file-name))
-                 "%b"))))  ; display either file or buffer name
+      '("" invocation-name " eMikes - " ; Customize title prefix
+        ;; Display file name (abbreviated) or buffer name
+        (:eval (if buffer-file-name
+                   (abbreviate-file-name buffer-file-name)
+                 "%b"))))
 
-;; Enable recursive minibuffers
-(setq enable-recursive-minibuffers t)
+;; --- Keybindings ---
+;; Bind C-x C-b to ibuffer (built-in buffer list alternative)
+(use-package ibuffer
+  :ensure nil ; Built-in
+  :bind ("C-x C-b" . ibuffer))
 
-;; Uniquify Settings
-(setq uniquify-buffer-name-style 'post-forward-angle-brackets
-      uniquify-ignore-buffers-re "^\\*"
-      uniquify-min-dir-content 1
-      uniquify-separator "/")  ; set separator for buffer name components
+;; --- Optional: AnsiColor for Shell/Comint Modes ---
+;; Uncomment and configure if needed
+;; (use-package comint
+;;   :ensure nil
+;;   :hook ((shell-mode . ansi-color-for-comint-mode-on)
+;;          (comint-mode . ansi-color-for-comint-mode-on))
+;;   :config
+;;   (add-to-list 'comint-output-filter-functions 'ansi-color-process-output))
 
-;; Keybindings
-(global-set-key (kbd "C-x C-b") 'ibuffer)
 
-;; Dialog Settings
-(setq use-dialog-box nil)  ; prevent UI dialog for prompt
-
+;; Mark this file as provided
 (provide 'core-look)
 ;;; core-look.el ends here

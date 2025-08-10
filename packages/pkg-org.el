@@ -42,7 +42,7 @@
     ;; Org Clock Persistence (requires org-clock module)
   (with-eval-after-load 'org-clock
     (setq org-clock-persist 'history)
-    (org-clock-persistence-insinuate)))
+    (org-clock-persistence-insinuate))
 
   ;; Org Capture Templates (define within :config or :init)
   (setq org-capture-templates

@@ -22,6 +22,11 @@
          (unless (treesit-language-available-p (car grammar))
            (treesit-install-language-grammar (car grammar)))))
 
+	 	(require 'tree-sitter)
+
+		 (add-to-list 'tree-sitter-major-mode-language-alist '(typescript-ts-mode . typescript))
+		 
+
      ;; Remapping of major modes to their Tree-sitter counterparts
      ;; This allows Tree-sitter to be used instead of the standard major modes for
      ;; the languages listed
@@ -43,6 +48,9 @@
      (add-hook 'css-ts-mode 'combobulate-mode)
      (add-hook 'yaml-ts-mode 'combobulate-mode)
      (add-hook 'typescript-ts-mode 'combobulate-mode)
-     (add-hook 'tsx-ts-mode 'combobulate-mode)))
+     (add-hook 'tsx-ts-mode 'combobulate-mode)
+		 )
+	)
+(global-font-lock-mode 1)
 
 (provide 'pkg-combobulate)

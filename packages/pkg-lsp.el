@@ -1,104 +1,118 @@
+;; -*- lexical-binding: t; -*-
+;;; pkg-lsp2.el --- Configuration for LSP Mode, related modes, and UI
+
 (require 'use-package)
-(require 'orderless)
-(require 'pkg-corfu2)
 
-;; ... other non-completion related config (all-the-icons, prog-mode-hook)
-
-;; Orderless configuration for LSP
-(defun pkg-lsp/orderless-flex-first (_pattern index _total)
-  (and (eq index 0) 'orderless-flex))
-
-(defun pkg-lsp/lsp-mode-setup-completion ()
-  (when (fboundp 'lsp-completion-at-point)
-    (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
-          '(orderless))
-    (add-hook 'orderless-style-dispatchers
-              #'pkg-lsp/orderless-flex-first nil 'local)
-    (setq-local completion-at-point-functions
-                (append '(lsp-completion-at-point) completion-at-point-functions))))
-
-;; Smart Tab Completion
-(defun pkg-lsp/smart-tab-completion ()
-  (interactive)
-  (cond
-   ((or (bolp)
-        (looking-back "^[[:space:]]+")
-        (looking-back "\\s-"))
-    (indent-for-tab-command))
-   (t (completion-at-point))))  ; Use completion-at-point directly
-
-;; Setup Corfu with LSP
-(defun pkg-lsp/setup-corfu ()
-  (corfu-mode))
-
-(use-package lsp-mode
+;; --- TypeScript Mode ---
+(use-package typescript-ts-mode
   :ensure t
-  :defer t
-  :commands (lsp lsp-deferred)
-  :hook ((python-mode . lsp-deferred)
-         (go-mode . lsp-deferred)
-         (dart-mode . lsp-deferred)
-         (lsp-mode . lsp-enable-which-key-integration)
-         (lsp-mode . pkg-lsp/setup-corfu))
+  ;; Associate .ts/.tsx files with this mode
+  :mode (
+				 ("\\.ts\\'" . typescript-ts-mode)
+         ("\\.tsx\\'" . tsx-ts-mode)
+				 )
   :custom
-  (lsp-completion-provider :none)  ; Use Corfu for completion
-  (lsp-keymap-prefix "C-c l")
-  :config
-  ;; Bind TAB for smart completion (only once)
-  (define-key lsp-mode-map (kbd "<tab>") #'pkg-lsp/smart-tab-completion)
-  (define-key lsp-mode-map (kbd "TAB") #'pkg-lsp/smart-tab-completion)
-  ;; Setup completion after lsp-completion-mode is activated
-  (add-hook 'lsp-completion-mode-hook #'pkg-lsp/lsp-mode-setup-completion))
-
-;; Configure lsp-dart for Dart Support
-(use-package lsp-dart
-  :ensure t
-  :after lsp-mode
-  :hook (dart-mode . lsp))
-
-;; Configure lsp-ui for Enhanced LSP UI
-(use-package lsp-ui
-  :ensure t
-  :after lsp-mode
-  :commands lsp-ui-mode
-  :custom
-  (lsp-ui-doc-enable t)
-  (lsp-ui-doc-position 'bottom)
-  (lsp-ui-doc-show-with-cursor t)
-  (lsp-ui-sideline-show-diagnostics t)
-  (lsp-ui-sideline-show-hover nil) ; Disable hover to prevent conflict with Corfu
-  (lsp-ui-sideline-show-code-actions t)
-  (lsp-ui-sideline-update-mode 'line)
-  :bind (:map lsp-ui-mode-map
-              ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
-              ([remap xref-find-references] . lsp-ui-peek-find-references)))
-
-;; Configure lsp-treemacs for Tree-based UI
-(use-package lsp-treemacs
-  :ensure t
-  :after lsp-mode
-  :config
-  (setq lsp-treemacs-sync-mode 1))
-
-;; Configure consult-lsp for Enhanced LSP Integration with Consult
-(use-package consult-lsp
-  :ensure t
-  :after (lsp-mode consult)
-  :bind (:map lsp-mode-map
-              ([remap xref-find-apropos] . consult-lsp-symbols)
-              ("C-c l d" . consult-lsp-diagnostics)
-              ("C-c l s" . consult-lsp-symbols)
-              ("C-c l f" . consult-lsp-file-symbols)))
-
-;; Define Additional Setup Function (Currently Empty)
-(defun pkg-lsp-setup ()
-  "Set up LSP for supported modes."
-  ;; Placeholder for additional custom configurations
+  ;; Set indentation (consider using editorconfig for project-specific settings)
+  (typescript-ts-mode-indent-offset 2)
   )
 
-;;;###autoload
-(defun pkg-lsp-init ()
-  "Initialize pkg-lsp configuration."
-  (pkg-lsp-setup))
+;; --- LSP Mode (Language Server Protocol Client) ---
+(use-package lsp-mode
+  :ensure t
+  :commands (lsp lsp-deferred) ; Ensure lsp and lsp-deferred are autoloaded
+  :pin melpa ; Optional: Pin to MELPA if preferred over other archives
+  :init
+  ;; Configure Language ID mapping (Crucial for LSP)
+  (setq lsp-language-id-configuration
+        '(;; Add mappings for all languages you intend to use with LSP
+          ;; (typescript-ts-mode . "typescript")
+          ;; (tsx-ts-mode . "typescriptreact")
+          ;; (js-ts-mode . "javascript")
+          ;; (python-mode . "python")
+          ;; (rust-mode . "rust")
+          ;; (go-mode . "go")
+          ;; KCL mapping added later after kcl-mode is defined/loaded
+          ))
+  ;; :hook (;; Activate LSP automatically but defer server start for these modes
+  ;;        ;; (typescript-ts-mode . lsp-deferred)
+  ;;        ;; (tsx-ts-mode . lsp-deferred)
+  ;;        ;; (js-ts-mode . lsp-deferred)
+  ;;        ;; (python-mode . lsp-deferred)
+  ;;        ;; (rust-mode . lsp-deferred)
+  ;;        ;; (go-mode . lsp-deferred)
+  ;;        ;; KCL hook added later
+  ;;        )
+  :custom
+  ;; Performance & Logging Settings
+  (lsp-log-io nil)
+  (lsp-print-performance nil)
+  (lsp-idle-delay 0.500)
+  (lsp-enable-file-watchers nil)
+  (lsp-completion-provider :capf)
+  (lsp-headerline-breadcrumb-enable nil)
+  )
 
+;; --- LSP UI Enhancements ---
+(use-package lsp-ui
+  :ensure t
+  :after lsp-mode ; Ensure lsp-mode is loaded first
+  :commands lsp-ui-mode ; Autoload the mode command
+  :custom
+  (lsp-ui-doc-enable t)
+  (lsp-ui-doc-position 'at-point)
+  (lsp-ui-doc-delay 0.2)
+  (lsp-ui-doc-show-with-mouse t)
+  (lsp-ui-sideline-enable t)
+  (lsp-ui-sideline-show-diagnostics t)
+  (lsp-ui-sideline-ignore-duplicate t)
+  (lsp-ui-peek-enable t)
+  :config
+  (lsp-ui-mode 1))
+
+
+;; --- KCL Mode Definition and LSP Integration ---
+
+;; Define potential paths for the KCL language server executable
+(defvar my/kcl-server-paths
+  '("/usr/local/kclvm/bin/kcl-language-server"
+    "/usr/bin/kcl-language-server"
+    "kcl-language-server")
+  "Possible paths for KCL language server executable.")
+
+;; Helper function to find the executable server path
+(defun my/find-kcl-server ()
+  "Find KCL language server executable in `my/kcl-server-paths`."
+  (seq-find #'executable-find my/kcl-server-paths))
+
+;; Define the major mode itself (if not provided by an external package)
+(unless (fboundp 'kcl-mode)
+  (define-derived-mode kcl-mode prog-mode "KCL"
+    "Major mode for editing KCL files."
+    (setq-local comment-start "//")
+    ;; Add other mode-specific settings if needed
+    ))
+
+;; Now configure kcl-mode using use-package
+(use-package kcl ; Use a different symbol for use-package if kcl-mode is defined above
+                 ; Or keep kcl-mode if it IS an external package with :ensure t
+  :ensure nil ; Set to t ONLY if kcl-mode is a separate package to install
+  :mode ("\\.k\\'" . kcl-mode) ; Associate .k files with the defined kcl-mode
+  :hook (kcl-mode . lsp) ; Hook LSP into the defined kcl-mode
+  :config
+  ;; Register KCL language server with lsp-mode
+  ;; Ensure lsp-mode is loaded before this runs
+  (with-eval-after-load 'lsp-mode
+    ;; Add language ID mapping
+    (add-to-list 'lsp-language-id-configuration '(kcl-mode . "kcl"))
+    ;; Register the client configuration
+    (lsp-register-client
+     (make-lsp-client
+      :new-connection (lsp-stdio-connection #'my/find-kcl-server)
+      :major-modes (list 'kcl-mode) ; Reference the defined kcl-mode
+      :server-id 'kcl-ls
+      ))))
+
+
+;; Mark this file as provided
 (provide 'pkg-lsp)
+;;; pkg-lsp2.el ends here

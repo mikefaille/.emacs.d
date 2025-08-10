@@ -26,7 +26,7 @@
   :config
   (with-eval-after-load 'flymake
     (define-key flymake-mode-map (kbd "M-n") #'flymake-goto-next-error)
-    (define-key flymake-mode-map (kbd "M-p") #'flymake-goto-prev-error)))
+    (define-key flymake-mode-map (kbd "M-p") #'flymake-goto-prev-error))
   ;; Optional: Diminish mode-line indicator
   ;; :diminish flymake-mode
   )
