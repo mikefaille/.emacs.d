@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+(require 'core-packages)
 ;; go get -u github.com/monochromegane/the_platinum_searcher/...
 
 (require-package 'pt)

@@ -1,30 +1,77 @@
+;; -*- lexical-binding: t; -*-
+
+;; --- Early Performance Tweaks ---
+
+;; Silence compiler warnings during startup (optional)
+(when (boundp 'native-comp-async-report-warnings-errors)
+  (setq native-comp-async-report-warnings-errors nil))
+
+;; Set GC threshold high during startup, restore later
+(setq gc-cons-threshold (* 128 1024 1024)) ; 128 MiB - Adjust as needed
+(setq gc-cons-percentage 0.5) ; Trigger GC later
+
+;; Defer file handler processing during startup
+(defvar file-name-handler-alist-original nil)
+(setq file-name-handler-alist-original file-name-handler-alist)
+(setq file-name-handler-alist nil)
+
+;; Disable package system initialization at startup (Elpaca will handle it)
 (setq package-enable-at-startup nil)
 
+;; --- Basic UI / Frame Settings ---
+
+;; Inhibit startup screens
+(setq inhibit-startup-message t)
+(setq inhibit-splash-screen t)
+
+;; Frame parameters (before initial frame is created)
+(add-to-list 'default-frame-alist '(menu-bar-lines . 0))
+(add-to-list 'default-frame-alist '(tool-bar-lines . 0))
+(add-to-list 'default-frame-alist '(vertical-scroll-bars . nil))
+(setq scroll-bar-mode nil)
+
+;; --- Basic Editor Settings ---
+
+(setq-default
+ make-backup-files nil          ; Disable backup files
+ auto-save-default nil          ; Disable auto-save
+ load-prefer-newer t            ; Prefer newer compiled files
+ ring-bell-function 'ignore     ; Silence audible bell
+ large-file-warning-threshold (* 100 1024 1024) ; 100 MiB threshold for large files
+
+ ;; Performance tweaks from online discussions / Doom Emacs
+ fast-but-imprecise-scrolling t
+ redisplay-skip-fontification-on-input t
+ inhibit-compacting-font-caches t
+ idle-update-delay 1.0 ; Reduce background churn when idle
+
+ ;; Bidirectional text processing (disable if only using LTR languages)
+ bidi-display-reordering 'left-to-right
+ bidi-paragraph-direction 'left-to-right
+ ;; bidi-inhibit-bpa t ; Uncomment if needed, usually set by modes
+
+ ;; Process communication tweaks (especially for LSP, terminals)
+ read-process-output-max (* 2 1024 1024) ; 2 MiB buffer
+ process-adaptive-read-buffering nil ; Disable adaptive buffering
+ )
+
+;; Default indentation settings (Consider moving to init.el/mode hooks if preferred)
 (setq-default
  tab-width 2
- js-indent-level 2
- typescript-indent-level 2
  emacs-lisp-indent-offset 2)
 
-(defvar current-user (getenv (if (equal system-type 'windows-nt) "USERNAME" "USER")))
-(message "Mike's .emac.d is powering up... Be patient, Master %s!" current-user)
-(when (version< emacs-version "24.4")
-  (error "Mike's dot emacs requires at least GNU Emacs 24.4, but you're running %s" emacs-version))
-(setq-default
- make-backup-files nil
- auto-save-default nil
- inhibit-startup-message t
- inhibit-splash-screen t
-
- load-prefer-newer t
- ring-bell-function 'ignore
- large-file-warning-threshold 100000000
- read-process-output-max (* 1024 1024) ; https://emacs-lsp.github.io/lsp-mode/page/performance/#increase-the-amount-of-data-which-emacs-reads-from-the-process
- native-comp-async-report-warnings-errors nil)
-
-; https://emacs-lsp.github.io/lsp-mode/page/performance/
+;; Set environment variable for LSP performance (if using LSP Mode)
 (setenv "LSP_USE_PLISTS" "true")
 
+;; --- User Info & Version Check ---
+
+(defvar current-user (getenv (if (eq system-type 'windows-nt) "USERNAME" "USER")) "Current system user.")
+(message "Mike's .emac.d is powering up... Be patient, Master %s!" current-user)
+(when (version< emacs-version "27.1") ; Elpaca requires 27.1+
+  (error "Mike's dot emacs requires at least GNU Emacs 27.1 for Elpaca, but you're running %s" emacs-version))
+
+;; --- Elpaca Package Manager Bootstrap ---
+;; (Standard Elpaca bootstrap code - appears correct)
 (defvar elpaca-installer-version 0.10)
 (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
 (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
@@ -64,52 +111,30 @@
 (add-hook 'after-init-hook #'elpaca-process-queues)
 (elpaca `(,@elpaca-order))
 
-(use-package emacs
-  :custom
-  (display-line-numbers-type 'relative)  ; Optional: for relative numbers
-  ;; (display-line-numbers-width 3)         ; Optional: adjust width
-  :hook
-  (prog-mode . display-line-numbers-mode)
-  (text-mode . display-line-numbers-mode)) ; Optional: for text modes too
+;; --- Optional Settings (Consider moving to init.el) ---
 
-;; BUG
-(setq outline-minor-mode-prefix "\C-c \C-o")
+;; Outline Minor Mode Prefix (Clarify "BUG" comment or remove)
+;; Outline Minor Mode Prefix (Clarify "BUG" comment or remove)
+;; (setq outline-minor-mode-prefix "c o")
 
-;; Optimizations for faster startup
-(setq file-name-handler-alist-original file-name-handler-alist)
-(setq file-name-handler-alist nil)
 
+;; --- Restore Settings After Startup ---
+
+;; Restore GC threshold and file handlers after init
 (add-hook 'emacs-startup-hook
-	  (lambda ()
-	    (setq gc-cons-threshold 2000000000 ;; 200mb
-		  file-name-handler-alist file-name-handler-alist-original)))
+          (lambda ()
+            (message "Restoring GC threshold and file handlers...")
+            ;; Restore GC to a higher value suitable for LSP/heavy workloads
+            (setq gc-cons-threshold (* 100 1024 1024)) ; 100 MiB - Starting point
+            (setq gc-cons-percentage 0.2) ; Slightly higher percentage
+            ;; Restore file handlers
+            (setq file-name-handler-alist file-name-handler-alist-original)
+            (message "GC threshold and file handlers restored.")
+            ))
 
-;; Increase the amount of data which Emacs reads from the process
-(setq read-process-output-max (* 1024 1024)) ;; 1mb
+;; --- Load Core Configuration from init.el ---
+;; (Commented out as these belong in init.el)
 
-(push '(menu-bar-lines . 0) default-frame-alist)
-(push '(tool-bar-lines . 0) default-frame-alist)
-(push '(vertical-scroll-bars) default-frame-alist)
+(message "Early init finished.")
 
-
-(setq package-enable-at-startup nil)
-
-
-(defconst main-savefile-dir (expand-file-name "savefile" user-emacs-directory))
-;; Ensure savefile directory exists
-(unless (file-exists-p main-savefile-dir)
-  (make-directory main-savefile-dir))
-
-
-(defconst core-dir (expand-file-name "core" user-emacs-directory))
-(add-to-list 'load-path core-dir)
-
-
-(require 'core-feel)
-(require 'core-util)
-(require 'core-native-comp)
-(require 'core-look)
-(require 'core-packages)
-
-
-;; Load a nice theme if in GUI
+;; early-init.el ends here

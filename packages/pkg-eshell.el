@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (require 'eshell)
 (require 'em-smart)
 (setq eshell-where-to-jump 'begin)
