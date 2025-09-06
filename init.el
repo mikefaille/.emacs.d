@@ -49,12 +49,7 @@
 (use-package solarized-theme
   :ensure t ; Ensure it's installed
   :config
-  ;; Load theme, handling daemon case if necessary (using logic from early-init is better)
-  ;; Simple version:
-  (when (display-graphic-p)
-     (load-theme 'solarized-dark t))
-  ;; Consider moving the daemon-aware loading logic from early-init here if preferred
-  )
+  (load-theme 'solarized-dark t))
 
 ;; In init.el
 (use-package markdown-mode
@@ -182,12 +177,6 @@
 
 
 ;; --- Finalization ---
-;; Remove misplaced theme loading code from original snippet
-;; :config
-(message "[Theme Debug] Attempting to load solarized-dark...")
-(load-theme 'solarized-dark t)
-(message "[Theme Debug] Theme load attempt finished.")
-
 (message "Michaël's Emacs configuration loaded successfully.")
 
 ;;; init.el ends here
