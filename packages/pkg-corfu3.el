@@ -170,7 +170,6 @@
 
   ;; Add configurations for other servers if needed...
 
-	(lsp-headerline-breadcrumb-mode)
   ;; Optional: Customize Eglot behavior
   ;; (setq eglot-connect-timeout 30)
   ;; (setq eglot-events-buffer-size 0) ; Disable events buffer if desired
