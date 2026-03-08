@@ -97,6 +97,19 @@
   :hook (prog-mode . indent-bars-mode))
 
 
+;; --- LSP / Eglot mutual exclusion ---
+;; Automatically flush `lsp-mode` if `eglot` is loaded, and vice versa.
+(with-eval-after-load 'eglot
+  (when (featurep 'lsp-mode)
+    (when (fboundp 'lsp-workspace-shutdown-all) (lsp-workspace-shutdown-all))
+    (unload-feature 'lsp-mode t)))
+
+(with-eval-after-load 'lsp-mode
+  (when (featurep 'eglot)
+    (when (fboundp 'eglot-shutdown-all) (eglot-shutdown-all))
+    (unload-feature 'eglot t)))
+
+
 ;; --- Load Package-Specific Configurations ---
 ;; Load configurations for individual packages or groups of packages.
 ;; These files should contain the `use-package` blocks for the actual packages.
@@ -108,7 +121,7 @@
 (require 'pkg-discover)       ; discover.el configuration
 (require 'pkg-git)            ; Git integration (e.g., Magit)
 (require 'pkg-flycheck)       ; Flycheck setup
-;; (require 'pkg-lsp)           ; Disabled: LSP Mode / Eglot setup. Eglot is configured in pkg-corfu3.el
+(require 'pkg-lsp)           ; LSP Mode / Eglot setup
 (require 'pkg-projectile)     ; Project management
 (require 'pkg-web)            ; Web development modes/tools
 (require 'pkg-docker)         ; Docker integration
