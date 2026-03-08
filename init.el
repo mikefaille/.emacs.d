@@ -108,7 +108,7 @@
 (require 'pkg-discover)       ; discover.el configuration
 (require 'pkg-git)            ; Git integration (e.g., Magit)
 (require 'pkg-flycheck)       ; Flycheck setup
-(require 'pkg-lsp)           ; LSP Mode / Eglot setup
+;; (require 'pkg-lsp)           ; Disabled: LSP Mode / Eglot setup. Eglot is configured in pkg-corfu3.el
 (require 'pkg-projectile)     ; Project management
 (require 'pkg-web)            ; Web development modes/tools
 (require 'pkg-docker)         ; Docker integration
