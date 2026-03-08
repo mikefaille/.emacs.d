@@ -115,6 +115,7 @@
 (require 'pkg-eshell)         ; Eshell enhancements
 (require 'pkg-multipleCursor) ; multiple-cursors setup
 (require 'pkg-search)         ; Search tools (Consult, etc.)
+(require 'pkg-gemini)         ; gemini-cli integration
 ;; ... add require lines for all other pkg-*.el files you use ...
 ;; (require 'pkg-ssh)
 ;; (require 'pkg-latex)
