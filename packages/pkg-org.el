@@ -149,5 +149,5 @@
 (use-package outline
   :ensure nil ; Built-in
   :config
-  (setq outline-minor-mode-prefix "c o"))
+  (setq outline-minor-mode-prefix (kbd "C-c C-o")))
 ;;; pkg-org.el ends here
