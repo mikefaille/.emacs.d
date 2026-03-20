@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (require-package 'rust-mode)
 (require-package 'flycheck-rust)
 

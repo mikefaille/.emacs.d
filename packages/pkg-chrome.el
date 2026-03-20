@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (when (daemonp)
   (require-package 'edit-server-htmlize)
   (setq edit-server-new-frame t)

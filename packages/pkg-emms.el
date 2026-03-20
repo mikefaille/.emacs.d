@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (defun mike-emms ()
   "Mike's emms launcher'"
   (interactive)

@@ -20,35 +20,10 @@
  '(global-display-line-numbers-mode t)
  '(lsp-ui-doc-use-webkit t)
  '(menu-bar-mode nil)
- '(package-selected-packages
-	 '(0blayout 0x0 0xc 2048-game 2bit 750words @ ace-jump-buffer
-							all-the-icons amx astro-ts-mode auctex-latexmk
-							auto-async-byte-compile auto-compile auto-virtualenv
-							bash-completion breadcrumb browse-kill-ring cape cdlatex
-							company consult-lsp consult-project-extra
-							corfu-prescient css-eldoc cue-mode deferred deft
-							diminish dired-hacks-utils discover discover-my-major
-							docker dockerfile-mode eglot eglot-booster
-							embark-consult emmet-mode eshell-prompt-extras
-							exec-path-from-shell expand-region find-file-in-project
-							flycheck-rust flycheck-yamllint fuzzy git-gutter-fringe
-							go-projectile gotest-ts gradle-mode groovy-mode helm
-							idle-highlight-mode ido-completing-read+ indent-bars
-							indent-tools indexed js2-mode kind-icon lsp-bridge
-							lsp-dart lsp-ivy lsp-java lsp-javacomp lsp-ui magit
-							marginalia mc-extras minimap mustache mustache-mode
-							neon-mode nerd-icons-corfu nerd-icons-dired nickel-mode
-							nix-mode no-littering npm-mode operate-on-number
-							orderless org-brain org-bullets ox-reveal perspective
-							php-mode prettier prettier-js projectile-ripgrep pt
-							quelpa rust-mode scpaste smartparens smex
-							solarized-theme ssh-config-mode systemd terraform-mode
-							tree-sitter-indent tree-sitter-langs treemacs-projectile
-							treesit-auto typescript-mode undo-tree vdiff
-							vertico-prescient virtualenvwrapper volatile-highlights
-							web-mode which-key yaml-mode yasnippet zop-to-char))
+ '(package-selected-packages nil)
  '(package-vc-selected-packages
-	 '((eglot-booster :vc-backend Git :url
+	 '((gemini-cli :url "https://github.com/linchen2chris/gemini-cli.el")
+		 (eglot-booster :vc-backend Git :url
 										"https://github.com/jdtsmith/eglot-booster")
 		 (lsp-bridge :vc-backend Git :url
 								 "https://github.com/manateelazycat/lsp-bridge.git")))

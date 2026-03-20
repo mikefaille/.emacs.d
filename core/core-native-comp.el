@@ -1,5 +1,5 @@
 ;; -*- lexical-binding: t; -*-
-;;; pkg-native-comp.el --- Configuration for Emacs Native Compilation -*- lexical-binding: t -*-
+;;; core-native-comp.el --- Configuration for Emacs Native Compilation
 
 ;;; Commentary:
 ;; Provides settings and utilities for Emacs native compilation.
@@ -12,46 +12,46 @@
 (eval-when-compile (require 'comp)) ; Needed for native-comp-* vars at compile time
 
 ;; --- Configuration Group ---
-(defgroup pkg-native-comp nil
+(defgroup core-native-comp nil
   "Native compilation utilities."
   :group 'convenience
-  :prefix "pkg-native-comp-")
+  :prefix "core-native-comp-")
 
 ;; --- Customizable Variables ---
-(defcustom pkg-native-comp-exclude-regexps
+(defcustom core-native-comp-exclude-regexps
   '("\\.dir-locals\\.el$" "/\\.#" "\\.elc$")
   "List of regexps matching files to exclude from native compilation hooks."
   :type '(repeat regexp)
-  :group 'pkg-native-comp)
+  :group 'core-native-comp)
 
-(defcustom pkg-native-comp-dirs
+(defcustom core-native-comp-dirs
   (list user-emacs-directory) ; Compile user config by default
   "Directories to include in manual native compilation updates."
   :type '(repeat directory)
-  :group 'pkg-native-comp)
+  :group 'core-native-comp)
 
 ;; --- Helper Function ---
-(defun pkg-native-comp--excluded-p (file)
-  "Check if FILE should be excluded based on `pkg-native-comp-exclude-regexps`."
+(defun core-native-comp--excluded-p (file)
+  "Check if FILE should be excluded based on `core-native-comp-exclude-regexps`."
   (or (null file)
       (seq-some (lambda (regexp) (string-match-p regexp file))
-                pkg-native-comp-exclude-regexps)))
+                core-native-comp-exclude-regexps)))
 
 ;; --- Hook Function for After Save ---
-(defun pkg-native-comp--compile-after-save ()
+(defun core-native-comp--compile-after-save ()
   "Asynchronously native compile current buffer after save (with delay)."
   (when (and buffer-file-name
              (string-match-p "\\.el\\'" buffer-file-name)
-             (not (pkg-native-comp--excluded-p buffer-file-name)))
+             (not (core-native-comp--excluded-p buffer-file-name)))
     ;; Add a short delay before compiling to avoid issues with rapid saves
-    (run-with-idle-timer 3 nil #'native-compile-async buffer-file-name nil nil))) ; Reduced delay to 3s
+    (run-with-idle-timer 3 nil #'native-compile-async buffer-file-name nil nil)))
 
 ;; --- Manual Update Command ---
-(defun pkg-native-comp-update ()
-  "Manually update native compilation for files in `pkg-native-comp-dirs`."
+(defun core-native-comp-update ()
+  "Manually update native compilation for files in `core-native-comp-dirs`."
   (interactive)
   (let ((native-comp-async-report-warnings-errors nil)) ; Suppress warnings for bulk compile
-    (dolist (dir pkg-native-comp-dirs)
+    (dolist (dir core-native-comp-dirs)
       (message "Native compiling in %s..." dir)
       ;; Recursively compile the directory
       (native-compile-async dir t nil)))
@@ -84,22 +84,11 @@
 
   :config
   ;; Add the hook for faster recompilation after saving files
-  (add-hook 'after-save-hook #'pkg-native-comp--compile-after-save)
-
-  ;; Remove the potentially redundant after-load hook
-  ;; (add-hook 'after-load-functions #'pkg-native-comp-after-load)
-
-  ;; Remove initial compilation of load-path (can be slow)
-  ;; Rely on deferred compilation or manual update instead.
-  ;; (mapc (lambda (dir)
-  ;;         (when (file-directory-p dir)
-  ;;           (native-compile-async dir t nil)))
-  ;;       load-path)
+  (add-hook 'after-save-hook #'core-native-comp--compile-after-save)
 
   ;; Define keybinding for manual update
-  (global-set-key (kbd "C-c C-n") #'pkg-native-comp-update) ; Changed binding slightly
-  )
+  (global-set-key (kbd "C-c C-n") #'core-native-comp-update))
 
-;; Mark this file as provided (using consistent name)
+;; Mark this file as provided
 (provide 'core-native-comp)
-;;; pkg-native-comp.el ends here
+;;; core-native-comp.el ends here

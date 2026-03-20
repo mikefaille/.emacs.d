@@ -1,10 +1,19 @@
 ;; -*- lexical-binding: t; -*-
+;;; pkg-multipleCursor.el --- Multiple cursors configuration
+
+(require 'use-package)
+
+(use-package multiple-cursors
+  :ensure t
+  :init
+  (global-set-key (kbd "C-c C-c") #'mc/edit-lines)
+  (global-set-key (kbd "C->") #'mc/mark-next-like-this)
+  (global-set-key (kbd "C-<") #'mc/mark-previous-like-this)
+  (global-set-key (kbd "C-c C-v") #'mc/mark-all-like-this))
+
 (use-package mc-extras
   :ensure t
-  :bind (("C-S-c C-S-c" . mc/edit-lines)
-         ("C->" . mc/mark-next-like-this)
-         ("C-<" . mc/mark-previous-like-this)
-         ("C-c C-<" . mc/mark-all-like-this))
+  :after multiple-cursors
   :config
   (with-eval-after-load 'mc-extras
     (define-key mc/keymap (kbd "C-. =") #'mc/compare-chars)
@@ -16,3 +25,4 @@
     (define-key mc/keymap (kbd "C-. r") #'mc/reverse-regions)))
 
 (provide 'pkg-multipleCursor)
+;;; pkg-multipleCursor.el ends here

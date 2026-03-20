@@ -1,54 +1,21 @@
-# -*- mode: gitignore; -*-
+# Compiled Emacs Lisp
+*.elc
+
+# Native compilation cache
+eln-cache/
+
+# Temporary and backup files
 *~
 \#*\#
-/.emacs.desktop
-/.emacs.desktop.lock
-*.elc
-auto-save-list
-tramp
-.\#*
-# Org-mode
-.org-id-locations
-*_archive
-# flymake-mode
-*_flymake.*
-# eshell files
-/eshell/history
-/eshell/lastdir
-# elpa packages
-/elpa/
-# reftex files
-*.rel
-# AUCTeX auto folder
-/auto/
-# cask packages
-.cask/
-
-
-
-[._]*.s[a-w][a-z]
-[._]s[a-w][a-z]
-*.un~
-Session.vim
-.netrwhist
-*~
-
-
-ac-comphist.dat
-backups
-eshell
-tramp
-places
-semanticdb
-srecode-map.el
-elpa
+.#*
 auto-save-list/
-.python-environments/
+crash-logs/
 
-smex-items
-fix.sh
-ido.last
+# Package and runtime data
+var/
+transient/
 
-session.*
-savefile/
-projectile-bookmarks.eld
+# OS generated files
+.DS_Store
+Thumbs.db
+node_modules

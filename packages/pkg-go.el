@@ -1,7 +1,11 @@
+;;; pkg-go.el --- Go Configuration -*- lexical-binding: t; -*-
+
+(require 'use-package)
+
 (use-package go-mode
   :ensure t
   :config
-  ;; ;; go config
+  ;; Go config
   (setq go-path (concat (getenv "HOME") "/go")
         go-bin "/usr/local/go/bin"
         go-tools '("goimports" "godef" "oracle" "golint"))
@@ -36,17 +40,13 @@
 
     ;; Run gofmt before saving
     (add-hook 'before-save-hook 'gofmt-before-save))
+  
+  :hook (go-mode . setup-go-mode))
 
-  ;; Optional: Use eglot for enhanced Go development
-  (use-package eglot
-    :ensure t
-    :config
-    (add-hook 'go-mode-hook 'eglot-ensure)
-    (defun eglot-format-buffer-on-save ()
-      (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
-    (add-hook 'go-mode-hook #'eglot-format-buffer-on-save)
-    (setq-default eglot-workspace-configuration
-                  '((:gopls .
-                     ((staticcheck . t)
-                      (matcher . "CaseSensitive")))))
+;; LSP Integration (Replaces Eglot)
+;; lsp-mode is already configured for go-mode in pkg-lsp.el, 
+;; so we just ensure it's enabled if not already caught by the hook there.
+;; (add-hook 'go-mode-hook #'lsp-deferred) ; Handled in pkg-lsp.el
+
 (provide 'pkg-go)
+;;; pkg-go.el ends here

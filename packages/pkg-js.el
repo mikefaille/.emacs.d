@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; JavaScript and JSON settings
 
 (require-package 'js2-mode)

@@ -1,56 +1,54 @@
-;; First, we make sure that both the `treesit` and `combobulate` packages are installed
-(require-package 'treesit)
+;;; pkg-treesiter.el --- Advanced Tree-sitter configuration -*- lexical-binding: t; -*-
 
+(require 'use-package)
 
-;; Once `treesit` is loaded, we can configure it
-(eval-after-load 'treesit
-  '(progn
-     ;; Function to install Tree-sitter grammars
-     ;; This function goes through a list of grammar specifications, each containing
-     ;; a language name and the corresponding URL of the Tree-sitter grammar.
-     ;; For each grammar, if it is not already available, it is installed.
-     (defun mp-setup-install-grammars ()
-       "Install Tree-sitter grammars if they are absent."
-       (interactive)
-       (dolist (grammar
-                '((css "https://github.com/tree-sitter/tree-sitter-css")
-                  (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript" "master" "src"))
-                  (python "https://github.com/tree-sitter/tree-sitter-python")
-                  (tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src"))
-                  (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
-         (add-to-list 'treesit-language-source-alist grammar)
-         (unless (treesit-language-available-p (car grammar))
-           (treesit-install-language-grammar (car grammar)))))
+;; --- 1. The Foundation: treesit-auto ---
+;; Handles grammar installation and remapping classic modes to -ts-modes.
+(use-package treesit-auto
+  :ensure t
+  :custom
+  (treesit-auto-install 'always)
+  :config
+  ;; Ensure all supported languages are handled
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
 
-	 	(require 'tree-sitter)
+;; --- 2. The Power: Combobulate ---
+;; Adds structured editing (navigation, splicing, cloning) for non-Lisp languages.
+(use-package combobulate
+  :ensure (:host github :repo "mickeynp/combobulate")
+  :preface
+  (setq combobulate-key-prefix "C-c o")
+  ;; Note: Combobulate works on specific -ts-modes. Add hooks as needed.
+  :hook ((python-ts-mode . combobulate-mode)
+         (js-ts-mode . combobulate-mode)
+         (typescript-ts-mode . combobulate-mode)
+         (tsx-ts-mode . combobulate-mode)
+         (css-ts-mode . combobulate-mode)
+         (yaml-ts-mode . combobulate-mode)
+         (json-ts-mode . combobulate-mode)
+         (go-ts-mode . combobulate-mode)))
 
-		 (add-to-list 'tree-sitter-major-mode-language-alist '(typescript-ts-mode . typescript))
-		 
+;; --- 3. The Polish: Modern Folding ---
+(use-package treesit-fold
+  :ensure (treesit-fold :host github :repo "emacs-tree-sitter/treesit-fold")
+  :hook (prog-mode . treesit-fold-mode))
 
-     ;; Remapping of major modes to their Tree-sitter counterparts
-     ;; This allows Tree-sitter to be used instead of the standard major modes for
-     ;; the languages listed
-     (dolist (mapping '((python-mode . python-ts-mode)
-                        (css-mode . css-ts-mode)
-                        (typescript-mode . tsx-ts-mode)
-                        (js-mode . js-ts-mode)
-                        (css-mode . css-ts-mode)
-                        (yaml-mode . yaml-ts-mode)))
-       (add-to-list 'major-mode-remap-alist mapping))
+;; --- 4. Astro Support ---
+(use-package treesit
+  :ensure nil
+  :config
+  (with-eval-after-load 'treesit
+    (add-to-list 'treesit-language-source-alist
+                 '(astro "https://github.com/virchau13/tree-sitter-astro"))
+    
+    (define-derived-mode astro-ts-mode prog-mode "Astro[TS]"
+      "Major mode for .astro files using Tree-sitter."
+      (when (treesit-ready-p 'astro)
+        (treesit-parser-create 'astro)
+        (treesit-major-mode-setup)))
 
-     ;; Define the key prefix for `combobulate` commands
-     (setq combobulate-key-prefix "C-c o")
+    (add-to-list 'auto-mode-alist '("\\.astro\\'" . astro-ts-mode))))
 
-     ;; Hooks to enable `combobulate-mode` in the Tree-sitter modes for the languages listed
-     ;; When a file in one of these languages is opened, `combobulate-mode` will be activated
-     (add-hook 'python-ts-mode 'combobulate-mode)
-     (add-hook 'js-ts-mode 'combobulate-mode)
-     (add-hook 'css-ts-mode 'combobulate-mode)
-     (add-hook 'yaml-ts-mode 'combobulate-mode)
-     (add-hook 'typescript-ts-mode 'combobulate-mode)
-     (add-hook 'tsx-ts-mode 'combobulate-mode)
-		 )
-	)
-(global-font-lock-mode 1)
-
-(provide 'pkg-combobulate)
+(provide 'pkg-treesiter)
+;;; pkg-treesiter.el ends here

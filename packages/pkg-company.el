@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (require-package 'company)
 
 (with-eval-after-load 'company

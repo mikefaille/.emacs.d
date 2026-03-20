@@ -1,12 +1,37 @@
-;; Required packages
-(require-package 'auctex)
-(require-package 'cdlatex)
-(require-package 'auctex-latexmk)
-(require 'smartparens-latex)
-;; (require 'tex-mik)
-;; (require-package 'company-auctex)
+;; -*- lexical-binding: t; -*-
+;;; pkg-latex.el --- LaTeX configuration using AUCTeX
 
-;; (company-auctex-init)
+(require 'use-package)
+
+;; AUCTeX
+(use-package auctex
+  :ensure t
+  :defer t
+  :custom
+  (TeX-auto-save t)
+  (TeX-parse-self t)
+  (TeX-engine 'luatex)
+  (TeX-PDF-mode t)
+  (pdf-latex-command "lualatex"))
+
+;; CDLaTeX
+(use-package cdlatex
+  :ensure t
+  :defer t)
+
+;; LaTeXmk support
+(use-package auctex-latexmk
+  :ensure t
+  :after auctex
+  :config
+  (auctex-latexmk-setup))
+
+;; Smartparens LaTeX support
+(use-package smartparens
+  :ensure t
+  :defer t
+  :config
+  (require 'smartparens-latex))
 
 ;; Configure TeX-view-program based on system type
 (setq TeX-view-program-selection
@@ -17,61 +42,34 @@
             (t '(output-dvi "open %o"
                             output-pdf "open %o"
                             output-html "open %o"))))
+
 (setq TeX-view-program-list
       '(("DVI Viewer" "open %o")
         ("PDF Viewer" "open %o")
         ("HTML Viewer" "open %o")))
 
-
-;; Adding specific backends and LaTeXmk for LaTeX
-(add-hook 'LaTeX-mode-hook (lambda ()
-  ;; Prioritize Orderless completion with Carpe and Prescient in LaTeX-mode
-  (setq-local completion-at-point-functions '(orderless-completion-at-point prescient-completion-at-point cape-tex cape-keyword cape-dabbrev cape-file))
-
-  ;; Latexmk command for easy compilation
-  (push '("Latexmk" "latexmk -pdf %s" TeX-run-command nil t :help "Run Latexmk on file")
-        TeX-command-list)))
-
-;; (with-eval-after-load 'eglot
-;;   (add-to-list 'eglot-server-programs
-;;                `(latex-mode . ("digestif" :build
-;;                                (:executable:
-;; 				(tectonic)
-;; 				))
-;; 			    )))
-
-
-;; LaTeX mode defaults
-(defun prelude-latex-mode-defaults ()
-  "Default Prelude hook for `LaTeX-mode'."
-  (turn-on-auto-fill)
-  (abbrev-mode +1)
-  (smartparens-mode +1)
-  (pcase latex-fast-math-entry
-    (`LaTeX-math-mode (LaTeX-math-mode 1))
-    (`cdlatex (turn-on-cdlatex))))
-
-(add-hook 'LaTeX-mode-hook 'prelude-latex-mode-defaults)
-
-;; Set lualatex as the default compiler
-(setq pdf-latex-command "lualatex")
-
-;; AUCTeX configuration
-(setq TeX-auto-save t)
-(setq TeX-parse-self t)
-(setq-default TeX-engine 'luatex)
-(setq-default TeX-PDF-mode t)
-
-;; Hooks for LaTeX mode
-(add-hook 'LaTeX-mode-hook 'visual-line-mode)
-(add-hook 'LaTeX-mode-hook 'flyspell-mode)
-(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
-(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+;; LaTeX mode hooks
+(add-hook 'LaTeX-mode-hook
+          (lambda ()
+            (turn-on-auto-fill)
+            (abbrev-mode +1)
+            (smartparens-mode +1)
+            (visual-line-mode 1)
+            (flyspell-mode 1)
+            (LaTeX-math-mode 1)
+            (turn-on-reftex)
+            (setq-local completion-at-point-functions
+                        '(orderless-completion-at-point
+                          prescient-completion-at-point
+                          cape-tex
+                          cape-keyword
+                          cape-dabbrev
+                          cape-file))
+            ;; Push Latexmk to command list
+            (push '("Latexmk" "latexmk -pdf %s" TeX-run-command nil t :help "Run Latexmk on file")
+                  TeX-command-list)))
 
 (setq reftex-plug-into-AUCTeX t)
 
-;; Flymake configuration for LaTeX
-(defun flymake-get-tex-args (file-name)
-  (list "pdflatex" (list "-file-line-error" "-draftmode" "-interaction=nonstopmode" file-name)))
-
 (provide 'pkg-latex)
+;;; pkg-latex.el ends here

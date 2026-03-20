@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (require-package 'mu4e-maildirs-extension)
 (require-package 'mu4e)
 (require-package 'mu4e-contrib)

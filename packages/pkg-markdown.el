@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (require-package 'markdown-mode)
 
 (setq auto-mode-alist

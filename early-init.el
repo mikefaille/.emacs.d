@@ -1,10 +1,11 @@
 ;; -*- lexical-binding: t; -*-
+;; -*- lexical-binding: t; -*-
 
 ;; --- Early Performance Tweaks ---
 
-;; Silence compiler warnings during startup (optional)
-(when (boundp 'native-comp-async-report-warnings-errors)
-  (setq native-comp-async-report-warnings-errors nil))
+;; Silence compiler warnings during startup
+(setq native-comp-async-report-warnings-errors nil)
+(setq warning-minimum-level :error) ; Only show errors, not warnings during init
 
 ;; Set GC threshold high during startup, restore later
 (setq gc-cons-threshold (* 128 1024 1024)) ; 128 MiB - Adjust as needed
@@ -77,7 +78,7 @@
 (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
 (defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
 (defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
-                              :ref nil :depth 1 :inherit ignore
+                              :ref nil :depth 1 :inherit t
                               :files (:defaults "elpaca-test.el" (:exclude "extensions"))
                               :build (:not elpaca--activate-package)))
 (let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
@@ -110,6 +111,21 @@
     (load "./elpaca-autoloads")))
 (add-hook 'after-init-hook #'elpaca-process-queues)
 (elpaca `(,@elpaca-order))
+
+;; Install use-package support for Elpaca
+(elpaca elpaca-use-package
+  ;; Enable use-package :ensure support for Elpaca.
+  (elpaca-use-package-mode))
+(elpaca-wait)
+
+;; --- Load Environment Variables ---
+(use-package exec-path-from-shell
+  :ensure t
+  :demand t
+  :config
+  (when (memq window-system '(mac ns x pgtk))
+    (exec-path-from-shell-initialize)))
+(elpaca-wait)
 
 ;; --- Optional Settings (Consider moving to init.el) ---
 

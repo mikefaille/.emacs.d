@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; Import necessary packages for ERC
 (require 'auth-source)
 (require 'erc)

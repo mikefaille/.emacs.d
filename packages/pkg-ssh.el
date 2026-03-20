@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (require-package 'ssh-config-mode)
 (autoload 'ssh-config-mode "ssh-config-mode" t)
   (add-to-list 'auto-mode-alist '(".ssh/config\\'"       . ssh-config-mode))

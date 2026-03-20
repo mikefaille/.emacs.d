@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (require-package 'ace-window)
 (require-package 'avy)
 (require-package 'zop-to-char)

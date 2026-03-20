@@ -14,8 +14,7 @@
 
 ;; install gemini-cli.el
 (use-package gemini-cli
-  :ensure t
-  :vc (:url "https://github.com/linchen2chris/gemini-cli.el" :rev :newest)
+  :ensure (gemini-cli :host github :repo "linchen2chris/gemini-cli.el")
   :config (gemini-cli-mode)
   :bind-keymap ("C-c c" . gemini-cli-command-map))
 

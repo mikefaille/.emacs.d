@@ -1,81 +1,62 @@
 ;; -*- lexical-binding: t; -*-
+;;; pkg-feel.el --- Various "look and feel" packages and settings
 
-;; This file configures various "look and feel" packages and settings.
-
-;; Ensure use-package is available
 (require 'use-package)
 
 ;; Diminish mode line clutter
 (use-package diminish
-  :ensure t
-  ;; Configuration for diminishing specific modes can go here or where those modes are loaded
-  ;; Example: (diminish 'eldoc-mode)
-  )
+  :ensure t)
 
 ;; Minimap for code overview
 (use-package minimap
   :ensure t
-  :defer t ; Defer loading until explicitly called
-  ;; Add keybindings or hooks as needed
-  ;; :bind ("C-c m" . minimap-mode)
-  )
+  :defer t)
 
 ;; Expand region semantically
 (use-package expand-region
   :ensure t
   :defer t
-  :bind ("C-=" . er/expand-region)) ; Common binding
+  :bind ("C-=" . er/expand-region))
 
 ;; Operate on numbers easily
 (use-package operate-on-number
   :ensure t
-  :defer t
-  ;; Bind keys if desired, e.g., for incrementing/decrementing
-  ;; :bind (("C-c +" . #'on/add)
-  ;;        ("C-c -" . #'on/subtract))
-  )
+  :defer t)
 
 ;; Recent Files configuration
 (use-package recentf
   :ensure nil ; Built-in
   :init
-  (setq main-savefile-dir (expand-file-name "savefile" user-emacs-directory)) ; Define ONCE globally
-  (setq recentf-save-file (expand-file-name "recentf" main-savefile-dir)
+  (setq recentf-save-file (expand-file-name "recentf" michael-savefile-dir)
         recentf-max-saved-items 500
         recentf-max-menu-items 15
         recentf-auto-cleanup 'never)
   :config
-  (recentf-mode 1)) ; Enable the mode
+  (recentf-mode 1))
 
 ;; Highlight current line globally
 (use-package hl-line
   :ensure nil ; Built-in
-  :hook (after-init . global-hl-line-mode)) ; Enable globally after init
+  :hook (after-init . global-hl-line-mode))
 
 ;; Highlight changes briefly
 (use-package volatile-highlights
   :ensure t
-  :hook (after-init . volatile-highlights-mode) ; Enable globally after init
-  ;; :config
-  ;; (diminish 'volatile-highlights-mode) ; Uncomment to hide from mode line
-  )
+  :demand t
+  :config
+  (volatile-highlights-mode 1))
 
 ;; Whitespace visualization configuration
 (use-package whitespace
   :ensure nil ; Built-in
-  :defer t ; Usually loaded when needed or via global mode
+  :defer t
   :custom
-  (whitespace-line-column 80 "Maximum line length.") ; Use :custom for customization
-  (whitespace-style '(face tabs empty trailing lines-tail)) ; Added lines-tail visualization
+  (whitespace-line-column 80 "Maximum line length.")
+  (whitespace-style '(face tabs empty trailing lines-tail))
   :config
-  ;; Enable globally if desired, or use hooks for specific modes
-  (global-whitespace-mode 1)
-  ;; Optional: Diminish mode line indicator
-  ;; (require 'diminish) ; Ensure diminish is loaded if using here
-  ;; (diminish 'whitespace-mode)
-  )
+  (global-whitespace-mode 1))
 
-;; Hippie Expand configuration (alternative/complement to Corfu/Cape)
+;; Hippie Expand configuration
 (use-package hippie-exp
   :ensure nil ; Built-in
   :config
@@ -92,14 +73,16 @@
           try-complete-lisp-symbol)))
 
 ;; Compilation buffer colorization
-;; Assumes 'main-colorize-compilation-buffer' function is defined elsewhere
-(add-hook 'compilation-filter-hook #'main-colorize-compilation-buffer)
+(require 'ansi-color)
+(defun michael-colorize-compilation-buffer ()
+  "Apply ANSI color codes to compilation buffer."
+  (when (derived-mode-p 'compilation-mode)
+    (ansi-color-apply-on-region compilation-filter-start (point-max))))
+(add-hook 'compilation-filter-hook #'michael-colorize-compilation-buffer)
 
 ;; --- Modernized Advice for server-visit-files ---
-;; Function to parse filename:line:col format
-(defun my-parse-file-line-col (filename)
-  "Parse FILENAME formatted as 'name:line:col' or 'name:line'.
-Return (cons PARSED-NAME (cons LINE COL)) or original FILENAME."
+(defun michael-parse-file-line-col (filename)
+  "Parse FILENAME formatted as 'name:line:col' or 'name:line'."
   (if (string-match "^\\(.*?\\):\\([0-9]+\\)\\(?::\\([0-9]+\\)\\)?$" filename)
       (let ((name (match-string 1 filename))
             (line (string-to-number (match-string 2 filename)))
@@ -107,16 +90,12 @@ Return (cons PARSED-NAME (cons LINE COL)) or original FILENAME."
         (cons name (cons line (when col-str (string-to-number col-str)))))
     filename))
 
-;; Advice function to modify the file list argument
-(defun my-server-visit-files-advice (orig-fun files proc &optional nowait)
-  "Advice for `server-visit-files` to handle 'name:line:col'.
-Transforms the FILES argument before calling ORIG-FUN."
-  (let ((parsed-files (mapcar #'my-parse-file-line-col files)))
+(defun michael-server-visit-files-advice (orig-fun files proc &optional nowait)
+  "Advice for `server-visit-files` to handle 'name:line:col'."
+  (let ((parsed-files (mapcar #'michael-parse-file-line-col files)))
     (apply orig-fun parsed-files proc (when nowait (list nowait)))))
 
-;; Add the advice using the modern advice system
-(advice-add 'server-visit-files :around #'my-server-visit-files-advice)
+(advice-add 'server-visit-files :around #'michael-server-visit-files-advice)
 
-;; Mark this file as provided
 (provide 'pkg-feel)
 ;;; pkg-feel.el ends here

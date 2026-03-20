@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 
 ;; emacs gnomeshell integration
 ;; (when (daemonp)

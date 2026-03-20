@@ -3,181 +3,88 @@
 
 ;;; Commentary:
 ;; This file loads core configuration, sets up the theme, tree-sitter,
-;; loads package-specific setups, and applies final customizations.
-;; It assumes early-init.el has run.
+;; and handles lazy loading of package configurations via hooks/mode-triggers.
 
 ;;; Code:
 
 ;; --- Load Path & Directory Setup ---
-(defvar michael-core-dir (expand-file-name "core" user-emacs-directory)
-  "Directory for core configuration files.")
-(defvar michael-packages-dir (expand-file-name "packages" user-emacs-directory)
-  "Directory for package-specific configuration files.")
+(defvar michael-core-dir (expand-file-name "core" user-emacs-directory))
+(defvar michael-packages-dir (expand-file-name "packages" user-emacs-directory))
+(defvar michael-savefile-dir (expand-file-name "var" user-emacs-directory))
+(defvar michael-theme-dir (expand-file-name "theme" user-emacs-directory))
 
-(defvar michael-savefile-dir (expand-file-name "var" user-emacs-directory) ; Use 'var' convention
-  "Directory for savefiles (recentf, savehist, etc.).")
-(defvar michael-theme-dir (expand-file-name "theme" user-emacs-directory) ; If you have custom themes
-  "Directory for custom theme files.")
+(unless (file-directory-p michael-savefile-dir) (make-directory michael-savefile-dir t))
 
-;; Ensure savefile directory exists
-(unless (file-directory-p michael-savefile-dir)
-  (make-directory michael-savefile-dir t))
-
-;; Add custom configuration directories to the load-path
 (add-to-list 'load-path michael-core-dir)
 (add-to-list 'load-path michael-packages-dir)
-;; Add custom theme directory if it exists and you use it
-;; (add-to-list 'custom-theme-load-path michael-theme-dir)
 
-
-;; --- Load Core Configuration ---
-
-;; Load package system setup (archives, use-package defaults)
-;; This MUST come before files that use use-package or require packages.
+;; --- Load Core Configuration (Always Needed) ---
 (require 'core-packages)
+(require 'core-util)
+(require 'core-font)
+(require 'core-feel)
+(require 'core-look)
+(require 'core-native-comp)
 
-;; Load other core modules (adjust order if dependencies exist)
-(require 'core-util)          ; Utility functions/macros
-(require 'core-font)          ; Font setup (load early for appearance)
-(require 'core-feel)          ; Basic editing feel (keys, modes)
-(require 'core-look)          ; Visual appearance (mode line, UI elements)
-(require 'core-native-comp)   ; Native compilation settings
-
-
-;; --- Theme Loading ---
-;; Load desired theme after core setup but before most packages
+;; --- Theme & UI (Always Needed) ---
 (use-package solarized-theme
-  :ensure t ; Ensure it's installed
-  :config
-  (load-theme 'solarized-dark t))
-
-;; In init.el
-(use-package markdown-mode
   :ensure t
-  :defer t) ; Defer unless you use markdown-mode directly often
-;; --- Tree-sitter Setup ---
-;; Configure Tree-sitter and related packages
-(use-package tree-sitter
-  :ensure t
-  :defer t
-  :config
-  ;; Add language mappings if needed (often handled by major modes or treesit-auto)
-  ;; (add-to-list 'tree-sitter-major-mode-language-alist '(typescript-ts-mode . typescript))
-  )
+  :demand t
+  :config (load-theme 'solarized-dark t))
+(elpaca-wait)
 
-(use-package tree-sitter-langs ;; Installs grammar bundles
-  :ensure t
-  :defer t
-  :after tree-sitter)
+;; --- Modern Stack (Core Experience) ---
+(require 'pkg-completion)     ; Vertico, Corfu, etc.
+(require 'pkg-workspaces)     ; Perspective
+(require 'pkg-lsp)            ; Loads hooks, but lsp-mode itself is deferred
 
-(use-package treesit-auto          ;; Auto-install grammars and setup modes
-  :ensure t
-  :defer t
-  :after (tree-sitter tree-sitter-langs) ; Ensure base packages are loaded
-  :custom
-  (treesit-auto-install 'prompt) ; Or t to install automatically
-  (treesit-auto-modes 'all)      ; Automatically configure modes for installed languages
-  (treesit-auto-exclude-modes '(fundamental-mode markdown-mode org-mode)) ; Exclude modes
-  :config
-  ;; Set the directory for storing downloaded grammars
-  (setq treesit-extra-load-path (list (expand-file-name "tree-sitter" michael-savefile-dir)))
-  (global-treesit-auto-mode)) ; Enable the auto-configuration globally
+;; --- Package Configurations (Hooks & Mode Triggers) ---
+;; We use 'require' here because the pkg-*.el files themselves use use-package
+;; with :defer t, :mode, or :hook, which handles the lazy loading properly.
 
-;; Major modes using Tree-sitter
-(use-package typescript-ts-mode
-  :ensure t
-  :defer t
-  :mode (("\\.ts\\'" . typescript-ts-mode)
-         ("\\.tsx\\'" . tsx-ts-mode)))
+;; AI Tools
+(require 'pkg-ai)
 
-;; Optional: Indentation bars
-(use-package indent-bars
-  :ensure t
-  :defer t
-  :hook (prog-mode . indent-bars-mode))
+;; QoL & Feel
+(require 'pkg-feel)
 
+;; Tree-sitter & Astro
+(require 'pkg-treesiter)
 
-;; --- Load Package-Specific Configurations ---
-;; Load configurations for individual packages or groups of packages.
-;; These files should contain the `use-package` blocks for the actual packages.
-(message "Loading package configurations...")
+;; Auto Compilation
+(require 'pkg-auto-compile)
 
-(require 'pkg-ido)            ; Ido completion setup (or Vertico/other)
-(require 'pkg-corfu3)         ; Corfu completion setup
-(require 'pkg-org)            ; Org mode configuration
-(require 'pkg-discover)       ; discover.el configuration
-(require 'pkg-git)            ; Git integration (e.g., Magit)
-(require 'pkg-flycheck)       ; Flycheck setup
-(require 'pkg-lsp)           ; LSP Mode / Eglot setup
-(require 'pkg-projectile)     ; Project management
-(require 'pkg-web)            ; Web development modes/tools
-(require 'pkg-docker)         ; Docker integration
-(require 'pkg-eshell)         ; Eshell enhancements
-(require 'pkg-multipleCursor) ; multiple-cursors setup
-(require 'pkg-search)         ; Search tools (Consult, etc.)
-(require 'pkg-gemini)         ; gemini-cli integration
-;; ... add require lines for all other pkg-*.el files you use ...
-;; (require 'pkg-ssh)
-;; (require 'pkg-latex)
-;; (require 'pkg-yaml)
-;; (require 'pkg-php)
-;; (require 'pkg-bash)
-;; (require 'pkg-rust)
-;; (require 'pkg-emms)
-;; (require 'pkg-systemd)
-;; (require 'pkg-mouvement)
-;; (require 'pkg-irc)
-;; (require 'pkg-flutter)
-;; (require 'pkg-terraform)
+;; Project Management
+(require 'pkg-projectile)
 
-(message "Package configurations loaded.")
+;; Org Mode
+(require 'pkg-org)
 
+;; Git
+(require 'pkg-git)
 
-;; --- Other Settings ---
+;; Languages (Lazy via their own files)
+(require 'pkg-bash)
+(require 'pkg-go)
+(require 'pkg-haskell)
+(require 'pkg-rust)
+(require 'pkg-latex)
+(require 'pkg-yaml)
+(require 'pkg-terraform)
+(require 'pkg-markdown)
 
-;; Winner mode (Undo/redo window configurations)
-(use-package winner
-  :ensure nil ; Built-in
-  :config
-  (winner-mode 1))
+;; Other Integrations
+(require 'pkg-docker)
+(require 'pkg-eshell)
+(require 'pkg-multipleCursor)
+(require 'pkg-gemini)
+(require 'pkg-ssh)
+(require 'pkg-systemd)
 
-;; Save History (Minibuffer history persistence)
-(use-package savehist
-  :ensure nil ; Built-in
-  :custom
-  (savehist-file (expand-file-name "savehist" michael-savefile-dir))
-  (history-length 1000) ; Increase history size
-  :config
-  (savehist-mode 1))
+;; --- Optional / Switchable Features (Commented Out) ---
+;; (require 'pkg-chrome)
+;; (require 'pkg-combobulate)
+;; (require 'pkg-mu4e)
 
-;; General Emacs behavior tweaks
-(use-package emacs
-  :ensure nil
-  :config
-  ;; Hook to delete .elc files (Consider downsides: hides compile errors, interaction with native-comp)
-  (add-hook 'emacs-lisp-mode-hook
-            (lambda ()
-              (add-hook 'after-save-hook
-                        (lambda ()
-                          (let ((elc-file (concat buffer-file-name "c")))
-                            (when (file-exists-p elc-file)
-                              (message "Deleting old elc file: %s" elc-file)
-                              (delete-file elc-file))))
-                        nil t))) ; t makes hook buffer-local
-
-  ;; Auto-revert log files
-  (add-to-list 'auto-mode-alist '("\\.log\\'" . auto-revert-mode)))
-
-
-;; --- Custom Settings ---
-;; Load customizations saved via M-x customize (or manually edited)
-;; Place this at the end to ensure it overrides other settings if necessary.
-(setq custom-file (locate-user-emacs-file "custom-vars.el"))
-(when (and custom-file (file-exists-p custom-file))
-  (load custom-file 'noerror 'nomessage))
-
-
-;; --- Finalization ---
 (message "Michaël's Emacs configuration loaded successfully.")
-
 ;;; init.el ends here
